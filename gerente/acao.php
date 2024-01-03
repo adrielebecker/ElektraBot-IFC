@@ -25,7 +25,7 @@
             break;
         
         case 'GET':
-            $acao = $_POST['acao'] ? $_POST['acao'] : "";
+            $acao = $_GET['acao'] ? $_GET['acao'] : "";
             break;
     }
 
@@ -35,6 +35,9 @@
             break;
         case 'editar':
             editar();
+            break;
+        case 'excluir':
+            excluir();
             break;
     }
 
@@ -97,6 +100,23 @@
             die();
         }
         
+    }
+    function excluir(){
+        try{
+            $id = isset($_GET["id"])?$_GET["id"]:0;
+    
+            $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
+            $query = "DELETE FROM gerente WHERE id = :id";
+            $stmt = $conexao->prepare($query);
+            $stmt->bindValue(":id",$id);
+    
+            $stmt->execute();
+            echo "foi";
+    
+        }catch(PDOExeptio $e){
+            print("Erro ao conectar com o banco de dados . . . <br>".$e->getMenssage());
+            die();
+        }
     }
         
 ?>
