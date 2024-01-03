@@ -25,7 +25,7 @@
 
         include '../sql/config.php';
 
-        if($cargo = "gerente"){
+        if($cargo == "gerente"){
             try {
                 $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
@@ -42,6 +42,32 @@
                         $_SESSION['idGerente'] = $gerente['id'];
                         $_SESSION['sexoGerente'] = $gerente['sexo'];
                         header('Location: ../gerente/index.php');
+                    } 
+                    else{
+                        echo "Usuário ou senha incorretos!";
+                    }
+                }
+            } catch(Exception $e){
+                print("Erro ...<br>".$e->getMessage());
+                die();
+            }
+        } elseif($cargo == "eletricista"){
+            try {
+                $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
+
+                $query = "SELECT * FROM eletricista";
+
+                $stmt = $conexao->prepare($query);
+                $stmt->execute();
+                $eletricistas = $stmt->fetchAll();
+
+                foreach($eletricistas as $eletricista){
+                    if(strtolower($eletricista['usuario']) == strtolower($usuario) && $eletricista['senha'] == $senha){
+                        session_start();
+                        $_SESSION['nomeEletricista'] = $eletricista['nome'];
+                        $_SESSION['idEletricista'] = $eletricista['id'];
+                        $_SESSION['sexoEletricista'] = $eletricista['sexo'];
+                        header('Location: ../eletricista/index.php');
                     } 
                     else{
                         echo "Usuário ou senha incorretos!";

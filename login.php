@@ -12,8 +12,8 @@
 
         <label for="cargo" class="form-label texto verde">CARGO:</label>
         <select name="cargo" id="cargo" class="form-select border-success">
-            <option value="Eletricista">Eletricista</option>
-            <option value="Gerente">Gerente</option>
+            <option value="eletricista">Eletricista</option>
+            <option value="gerente">Gerente</option>
         </select>
 
         <label for="senha" class="form-label texto verde">SENHA:</label>
