@@ -70,6 +70,7 @@
                         $_SESSION['nomeEletricista'] = $eletricista['nome'];
                         $_SESSION['idEletricista'] = $eletricista['id'];
                         $_SESSION['sexoEletricista'] = $eletricista['sexo'];
+                        $_SESSION['idGerente'] = $eletricista['gerente'];
                         header('Location: ../eletricista/index.php');
                     } 
                     else{

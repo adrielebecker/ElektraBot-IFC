@@ -103,8 +103,8 @@
             print("Erro ...<br>".$e->getMessage());
             die();
         }
-        
     }
+    
     function excluir(){
         try{
             $id = isset($_GET["id"])? $_GET["id"]:0;
