@@ -107,7 +107,7 @@
     }
     function excluir(){
         try{
-            $id = isset($_GET["id"])?$_GET["id"]:0;
+            $id = isset($_GET["id"])? $_GET["id"]:0;
     
             $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
             $query = "DELETE FROM eletricista WHERE id = :id";
@@ -116,7 +116,7 @@
     
             $stmt->execute();
     
-        }catch(PDOExeptio $e){
+        } catch(PDOExeptio $e){
             print("Erro ao conectar com o banco de dados . . . <br>".$e->getMenssage());
             die();
         }

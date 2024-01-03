@@ -20,6 +20,7 @@
         <input type="password" name="senha" id="senha" class="form-control border-success">
 
         <button class="btn secundario border-success" type="submit" name="acao" id="acao" value="entrar">Entrar</button>
+        <a href="cadastrar.php">Cadastre-se</a>
     </form>
 </body>
 </html>

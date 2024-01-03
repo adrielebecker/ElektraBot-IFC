@@ -16,6 +16,9 @@
         case 'sair':
             sair();
             break;
+        case 'cadastrar':
+            cadastrar();
+            break;
     }
 
     function entrar(){
@@ -84,5 +87,15 @@
         session_start();
         session_destroy();
         header('Location: ../login.php');
+    }
+
+    function cadastrar(){
+        $cargo = $_POST['cargo'] ? $_POST['cargo'] : "";
+
+        if($cargo == "eletricista"){
+            header('Location: ../eletricista/cadastro.php');
+        } else{
+            header('Location: ../gerente/cadastro.php');
+        }
     }
 ?>
