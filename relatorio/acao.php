@@ -7,7 +7,7 @@
     $codNovo = $_POST['codNovo'] ? $_POST['codNovo'] : "";
     $codAntigo = $_POST['codAntigo'] ? $_POST['codAntigo'] : "";
     $tipo = $_POST['tipo'] ? $_POST['tipo'] : "";
-    $substituicao = $_POST['nome'] ? $_POST['nome'] : "";
+    $substituicao = $_POST['substituicao'] ? $_POST['substituicao'] : "";
     $dataSub = $_POST['dataSub'] ? $_POST['dataSub'] : "";
     $acidente = $_POST['acidente'] ? $_POST['acidente'] : "";
     $idEletricista = $_SESSION['idEletricista'];
@@ -26,6 +26,9 @@
     switch ($acao) {
         case 'salvar':
             salvar();
+            break;
+        case 'editar':
+            editar();
             break;
     }
 
@@ -56,6 +59,24 @@
             $stmt->execute();
 
             echo "foi";
+        } catch(Exception $e){
+            print("Erro ...<br>".$e->getMessage());
+            die();
+        }
+    }
+
+    function editar(){
+        try {
+            global $id;
+            $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);  
+            $query = "UPDATE relatorio SET texto = :texto, codNovo = :codNovo, codAntigo = :codAntigo, tipo = :tipo, substituicao = :substituicao, dataSub = :dataSub, acidente = :acidente, eletricista = :eletricista, gerente = :gerente WHERE id = :id";
+            
+            $stmt = $conexao->prepare($query);
+
+            bindar($stmt);
+            $stmt->bindValue(":id", $id);
+            $stmt->execute();
+
         } catch(Exception $e){
             print("Erro ...<br>".$e->getMessage());
             die();
