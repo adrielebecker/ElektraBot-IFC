@@ -7,6 +7,7 @@
     $eletricista = isset($_POST['eletricista']) ? $_POST['eletricista'] : "";
     $localizacao = isset($_POST['localizacao']) ? $_POST['localizacao'] : "";
     $dataSub = isset($_POST['dataSub']) ? $_POST['dataSub'] : "";
+    $situacao = isset($_POST['situacao']) ? $_POST['situacao'] : "";
 
     switch ($_SERVER['REQUEST_METHOD']) {
         case 'POST':
@@ -27,15 +28,19 @@
         case 'excluir':
             excluir();
             break;
+        case 'concluir':
+            concluir();
+            break;
     }
 
     function bindar($stmt){
-        global $nome, $gerente, $eletricista, $localizacao, $dataSub;
+        global $nome, $gerente, $eletricista, $localizacao, $dataSub, $situacao;
         $stmt->bindValue(":nome", $nome);
         $stmt->bindValue(":gerente", $gerente);
         $stmt->bindValue(":eletricista", $eletricista);
         $stmt->bindValue(":localizacao", $localizacao);
         $stmt->bindValue(":dataSub", $dataSub);
+        $stmt->bindValue(":situacao", $situacao);
 
     }
 
@@ -43,7 +48,7 @@
         try {
             $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
-            $query = "INSERT INTO substituicao(nome, gerente, eletricista, localizacao, dataSub) VALUES(:nome, :gerente, :eletricista, :localizacao, :dataSub)";
+            $query = "INSERT INTO substituicao(nome, gerente, eletricista, localizacao, dataSub, situacao) VALUES(:nome, :gerente, :eletricista, :localizacao, :dataSub, :situacao)";
 
             $stmt = $conexao->prepare($query);
 
@@ -60,14 +65,14 @@
         try {
             global $id;
             $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);  
-            $query = "UPDATE substituicao SET nome = :nome, gerente = :gerente, eletricista = :eletricista, localizacao = :localizacao, dataSub = :dataSub WHERE id = :id";
+            $query = "UPDATE substituicao SET nome = :nome, gerente = :gerente, eletricista = :eletricista, localizacao = :localizacao, dataSub = :dataSub, situacao = :situacao WHERE id = :id";
             
             $stmt = $conexao->prepare($query);
 
             bindar($stmt);
             $stmt->bindValue(":id", $id);
             $stmt->execute();
-
+            
         } catch(Exception $e){
             print("Erro ...<br>".$e->getMessage());
             die();
@@ -87,6 +92,24 @@
     
         } catch(PDOExeptio $e){
             print("Erro ao conectar com o banco de dados . . . <br>".$e->getMenssage());
+            die();
+        }
+    }
+
+    function concluir(){
+        try {
+            global $id;
+            $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);  
+            $query = "UPDATE substituicao SET nome = :nome, gerente = :gerente, eletricista = :eletricista, localizacao = :localizacao, dataSub = :dataSub, situacao = :situacao WHERE id = :id";
+            
+            $stmt = $conexao->prepare($query);
+
+            bindar($stmt);
+            $stmt->bindValue(":id", $id);
+            $stmt->execute();
+
+        } catch(Exception $e){
+            print("Erro ...<br>".$e->getMessage());
             die();
         }
     }

@@ -3,12 +3,14 @@
     session_start();
     include 'sql/config.php';
     $diretorio = "video/substituicao-longa.mp4";
+
+    var_dump($_SESSION);
 ?>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?=$pagina?></title>
+    <title></title>
    
 </head>
 <body>
@@ -22,18 +24,22 @@
             <?php
                 try{
                     $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
-    
+                    
                     $query = "SELECT * FROM substituicao";
-    
+                    
                     $stmt = $conexao->prepare($query);
                     $stmt->execute();
                     $substituicao = $stmt->fetchAll();
                     
                     foreach($substituicao as $value){
-                        if($id != 0){
-                            echo "<option value='{$value['id']}' selected>{$value['dataSub']}</option>";
+                        if($_SESSION['idEletricista'] == $value['eletricista']){
+                            if($id != 0){
+                                echo "<option value='{$value['id']}' selected>{$value['dataSub']}</option>";
+                            } else{
+                                echo "<option value='{$value['id']}'>{$value['nome']}</option>";
+                            }
                         } else{
-                            echo "<option value='{$value['id']}'>{$value['nome']}</option>";
+                            echo "<option value='nenhum'>Nenhuma substituição! Volte mais tarde</option>";
                         }
                     }
                 }catch(Exception $e){

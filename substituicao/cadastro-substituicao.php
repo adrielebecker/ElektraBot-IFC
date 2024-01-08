@@ -72,6 +72,8 @@
         <input type="hidden" name="localizacao" id="localizacao" value="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3548.2225635105933!2d-49.642396925310535!3d-27.212161305780715!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-BR!2sbr!4v1697839360200!5m2!1spt-BR!2sbr">
             <br>
 
+        situacao:
+        <input type="text" readonly name="situacao" id="situacao" value="<?php if($id == 0) echo "pendente";?>">
         <button name="acao" id="acao" value="<?php if($id != 0) echo "editar"; else echo "salvar";?>">Salvar</button>
     </form>
 </body>

@@ -62,10 +62,14 @@
                     $substituicao = $stmt->fetchAll();
                     
                     foreach($substituicao as $value){
-                        if($id != 0 && $relatorio['substituicao'] == $value['id']){
-                            echo "<option value='{$value['id']}' selected>{$value['nome']}</option>";
-                        } else{
-                            echo "<option value='{$value['id']}'>{$value['nome']}</option>";
+                        if($_SESSION['idEletricista'] == $value['eletricista']){
+                            if($id != 0 && $relatorio['substituicao'] == $value['id']){
+                                echo "<option value='{$value['id']}' selected>{$value['nome']}</option>";
+                            } else{
+                                echo "<option value='{$value['id']}'>{$value['nome']}</option>";
+                            }
+                        }else{
+                            echo "<option value='nenhum'>Nenhuma substituição! Volte mais tarde</option>";
                         }
                     }
                 }catch(Exception $e){
@@ -89,10 +93,14 @@
                     $substituicao = $stmt->fetchAll();
                     
                     foreach($substituicao as $value){
-                        if($id != 0 && $relatorio['dataSub'] == $value['dataSub']){
-                            echo "<option value='{$value['dataSub']}' selected>{$value['dataSub']}</option>";
+                        if($_SESSION['idEletricista'] == $value['eletricista']){
+                            if($id != 0 && $relatorio['dataSub'] == $value['dataSub']){
+                                echo "<option value='{$value['dataSub']}' selected>{$value['dataSub']}</option>";
+                            } else{
+                                echo "<option value='{$value['dataSub']}'>{$value['dataSub']}</option>";
+                            }
                         } else{
-                            echo "<option value='{$value['dataSub']}'>{$value['dataSub']}</option>";
+                            echo "<option value='nenhum'>Nenhuma substituição! Volte mais tarde</option>";
                         }
                     }
                 }catch(Exception $e){
