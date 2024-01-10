@@ -1,11 +1,11 @@
 <?php
     switch ($_SERVER['REQUEST_METHOD']) {
         case 'POST':
-            $acao = $_POST['acao'] ? $_POST['acao'] : "";
+            $acao = isset($_POST['acao']) ? $_POST['acao'] : "";
             break;
         
         case 'GET':
-            $acao = $_GET['acao'] ? $_GET['acao'] : "";
+            $acao = isset($_GET['acao']) ? $_GET['acao'] : "";
             break;
     }
 
@@ -22,9 +22,9 @@
     }
 
     function entrar(){
-        $usuario = $_POST['usuario'] ? $_POST['usuario'] : "";
-        $cargo = $_POST['cargo'] ? $_POST['cargo'] : "";
-        $senha = $_POST['senha'] ? $_POST['senha'] : "";
+        $usuario = isset($_POST['usuario']) ? $_POST['usuario'] : "";
+        $cargo = isset($_POST['cargo']) ? $_POST['cargo'] : "";
+        $senha = isset($_POST['senha']) ? $_POST['senha'] : "";
 
         include '../sql/config.php';
 
@@ -91,12 +91,27 @@
     }
 
     function cadastrar(){
-        $cargo = $_POST['cargo'] ? $_POST['cargo'] : "";
+        $cargo = isset($_POST['cargo']) ? $_POST['cargo'] : "";
 
         if($cargo == "eletricista"){
             header('Location: ../eletricista/cadastro.php');
         } else{
             header('Location: ../gerente/cadastro.php');
         }
+    }
+
+    function formataCpf($cpf){
+        $cpf= substr($cpf,0,-8).".".substr($cpf, 3, -5).".".substr($cpf, -5, -2)."-".substr($cpf,-2);
+        return $cpf;
+    }
+
+    function formataTelefone($number){
+        $number="(".substr($number,0,2).") ".substr($number,2,-4)."-".substr($number,-4);
+        return $number;
+    }
+
+    function formataCep($cep){
+        $cep= substr($cep,0,-4)."-".substr($cep,-4);
+        return $cep;
     }
 ?>

@@ -21,64 +21,78 @@
             die();
         }
     }
+
+    $acao = isset($_GET['acao']) ? $_GET['acao'] : "salvar";
+    if($acao == "salvar"){
+        $pagina = "Cadastro";
+    } else{
+        $pagina = "Alterar Dados";
+    }
+    $id = isset($_GET['id']) ? $_GET['id'] : 0;
 ?>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
+    <?php include 'link.html';?>
 </head>
 <body>
-    <form action="acao.php" method="post">
-        <input type="text" readonly name="id" id="id" value="<?=$id?>">
-        <div class="row mt-2">
-            <div class="col-5">
-                <label for="nome" class="form-label">Nome Completo:</label>
-                <input type="text" name="nome" id="nome" class="form-control border-success text-center" value="<?php if($id != 0) echo $eletricista["nome"];?>" required>
-            </div>
-            <div class="col-2 ms-4">
-                <label for="dataNasc" class="form-label">Data de Nascimento:</label>
-            <input type="date" name="dataNasc" id="dataNasc" class="form-control border-success" value="<?php if($id != 0) echo $eletricista["dataNasc"]?>" required>
-            </div>
-            <div class="col-4 ms-5">
-                <label for="sexo" class="form-check-label">Sexo:</label>
-                <div class="row mt-3">
-                    <div class="col-4">
-                        <input type="radio" name="sexo" id="sexo" value="Feminino" class="form-check-input border-success" <?php if($id != 0){if($eletricista['sexo'] == "Feminino") echo "checked";}?>> Feminino
-                    </div>
-                    <div class="col-4">
-                        <input type="radio" name="sexo" id="sexo" value="Masculino" class="form-check-input border-success" <?php if($id != 0){if($eletricista['sexo'] == "Masculino") echo "checked";}?>> Masculino
-                    </div>
-                    <div class="col-3">
-                        <input type="radio" name="sexo" id="sexo" value="Outro" class="form-check-input border-success" <?php if($id != 0){if($eletricista['sexo'] == "Outro") echo "checked";}?>> Outro
-                    </div>
-                </div>
-            </div>               
+    <?php include '../navbar/nav-outro.php';?>
+    <div class="container">
+        <div class="row mt-4">
+            <h5 class="titulo verde text-center">Preencha o Formulário:</h5>
         </div>
-
-        <div class="row mt-3">
-                <div class="col-3">
+        <form action="acao.php" method="post">
+            <input type="hidden" name="id" id="id" value="<?=$id?>">
+            <div class="row mt-2">
+                <div class="col-4">
+                    <label for="nome" class="form-label">Nome Completo:</label>
+                    <input type="text" name="nome" id="nome" class="form-control border-success text-center" value="<?php if($id != 0) echo $eletricista["nome"];?>" >
+                </div>
+                <div class="col-2">
+                    <label for="dataNasc" class="form-label">Data de Nascimento:</label>
+                <input type="date" name="dataNasc" id="dataNasc" class="form-control border-success" value="<?php if($id != 0) echo $eletricista["dataNasc"]?>">
+                </div>
+                <div class="col-4">
+                    <label for="sexo" class="form-check-label">Sexo:</label>
+                    <div class="row mt-3">
+                        <div class="col-4">
+                            <input type="radio" name="sexo" id="sexo" value="Feminino" class="form-check-input border-success" <?php if($id != 0){if($eletricista['sexo'] == "Feminino") echo "checked";}?>> Feminino
+                        </div>
+                        <div class="col-4">
+                            <input type="radio" name="sexo" id="sexo" value="Masculino" class="form-check-input border-success" <?php if($id != 0){if($eletricista['sexo'] == "Masculino") echo "checked";}?>> Masculino
+                        </div>
+                        <div class="col-3">
+                            <input type="radio" name="sexo" id="sexo" value="Outro" class="form-check-input border-success" <?php if($id != 0){if($eletricista['sexo'] == "Outro") echo "checked";}?>> Outro
+                        </div>
+                    </div>
+                </div> 
+                <div class="col-2">
                     <label for="cpf" class="form-label">CPF:</label>
-                    <input type="text" name="cpf" id="cpf" class="form-control border-success text-center" placeholder="000.000.000-00" value="<?php if($id != 0) echo $eletricista["cpf"]?>" required>
-                </div>  
+                    <input type="text" name="cpf" id="cpf" class="form-control border-success text-center" placeholder="000.000.000-00" value="<?php if($id != 0) echo $eletricista["cpf"]?>">
+                </div>              
+            </div>
+    
+            <div class="row mt-3"> 
                 <div class="col-3">
                     <label for="celular" class="form-label">Celular:</label>
-                    <input type="text" name="celular" id="celular" class="form-control border-success text-center" placeholder="(00) 00000-0000" value="<?php if($id != 0) echo $eletricista["celular"]?>" required>
+                    <input type="text" name="celular" id="celular" class="form-control border-success text-center" placeholder="(00) 00000-0000" value="<?php if($id != 0) echo $eletricista["celular"]?>">
                 </div>
                 <div class="col-6">
                     <label for="email" class="form-label">E-mail:</label>
-                    <input type="text" name="email" id="email" class="form-control border-success text-center" placeholder="dominio@email.com" value="<?php if($id != 0) echo $eletricista["email"]?>" required>    
-                </div>               
-            </div>
-            
-            <div class="row mt-3">
-                <div class="col-3">
-                    <label for="cep" class="form-label">CEP:</label>
-                    <input type="text" name="cep" id="cep" class="form-control border-success text-center" placeholder="00000-0000" value="<?php if($id != 0) echo $eletricista["cep"]?>" required>
+                    <input type="text" name="email" id="email" class="form-control border-success text-center" placeholder="dominio@email.com" value="<?php if($id != 0) echo $eletricista["email"]?>">    
                 </div> 
                 <div class="col-3">
+                    <label for="cep" class="form-label">CEP:</label>
+                    <input type="text" name="cep" id="cep" class="form-control border-success text-center" placeholder="00000-0000" value="<?php if($id != 0) echo $eletricista["cep"]?>">
+                </div>              
+            </div>
+                
+            <div class="row mt-3">
+                <div class="col-3">
                     <label for="estado" class="form-label">Estado:</label>
-                    <select name="estado" id="estado" class="form-select border-success text-center" required>
+                    <select name="estado" id="estado" class="form-select border-success text-center">
                         <option value="selecione" <?php ?>>Selecione um estado...</option>
                         <option value="AC" <?php if($id != 0){if($eletricista['estado'] == "AC") echo "selected";}?>>Acre</option>
                         <option value="AL" <?php if($id != 0){if($eletricista['estado'] =="AL") echo "selected";}?>>Alagoas</option>
@@ -112,19 +126,19 @@
                 </div>
                 <div class="col-3">
                     <label for="cidade" class="form-label">Cidade:</label>
-                    <input type="text" name="cidade" id="cidade" class="form-control border-success text-center" value="<?php if($id != 0) echo $eletricista["cidade"]?>" required> 
+                    <input type="text" name="cidade" id="cidade" class="form-control border-success text-center" value="<?php if($id != 0) echo $eletricista["cidade"]?>"> 
                 </div>
                 <div class="col-3">
                     <label for="bairro" class="form-label">Bairro:</label>
-                    <input type="text" name="bairro" id="bairro" class="form-control border-success text-center" value="<?php if($id != 0) echo $eletricista["bairro"]?>" required> 
-                </div>                     
+                    <input type="text" name="bairro" id="bairro" class="form-control border-success text-center" value="<?php if($id != 0) echo $eletricista["bairro"]?>"> 
+                </div>  
+                <div class="col-3">
+                    <label for="rua" class="form-label">Rua:</label>
+                    <input type="text" name="rua" id="rua" class="form-control border-success text-center" value="<?php if($id != 0) echo $eletricista["rua"]?>">
+                </div>                    
             </div>
 
             <div class="row mt-3">
-                <div class="col-3">
-                    <label for="rua" class="form-label">Rua:</label>
-                    <input type="text" name="rua" id="rua" class="form-control border-success text-center" value="<?php if($id != 0) echo $eletricista["rua"]?>" required>
-                </div> 
                 <div class="col-7">
                     <label for="complemento" class="form-label">Complemento:</label>
                     <input type="text" name="complemento" id="complemento" class="form-control border-success text-center" placeholder="Ex: Casa" value="<?php if($id != 0) echo $eletricista["complemento"]?>">
@@ -132,17 +146,21 @@
                 <div class="col-2">
                     <label for="numero" class="form-label">Número:</label>
                     <input type="text" name="numero" id="numero" class="form-control border-success text-center" value="<?php if($id != 0) echo $eletricista["numero"]?>">
-                </div>                 
+                </div> 
+                <div class="col-3">
+                    <label for="matricula" class="form-label">Matrícula:</label>
+                    <input type="text" name="matricula" id="matricula" class="form-control border-success text-center" value="<?php if($id != 0) echo $eletricista["matricula"]?>">
+                </div>                
             </div>
-
+    
             <div class="row mt-3">
                 <div class="col-3">
                     <label for="usuario" class="form-label">Nome de usuário:</label>
-                    <input type="text" name="usuario" id="usuario" class="form-control border-success text-center" value="<?php if($id != 0) echo $eletricista["usuario"];?>" required>
+                    <input type="text" name="usuario" id="usuario" class="form-control border-success text-center" value="<?php if($id != 0) echo $eletricista["usuario"];?>">
                 </div>
                 <div class="col-3">
                     <label for="gerente" class="form-label">Gerente Responsável:</label>
-                    <select name="gerente" id="gerente" class="form-select border-success text-center" required>
+                    <select name="gerente" id="gerente" class="form-select border-success text-center">
                         <?php
                             try{
                                 $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
@@ -163,28 +181,26 @@
                         ?>
                     </select>
                 </div>
-                <div class="col-3">
-                    <label for="matricula" class="form-label">Matrícula:</label>
-                    <input type="text" name="matricula" id="matricula" class="form-control border-success text-center" value="<?php if($id != 0) echo $eletricista["matricula"]?>" required>
-                </div>
+                
                 <div class="col-3">
                     <label for="senha" class="form-label">Criar Senha:</label>
-                    <input type="password" name="senha" id="senha" class="form-control border-success text-center" value="<?php if($id != 0) echo $eletricista["senha"]?>" required>
+                    <input type="password" name="senha" id="senha" class="form-control border-success text-center" value="<?php if($id != 0) echo $eletricista["senha"]?>">
                 </div>
                 <div class="col-3">
                     <label for="confirmaSenha" class="form-label">Confirmar Senha:</label>
-                    <input type="password" name="confirmaSenha" id="confirmaSenha" class="form-control border-success text-center" required>
+                    <input type="password" name="confirmaSenha" id="confirmaSenha" class="form-control border-success text-center">
                 </div>
             </div>
 
             <div class="row mt-4">
                 <div class="col-1">
-                    <button class="btn btn-secondary border-dark"><a href="index.html" class="link texto branco">Voltar</a></button>
-                </div>
-                <div class="col-1">
                     <button class="btn secundario border-success branco texto" name="acao" id="acao" value="<?php if($id != 0) echo "editar"; else echo "Salvar"?>"><?php if($id != 0) echo $acao; else echo "Salvar";?></button>
                 </div>
+            </form>
+                <div class="col-1">
+                    <button class="btn btn-secondary border-dark"><a href="../index.php" class="link texto branco">Voltar</a></button>
+                </div>
             </div>
-    </form>
+    </div>
 </body>
 </html>

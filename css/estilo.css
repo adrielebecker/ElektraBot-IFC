@@ -1,0 +1,77 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: "Cabin";
+    src: url("../font/Cabin/Cabin-Regular.ttf");
+}
+@font-face{
+    font-family: "Bungee";
+    src: url("../font/Bungee/Bungee-Regular.ttf");
+}
+
+nav{
+    background-color: #FFF;
+}
+.titulo{
+    font-family: "Bungee";
+}
+.branco{
+    color: #FFF;
+}
+.verde{
+    color: #015A06;
+}
+.secundario{
+    background-color: #70B77E;
+}
+.sobre-margin{
+    margin-top: 25%;
+}
+.sobre-tam{
+    font-size: 20px;
+}
+.texto{
+    font-family: "Cabin";
+}
+#sobre{
+    background-color: #015A06;
+}
+.card-title{
+    color: #015A06;
+    font-family: "Cabin";
+}
+.desenvolvedores-titulo{
+    color: #015A06;
+    font-family: "Bungee";
+}
+#contato{
+    background-color: #015A06;
+}
+.copyright{
+    font-size: 15px;
+}
+.link{
+    text-decoration: none;
+}
+.card-senha{
+    margin: 4% 0 0 24%;
+    border: 10px #015A06 solid;
+    border-radius: 5%;
+}
+.card-login{
+    margin: 4% 0 0 0;
+    border: 5px #015A06 solid;
+    border-radius: 5%;
+}
+.nav-link.active{
+    font-family: "Cabin";
+    text-align: center;
+    color: #FFF;
+}
+.offcanvas.offcanvas-end{
+    background-color: #015A06;
+    color: #FFF;
+}
+.img-gravacao{
+    filter: opacity(55%);
+}

@@ -1,6 +1,7 @@
 <?php
     include '../sql/config.php';
 
+    var_dump($_POST);
     $id = isset($_POST['id']) ? $_POST['id'] : 0;
     $nome = isset($_POST['nome']) ? $_POST['nome'] : "";
     $gerente = isset($_POST['gerente']) ? $_POST['gerente'] : "";
@@ -30,6 +31,9 @@
             break;
         case 'concluir':
             concluir();
+            break;
+        case 'Fazer a consulta':
+            buscar();
             break;
     }
 
@@ -110,6 +114,35 @@
 
         } catch(Exception $e){
             print("Erro ...<br>".$e->getMessage());
+            die();
+        }
+    }
+
+    function buscar(){
+        try{
+            $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);  
+        
+            $busca = isset($_GET['busca'])?$_GET['busca']:"";
+            $query = "SELECT * FROM substituicao";
+            
+            if ($busca != ""){
+                $busca = '%'.$busca.'%';
+                $query .= ' WHERE nome like :busca' ;
+            }
+        
+            $stmt = $conexao->prepare($query);
+        
+            if ($busca != ""){
+                $stmt->bindValue(':busca',$busca);
+            }
+        
+            $stmt->execute();
+            $usuarios = $stmt->fetchAll();
+            
+            echo json_encode($usuarios);
+        
+        }catch(PDOExeptio $e){
+            print("Erro ao conectar com o banco de dados . . . <br>".$e->getMenssage());
             die();
         }
     }
