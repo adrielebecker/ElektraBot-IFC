@@ -3,9 +3,9 @@
     session_start();
     // var_dump($_SESSION);
     if($_SESSION['sexoGerente'] == "Feminino"){
-        $pagina = "Bem Vinda, ".$_SESSION['nomeGerente']."!";
+        $pagina = "Bem Vinda, ".ucWords($_SESSION['nomeGerente'])."!";
     } else{
-        $pagina = "Bem Vindo, ".$_SESSION['nomeGerente']."!";
+        $pagina = "Bem Vindo, ".ucWords($_SESSION['nomeGerente'])."!";
     }
 ?>
 <html lang="pt-BR">

@@ -46,5 +46,7 @@
             print("Erro ...<br>".$e->getMessage());
             die();
         }
+
+        header('Location: gravacao-eletricista.php');
     }
 ?>

@@ -38,10 +38,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?=$pagina?></title>
-    <?php include '../gerente/link.html';?>
+    <?php include '../eletricista/link.html';?>
 </head>
 <body>
-    <?php include '../navbar/nav-gerente.php';?>
+    <?php include '../navbar/nav-eletricista.php';?>
     <div class="container">
         <div class="row">
             <div class="col-3 mt-3">
@@ -123,7 +123,7 @@
                         $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
                         $busca = isset($_POST['busca'])?$_POST['busca']:"";
-                        $query = "SELECT substituicao.id, substituicao.nome, substituicao.gerente, dataSub, situacao, eletricista.id, eletricista.nome FROM substituicao, eletricista WHERE eletricista.id = substituicao.eletricista";
+                        $query = "SELECT * FROM substituicao";
                         
                         if ($busca != ""){
                             $busca = $busca.'%';
@@ -139,7 +139,7 @@
                         $stmt->execute();
                         $substituicoes = $stmt->fetchAll();
                         
-                        echo "<thead class='bg-success branco'><tr><th>Nome</th><th>Data</th><th>Situação</th><th>Eletricista</th><th>Detalhes</th><th>Editar</th><th>Excluir</th></tr></thead>";
+                        echo "<thead class='bg-success branco'><tr><th>Nome</th><th>Data</th><th>Situação</th><th>Detalhes</th></tr></thead>";
                         foreach($substituicoes as $substituicao){
                             if($substituicao['situacao'] == "pendente"){
                                 $situacao = "<b style='color: #F00'>Pendente</b>";
@@ -147,7 +147,9 @@
                                 $situacao = "<b style='color: #0F0'>Concluída</b>";
                             }
                             // var_dump($substituicao);
-                            echo "<tbody><tr><td>".ucWords($substituicao["1"])."</td><td>".date("d/m/Y", strtotime($substituicao['dataSub']))."</td><td>".ucWords($situacao)."</td><td>".ucWords($substituicao['nome'])."</td><td><a href=visualizar-gerente.php?idSubstituicao={$substituicao['0']}&idGerente={$substituicao['gerente']} >Detalhes</a></td><td><a href=acao.php?idSubstituicao={$substituicao['0']}&idGerente={$substituicao['gerente']}&acao=editar>Editar</a></td><td><a href=acao.php?idSubstituicao={$substituicao['0']}&idGerente={$substituicao['gerente']}&acao=excluir>Excluir</a></td></tr></tbody>";
+                            if($_SESSION['idEletricista'] == $substituicao['eletricista']){
+                                echo "<tbody><tr><td>".ucWords($substituicao["nome"])."</td><td>".date("d/m/Y", strtotime($substituicao['dataSub']))."</td><td>".ucWords($situacao)."</td><td><a href=visualizar-eletricista.php?idSubstituicao={$substituicao['0']}>Detalhes</a></td></tr></tbody>";
+                            }
                         }
 
                     }catch(PDOExeptio $e){

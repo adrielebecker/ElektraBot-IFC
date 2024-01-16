@@ -1,7 +1,12 @@
 <?php
     include '../sql/config.php';
 
+    echo "POST:";
     var_dump($_POST);
+
+    echo"GET:";
+    var_dump($_GET);
+    
     $id = isset($_POST['id']) ? $_POST['id'] : 0;
     $nome = isset($_POST['nome']) ? $_POST['nome'] : "";
     $gerente = isset($_POST['gerente']) ? $_POST['gerente'] : "";
@@ -102,15 +107,19 @@
 
     function concluir(){
         try {
-            global $id;
+            $situacao = isset($_GET['situacao']) ? $_GET['situacao'] : "pendente";
+            $id = isset($_GET['id']) ? $_GET['id'] : 0;
+
             $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);  
-            $query = "UPDATE substituicao SET nome = :nome, gerente = :gerente, eletricista = :eletricista, localizacao = :localizacao, dataSub = :dataSub, situacao = :situacao WHERE id = :id";
+            $query = "UPDATE substituicao SET situacao = :situacao WHERE id = :id";
             
             $stmt = $conexao->prepare($query);
 
-            bindar($stmt);
             $stmt->bindValue(":id", $id);
+            $stmt->bindValue(":situacao", $situacao);
+
             $stmt->execute();
+            header('Location: substituicoes-eletricista.php');
 
         } catch(Exception $e){
             print("Erro ...<br>".$e->getMessage());

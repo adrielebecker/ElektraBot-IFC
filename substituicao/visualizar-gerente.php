@@ -173,7 +173,9 @@
                                         if($idSubstituicao == $substituicao['id']){
                                             if($substituicao['situacao'] == "pendente"){
                                                 echo "<p class='texto'>Atenção: <b>".ucWords($substituicao['nome'])."</b> ainda está <b style='color: #F00;'>pendente</b>!</p>";
-                                            }
+                                            } elseif($substituicao['situacao'] == "concluída"){
+                                                echo "<p class='texto'>Parabéns: <b>".ucWords($substituicao['nome'])."</b> está <b class='verde'>Concluída</b>!</p>";
+                                            } 
                                         }
                                     }
                                 }catch(Exception $e){
