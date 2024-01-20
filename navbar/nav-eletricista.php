@@ -28,7 +28,7 @@
                         <a class="nav-link active mt-4 text-white" aria-current="page" href="../gravacao/gravacao-eletricista.php"><b>GRAVAÇÕES</b></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active mt-4 text-white" aria-current="page" href="../eletricista/relatorios.php"><b>RELATÓRIOS</b></a>
+                        <a class="nav-link active mt-4 text-white" aria-current="page" href="../relatorio/relatorios-eletricista.php"><b>RELATÓRIOS</b></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active mt-4 text-white" aria-current="page" href="../substituicao/substituicoes-eletricista.php"><b>VISUALIZAR SUBSTITUIÇÕES</b></a>
