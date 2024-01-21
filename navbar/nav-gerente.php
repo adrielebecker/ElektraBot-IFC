@@ -22,7 +22,7 @@
                         <a class="nav-link active mt-2 text-white" aria-current="page" href="../gerente/conta.php"><b>MINHA CONTA</b></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active mt-4 text-white" aria-current="page" href="../gerente/gravacoes.php"><b>GRAVAÇÕES</b></a>
+                        <a class="nav-link active mt-4 text-white" aria-current="page" href="../gravacao/gravacao-gerente.php"><b>GRAVAÇÕES</b></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active mt-4 text-white" aria-current="page" href="../gerente/relatorios.php"><b>RELATÓRIOS</b></a>

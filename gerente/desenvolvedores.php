@@ -10,7 +10,7 @@
     <?php include "link.html";?>
 </head>
 <body>
-    <?php include "../navbar/nav-eletricista.php";?>
+    <?php include "../navbar/nav-gerente.php";?>
     <div class="container mt-5">
         <div class="row">
             <h3 class="titulo verde text-center">DESENVOLVEDORAS</h3>

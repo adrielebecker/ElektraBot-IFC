@@ -78,3 +78,7 @@ nav{
 .img-gravacao{
     filter: opacity(55%);
 }
+.tam10{
+    font-size: 13px;
+    font-style: normal;
+}
