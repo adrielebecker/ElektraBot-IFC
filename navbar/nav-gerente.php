@@ -25,7 +25,7 @@
                         <a class="nav-link active mt-4 text-white" aria-current="page" href="../gravacao/gravacao-gerente.php"><b>GRAVAÇÕES</b></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active mt-4 text-white" aria-current="page" href="../gerente/relatorios.php"><b>RELATÓRIOS</b></a>
+                        <a class="nav-link active mt-4 text-white" aria-current="page" href="../relatorio/relatorios-gerente.php"><b>RELATÓRIOS</b></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active mt-4 text-white" aria-current="page" href="../substituicao/cadastro-substituicao.php"><b>DESIGNAR SUBSTITUIÇÕES</b></a>
