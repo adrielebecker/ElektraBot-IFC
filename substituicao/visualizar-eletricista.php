@@ -15,6 +15,74 @@
 <body>
     <?php include '../navbar/nav-eletricista.php'; ?>
     <div class="container">
+        <div class="row">
+            <div class="col-3 mt-3">
+                <button class="navbar-toggler border border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarToggleExternalContent">
+                    <h6 class="texto verde mt-1">Acesso rápido</h6>
+                </button>
+
+                <div class="offcanvas p-5 offcanvas-start text-center" id="navbarToggleExternalContent">
+                    <div class="offcanvas-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                    <h5 class="titulo verde">CONCLUÍDAS</h5>
+                    <?php
+                    try{
+                        $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
+
+                        $busca = isset($_POST['busca'])?$_POST['busca']:"";
+                        $query = "SELECT substituicao.id, substituicao.nome, substituicao.eletricista, dataSub, situacao, eletricista.id, eletricista.nome FROM substituicao, eletricista WHERE eletricista.id = substituicao.eletricista";
+
+                        $stmt = $conexao->prepare($query);
+                        $stmt->execute();
+                        $substituicoes = $stmt->fetchAll();
+                        
+                        foreach($substituicoes as $substituicao){
+                            if(strtolower($substituicao['situacao']) == "concluída" && $substituicao['eletricista'] == $_SESSION['idEletricista']){
+                                echo "<div class='border border-success rounded mt-2 text-center'>
+                                        <a href='visualizar-eletricista.php?idSubstituicao={$substituicao['0']}&idEletricista={$substituicao['eletricista']}&substituicao={$substituicao['nome']}' class='link texto fs-5 text-reset'>
+                                            <p class='texto mt-2'><b class='verde'>".ucWords($substituicao['1'])."</b> <br> <i class='tam10'> Data da Substituição: <br>".date("d/m/Y", strtotime($substituicao['dataSub']))."</i></p>
+                                        </a>
+                                    </div>";
+                            }
+                        }
+                    }catch(PDOExeptio $e){
+                        print("Erro ao conectar com o banco de dados . . . <br>".$e->getMenssage());
+                        die();
+                    }
+                    ?>
+                    
+                    <h5 class="titulo text-danger pt-4">PENDENTES</h5>
+                    <?php
+                    try{
+                        $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
+
+                        $busca = isset($_POST['busca'])?$_POST['busca']:"";
+                        $query = "SELECT substituicao.id, substituicao.nome, substituicao.eletricista, dataSub, situacao, eletricista.id, eletricista.nome FROM substituicao, eletricista WHERE eletricista.id = substituicao.eletricista";
+
+                        $stmt = $conexao->prepare($query);
+                        $stmt->execute();
+                        $substituicoes = $stmt->fetchAll();
+                        
+                        foreach($substituicoes as $substituicao){
+                            if(strtolower($substituicao['situacao']) == "pendente" && $substituicao['eletricista'] == $_SESSION['idEletricista']){
+                                echo "<div class='border border-danger rounded mt-2 text-center'>
+                                        <a href='visualizar-eletricista.php?idSubstituicao={$substituicao['0']}&idEletricista={$substituicao['eletricista']}&substituicao={$substituicao['nome']}' class='link texto fs-5 text-reset'>
+                                            <p class='texto mt-2'><b class='text-danger'>".ucWords($substituicao['1'])."</b> <br> <i class='tam10'> Data da Substituição: <br>".date("d/m/Y", strtotime($substituicao['dataSub']))."</i></p>
+                                        </a>
+                                    </div>";
+                            }
+                        }
+                    }catch(PDOExeptio $e){
+                        print("Erro ao conectar com o banco de dados . . . <br>".$e->getMenssage());
+                        die();
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+
         <div class="row mt-4">
             <h3 class="titulo verde text-center"></h3>
         </div>

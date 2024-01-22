@@ -28,12 +28,33 @@
                     </div>
                     <div class="offcanvas-body">
                         <?php
-                            foreach($jsonGravacao as $value){
-                                if($_SESSION['idEletricista'] == $value['idEletricista']){   
-                                    echo "<div class='row'>
-                                            <a href='video.php?video={$value['video']}' class='link texto fs-5 text-reset'> {$value['video']} </a>
-                                        </div>";
+                            try{
+                                $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
+            
+                                $query = "SELECT video, gravacao.gerente, gravacao.eletricista, substituicao.nome, substituicao.id, eletricista.nome, eletricista.id FROM substituicao, gravacao, eletricista WHERE substituicao.id = gravacao.substituicao AND gravacao.eletricista = eletricista.id";
+                
+                                $stmt = $conexao->prepare($query);
+                                $stmt->execute();
+                                $gravacoes = $stmt->fetchAll();
+                                
+                                foreach($gravacoes as $gravacao){
+                                    if($_SESSION['idEletricista'] === $gravacao['eletricista']){
+                                        if($gravacao == NULL){
+                                            echo "<h4 class='text-center titulo mt-5'>Ainda não há gravações!</h4>";
+                                            break;
+                                        } else{
+                                            echo "<div class='border border-success rounded mt-2 text-center'>
+                                                    <a href='video-eletricista.php?video={$gravacao['video']}&nome={$gravacao['3']}&eletricista={$gravacao['eletricista']}' class='link texto fs-5 text-reset'>
+                                                        <p class='texto mt-3'><b class='verde'>".ucWords($gravacao['3'])."</b></p>
+                                                    </a>
+                                            </div>";
+                                        }
+                                    } 
                                 }
+                            } catch(Exception $e){
+                                print("Erro ...<br>".$e->getMessage());
+                                die();
+                            
                             }
                         ?>
                     </div>

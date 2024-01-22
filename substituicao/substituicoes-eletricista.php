@@ -54,45 +54,56 @@
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
-                    <h5 class="texto text-dark pt-4">DESIGNADAS</h5>
+                    <h5 class="titulo verde">CONCLUÍDAS</h5>
                     <?php
-                        foreach($jsonSubstituicao as $value){
-                            if($_SESSION['nomeGerente'] == $value['gerente']){   
-                                if($value['concluida'] == NULL && $hoje < $value['dataSubstituicao']){
-                                    echo "<div class='row mt-2'>
-                                            <a href='visualizar-notificacao.php?nomeSubstituicao={$value['nome']}&id={$value['id']}' class='text-reset link'>".ucwords($value['nome'])."</a>
+                        try{
+                            $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
+
+                            $query = "SELECT substituicao.id, substituicao.nome, substituicao.eletricista, dataSub, situacao, eletricista.id, eletricista.nome FROM substituicao, eletricista WHERE eletricista.id = substituicao.eletricista";
+
+                            $stmt = $conexao->prepare($query);
+                            $stmt->execute();
+                            $substituicoes = $stmt->fetchAll();
+                            
+                            foreach($substituicoes as $substituicao){
+                                if(strtolower($substituicao['situacao']) == "concluída" && $substituicao['eletricista'] == $_SESSION['idEletricista']){
+                                    echo "<div class='border border-success rounded mt-2 text-center'>
+                                            <a href='visualizar-eletricista.php?idSubstituicao={$substituicao['0']}&idEletricista={$substituicao['eletricista']}&substituicao={$substituicao['nome']}' class='link texto fs-5 text-reset'>
+                                                <p class='texto mt-2'><b class='verde'>".ucWords($substituicao['1'])."</b> <br> <i class='tam10'> Data da Substituição: <br>".date("d/m/Y", strtotime($substituicao['dataSub']))."</i></p>
+                                            </a>
                                         </div>";
                                 }
                             }
+                        }catch(PDOExeptio $e){
+                            print("Erro ao conectar com o banco de dados . . . <br>".$e->getMenssage());
+                            die();
                         }
                     ?>
-
-                    <h5 class="texto text-danger pt-4">PENDENTES</h5>
+                    
+                    <h5 class="titulo text-danger pt-4">PENDENTES</h5>
                     <?php
-                        foreach($jsonSubstituicao as $value){
-                            if($_SESSION['nomeGerente'] == $value['gerente']){   
-                                if($hoje > $value['dataSubstituicao']){
-                                    if($value['concluida'] == NULL){
-                                        echo "<div class='row mt-2'>
-                                                <a href='visualizar-notificacao.php?nomeSubstituicao={$value['nome']}&id={$value['id']}' class='text-reset link'>".ucwords($value['nome'])."</a>
-                                            </div>";
-                                    }
-                                }
+                    try{
+                        $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
+
+                        $query = "SELECT substituicao.id, substituicao.nome, substituicao.eletricista, dataSub, situacao, eletricista.id, eletricista.nome FROM substituicao, eletricista WHERE eletricista.id = substituicao.eletricista";
+
+                        $stmt = $conexao->prepare($query);
+                        $stmt->execute();
+                        $substituicoes = $stmt->fetchAll();
+                    
+                        foreach($substituicoes as $substituicao){
+                            if(strtolower($substituicao['situacao']) == "pendente" && $substituicao['eletricista'] == $_SESSION['idEletricista']){
+                                echo "<div class='border border-danger rounded mt-2 text-center'>
+                                        <a href='visualizar-eletricista.php?idSubstituicao={$substituicao['0']}&idEletricista={$substituicao['eletricista']}&substituicao={$substituicao['nome']}' class='link texto fs-5 text-reset'>
+                                            <p class='texto mt-2'><b class='text-danger'>".ucWords($substituicao['1'])."</b> <br> <i class='tam10'> Data da Substituição: <br>".date("d/m/Y", strtotime($substituicao['dataSub']))."</i></p>
+                                        </a>
+                                    </div>";
                             }
                         }
-                    ?>
-
-                    <h5 class="texto verde pt-4">CONCLUÍDAS</h5>
-                    <?php
-                        foreach($jsonSubstituicao as $value){
-                            if($_SESSION['nomeGerente'] == $value['gerente']){   
-                                if($value['concluida'] != NULL){
-                                    echo "<div class='row mt-2'>
-                                            <a href='visualizar-notificacao.php?nomeSubstituicao={$value['nome']}&id={$value['id']}' class='text-reset link'>".ucwords($value['nome'])."</a>
-                                        </div>";
-                                }
-                            }
-                        }
+                    }catch(PDOExeptio $e){
+                        print("Erro ao conectar com o banco de dados . . . <br>".$e->getMenssage());
+                        die();
+                    }
                     ?>
                 </div>
             </div>

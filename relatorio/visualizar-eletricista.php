@@ -17,7 +17,55 @@
     <?php include "../navbar/nav-eletricista.php";?>
 
     <div class="container-fluid">
-        <div class="row mt-5 ms-2">
+        <div class="row ms-3 mt-2">
+            <div class="col-3">
+                <button class="navbar-toggler border border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarToggleExternalContent">
+                    <h6 class="texto verde mt-1">Acesso rápido</h6>
+                </button>
+
+                <div class="offcanvas p-5 offcanvas-start text-center" id="navbarToggleExternalContent">
+                    <div class="offcanvas-header ms-5">
+                        <h5 class="offcanvas-title titulo verde ms-4" id="offcanvasLabel"><?=$pagina?></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+
+                    <div class="offcanvas-body">
+                        <?php
+                            try{
+                                $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
+            
+                                $query = "SELECT  texto, codAntigo, codNovo, tipo, acidente, relatorio.eletricista, substituicao, substituicao.nome, substituicao.id, relatorio.id FROM substituicao, relatorio WHERE substituicao.id = relatorio.substituicao";
+                
+                                $stmt = $conexao->prepare($query);
+                                $stmt->execute();
+                                $relatorios = $stmt->fetchAll();
+                                
+                                foreach($relatorios as $relatorio){
+                                    if($_SESSION['idEletricista'] === $relatorio['eletricista']){
+                                        if($relatorio == NULL){
+                                            echo "<h4 class='text-center titulo mt-5'>Ainda não há relatórios!</h4>";
+                                            break;
+                                        } else{
+                                            echo "<div class='border border-success rounded mt-2 text-center'>
+                                                    <a href='visualizar-eletricista.php?relatorio={$relatorio['id']}' class='link texto fs-5 text-reset'>
+                                                        <p class='texto mt-2'><b class='verde'>".ucWords($relatorio['nome'])."</b> <br> <i class='tam10'> Tipo do Medidor: <br>".ucWords($relatorio['tipo'])."</i></p>
+                                                    </a>
+                                            </div>";
+                                        }
+                                    } 
+                                }
+                            } catch(Exception $e){
+                                print("Erro ...<br>".$e->getMessage());
+                                die();
+                            
+                            }
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row ms-2">
             <div class="col-7 mt-2">
                 <div class="row mt-5 ms-4">
                 <?php
