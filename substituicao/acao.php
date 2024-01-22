@@ -131,23 +131,23 @@
         try{
             $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);  
         
-            $busca = isset($_GET['busca'])?$_GET['busca']:"";
+            $busca = isset($_GET['busca']) ? $_GET['busca']:"";
             $query = "SELECT * FROM substituicao";
             
             if ($busca != ""){
-                $busca = '%'.$busca.'%';
+                $busca = $busca.'%';
                 $query .= ' WHERE nome like :busca' ;
             }
         
             $stmt = $conexao->prepare($query);
         
             if ($busca != ""){
-                $stmt->bindValue(':busca',$busca);
+                $stmt->bindValue(':busca', $busca);
             }
         
             $stmt->execute();
             $usuarios = $stmt->fetchAll();
-            
+            // var_dump($usuarios);
             echo json_encode($usuarios);
         
         }catch(PDOExeptio $e){

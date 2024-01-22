@@ -46,11 +46,12 @@
         <div class="row">
             <div class="col-6 mt-3">
                 <form action="acao.php" method="post">
+                <input type="hidden" name="id" id='id' value="<?=$id?>">
                 <div class="row mt-5">
                     <div class="col-5">
                         <div class="row bg-success rounded">
                             <p class="texto branco text-center mt-3">Nome da Substituição:</p>
-                            <input type="text" name="nome" id="nome" value="<?php if($id != 0) echo $substituicao["nome"];?>" class="form-control text-center border-success">
+                            <input type="text" name="nome" id="nome" value="<?php if($id != 0) echo ucWords($substituicao["nome"]);?>" class="form-control text-center border-success">
                         </div>
                     </div>
                     <div class="col-2"></div>
@@ -80,7 +81,11 @@
                                             
                                             foreach($eletricista as $value){
                                                 if($_SESSION['idGerente'] == $value['gerente']){
-                                                    echo "<option value='{$value['id']}'>".ucWords($value['nome'])."</option>";
+                                                    if($id != 0){
+                                                        echo "<option value='{$value['id']}' selected>".ucWords($value['nome'])."</option>";
+                                                    } else{
+                                                        echo "<option value='{$value['id']}'>".ucWords($value['nome'])."</option>";
+                                                    }
                                                 }
                                             }
                                         }catch(Exception $e){
@@ -104,7 +109,7 @@
                         <div class="col-5">
                             <div class="row bg-success rounded">
                                 <p class="texto branco text-center mt-3">Situação do Projeto:</p>
-                                <input type="text" name="situacao" id="situacao" value="<?php if($id != 0) echo $substituicao["situacao"]; elseif($id == 0) echo ucWords($situacao);?>" class="form-control text-center border-success" readonly>
+                                <input type="text" name="situacao" id="situacao" value="<?php if($id != 0) echo ucWords($substituicao["situacao"]); elseif($id == 0) echo ucWords($situacao);?>" class="form-control text-center border-success" readonly>
                             </div>
                         </div>
                         <div class="col-1 ms-5"></div>

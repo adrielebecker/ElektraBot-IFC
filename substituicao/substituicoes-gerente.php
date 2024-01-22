@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
     session_start();
-    $pagina = "Notificações";
+    $pagina = "Substituições";
     $hoje = date("Y/m/d");
     $busca = isset($_POST['busca']) ? $_POST['busca'] : "";
     include '../sql/config.php';
@@ -123,8 +123,8 @@
                         $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
                         $busca = isset($_POST['busca'])?$_POST['busca']:"";
-                        $query = "SELECT substituicao.id, substituicao.nome, substituicao.gerente, dataSub, situacao, eletricista.id, eletricista.nome FROM substituicao, eletricista WHERE eletricista.id = substituicao.eletricista";
-                        
+                        // $query = "SELECT substituicao.id, substituicao.nome, substituicao.gerente, dataSub, situacao, eletricista.id, eletricista.nome FROM substituicao, eletricista WHERE eletricista.id = substituicao.eletricista";
+                        $query = "SELECT * FROM substituicao";
                         if ($busca != ""){
                             $busca = $busca.'%';
                             $query .= ' WHERE nome like :busca' ;
@@ -133,13 +133,13 @@
                         $stmt = $conexao->prepare($query);
 
                         if ($busca != ""){
-                        $stmt->bindValue(':busca',$busca);
+                            $stmt->bindValue(':busca',$busca);
                         }
 
                         $stmt->execute();
                         $substituicoes = $stmt->fetchAll();
                         
-                        echo "<thead class='bg-success branco'><tr><th>Nome</th><th>Data</th><th>Situação</th><th>Eletricista</th><th>Detalhes</th><th>Editar</th><th>Excluir</th></tr></thead>";
+                        echo "<thead class='bg-success branco'><tr><th>Nome</th><th>Data</th><th>Situação</th><th>Detalhes</th><th>Editar</th><th>Excluir</th></tr></thead>";
                         foreach($substituicoes as $substituicao){
                             if($substituicao['situacao'] == "pendente"){
                                 $situacao = "<b style='color: #F00'>Pendente</b>";
@@ -147,7 +147,7 @@
                                 $situacao = "<b style='color: #0F0'>Concluída</b>";
                             }
                             // var_dump($substituicao);
-                            echo "<tbody><tr><td>".ucWords($substituicao["1"])."</td><td>".date("d/m/Y", strtotime($substituicao['dataSub']))."</td><td>".ucWords($situacao)."</td><td>".ucWords($substituicao['nome'])."</td><td><a href=visualizar-gerente.php?idSubstituicao={$substituicao['0']}&idGerente={$substituicao['gerente']} >Detalhes</a></td><td><a href=acao.php?idSubstituicao={$substituicao['0']}&idGerente={$substituicao['gerente']}&acao=editar>Editar</a></td><td><a href=acao.php?idSubstituicao={$substituicao['0']}&idGerente={$substituicao['gerente']}&acao=excluir>Excluir</a></td></tr></tbody>";
+                            echo "<tbody><tr><td>".ucWords($substituicao["1"])."</td><td>".date("d/m/Y", strtotime($substituicao['dataSub']))."</td><td>".ucWords($situacao)."</td><td><a href=visualizar-gerente.php?idSubstituicao={$substituicao['0']}&idGerente={$substituicao['gerente']}&substituicao={$substituicao['nome']}>Detalhes</a></td><td><a href=cadastro-substituicao.php?id={$substituicao['0']}&acao=editar>Editar</a></td><td><a href=acao.php?idSubstituicao={$substituicao['0']}&idGerente={$substituicao['gerente']}&acao=excluir>Excluir</a></td></tr></tbody>";
                         }
 
                     }catch(PDOExeptio $e){

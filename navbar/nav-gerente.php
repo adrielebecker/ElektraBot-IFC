@@ -31,7 +31,7 @@
                         <a class="nav-link active mt-4 text-white" aria-current="page" href="../substituicao/cadastro-substituicao.php"><b>DESIGNAR SUBSTITUIÇÕES</b></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active mt-4 text-white" aria-current="page" href="../substituicao/substituicoes-gerente.php"><b>NOTIFICAÇÕES</b></a>
+                        <a class="nav-link active mt-4 text-white" aria-current="page" href="../substituicao/substituicoes-gerente.php"><b>VISUALIZAR SUBSTITUIÇÕES</b></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active mt-4 text-white" aria-current="page" href="../gerente/eletricistas.php"><b>ELETRICISTAS</b></a>

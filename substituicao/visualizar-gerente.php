@@ -4,6 +4,7 @@
     session_start();
     $idSubstituicao = isset($_GET['idSubstituicao']) ? $_GET['idSubstituicao'] : 0;
     $idGerente = isset($_GET['idGerente']) ? $_GET['idGerente'] : 0;
+    $nomeSubstituicao = isset($_GET['substituicao']) ? $_GET['substituicao'] : "";
     include '../sql/config.php';
 ?>
 <html lang="pt-BR">
@@ -147,7 +148,11 @@
                                         
                                         foreach($substituicoes as $substituicao){
                                             if($idSubstituicao == $substituicao['id']){
-                                                echo "<input type='text' name='dataSub' id='dataSub' value='".ucWords($substituicao['situacao'])."' class='form-control text-center border-success'>";
+                                                if($substituicao['situacao'] == "pendente"){
+                                                    echo "<input type='text' style='color: #F00;' value='".ucWords($substituicao['situacao'])."' class='form-control text-center fw-bold border-success'>";
+                                                } else{
+                                                    echo "<input type='text' value='".ucWords($substituicao['situacao'])."' class='form-control  fw-bold verde text-center border-success'>";
+                                                }
                                             }
                                         }
                                     }catch(Exception $e){
@@ -162,8 +167,8 @@
                             <?php
                                 try{
                                     $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
-                    
-                                    $query = "SELECT * FROM substituicao";
+
+                                    $query = "SELECT eletricista.nome, eletricista.id, substituicao.id, situacao FROM eletricista, substituicao WHERE eletricista.id = substituicao.eletricista";
                     
                                     $stmt = $conexao->prepare($query);
                                     $stmt->execute();
@@ -172,9 +177,9 @@
                                     foreach($substituicoes as $substituicao){
                                         if($idSubstituicao == $substituicao['id']){
                                             if($substituicao['situacao'] == "pendente"){
-                                                echo "<p class='texto'>Atenção: <b>".ucWords($substituicao['nome'])."</b> ainda está <b style='color: #F00;'>pendente</b>!</p>";
+                                                echo "<p class='texto'>Atenção: <b>".ucWords($nomeSubstituicao)."</b> ainda está <b style='color: #F00;'>pendente</b>!</p>";
                                             } elseif($substituicao['situacao'] == "concluída"){
-                                                echo "<p class='texto'>Parabéns: <b>".ucWords($substituicao['nome'])."</b> está <b class='verde'>Concluída</b>!</p>";
+                                                echo "<p class='texto'>".ucWords($substituicao['nome'])." já <b class='verde'> concluiu </b><b>".ucWords($nomeSubstituicao)."</b>!</p>";
                                             } 
                                         }
                                     }
