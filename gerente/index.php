@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <?php
     session_start();
-    // var_dump($_SESSION);
+    $nome = explode(" ", $_SESSION['nomeGerente']);
+    // var_dump($nome);
     if($_SESSION['sexoGerente'] == "Feminino"){
-        $pagina = "Bem Vinda, ".ucWords($_SESSION['nomeGerente'])."!";
+        $pagina = "Bem Vinda, ".ucWords($nome[0])."!";
     } else{
-        $pagina = "Bem Vindo, ".ucWords($_SESSION['nomeGerente'])."!";
+        $pagina = "Bem Vindo, ".ucWords($nome[0])."!";
     }
 ?>
 <html lang="pt-BR">
@@ -27,7 +28,7 @@
         
         <div class="row mt-5">
             <div class="col-3">
-                <a href="substituicoes.php" class="link">
+                <a href="../substituicao/cadastro-substituicao.php" class="link">
                     <div class="card secundario border-success rounded-4">
                         <img src="../img/icones/designar.png" alt="designar" width="40%" class="rounded mx-auto d-block mt-3">
                         <div class="card-body">
@@ -42,7 +43,7 @@
             </div>
 
             <div class="col-3">
-                <a href="gravacoes.php" class="link">
+                <a href="../gravacao/gravacao-gerente.php" class="link">
                     <div class="card secundario border-success rounded-4">
                         <img src="../img/icones/gravacoes.png" alt="gravações" width="50%" class="rounded mx-auto d-block">
                         <div class="card-body">
@@ -57,7 +58,7 @@
             </div>
 
             <div class="col-3">
-                <a href="relatorios.php" class="link">
+                <a href="../relatorio/relatorios-gerente.php" class="link">
                     <div class="card secundario border-success rounded-4">
                         <img src="../img/icones/relatorio.png" alt="Relatórios" width="40%" class="rounded mx-auto d-block mt-3">
                         <div class="card-body">
@@ -72,14 +73,13 @@
             </div>
 
             <div class="col-3">
-                <a href="notificacoes.php" class="link">
+                <a href="../substituicao/substituicoes-gerente.php" class="link">
                     <div class="card secundario border-success rounded-4">
-                        <img src="../img/icones/notificacoes.png" alt="notificações" width="40%" class="rounded mx-auto d-block mt-3">
+                        <img src="../img/icones/medidor-eletrico.png" alt="notificações" width="40%" class="rounded mx-auto d-block mt-3">
                         <div class="card-body">
-                            <h5 class="titulo branco text-center mt-2">NOTIFICAÇÕES</h5>
+                            <h5 class="titulo branco text-center mt-2">SUBSTITUIÇÕES</h5>
                             <p class="texto branco text-center sobre-tam mt-4">
-                                Substituições realizadas e/ou pendentes serão notificadas ao gerente, 
-                                que pode apenas visualizar ou adicionar uma mensagem ao eletricista.st
+                                Todas as substituições, concluídas ou pendentes, poderam ser visualizadas nesta página. Além disso, o gerente pode editar ou excluir substituições.
                             </p>
                         </div>
                     </div>
@@ -88,6 +88,6 @@
         </div>
         <br><br><br><br>
     </div>
-    <?php include "../config/footer.html";?>
+    <?php include "footer.html";?>
 </body>
 </html>

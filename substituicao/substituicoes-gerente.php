@@ -44,9 +44,9 @@
     <?php include '../navbar/nav-gerente.php';?>
     <div class="container">
         <div class="row">
-            <div class="col-3 mt-3">
+            <div class="col-3">
                 <button class="navbar-toggler border border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarToggleExternalContent">
-                    <h6 class="texto verde mt-1">Acesso rápido</h6>
+                    <h6 class="texto verde mt-4">Acesso rápido</h6>
                 </button>
 
                 <div class="offcanvas p-5 offcanvas-start text-center" id="navbarToggleExternalContent">
@@ -54,51 +54,62 @@
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
-                    <h5 class="texto text-dark pt-4">DESIGNADAS</h5>
+                    <h5 class="titulo verde">CONCLUÍDAS</h5>
                     <?php
-                        foreach($jsonSubstituicao as $value){
-                            if($_SESSION['nomeGerente'] == $value['gerente']){   
-                                if($value['concluida'] == NULL && $hoje < $value['dataSubstituicao']){
-                                    echo "<div class='row mt-2'>
-                                            <a href='visualizar-notificacao.php?nomeSubstituicao={$value['nome']}&id={$value['id']}' class='text-reset link'>".ucwords($value['nome'])."</a>
-                                        </div>";
-                                }
-                            }
-                        }
-                    ?>
+                    try{
+                        $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
-                    <h5 class="texto text-danger pt-4">PENDENTES</h5>
-                    <?php
-                        foreach($jsonSubstituicao as $value){
-                            if($_SESSION['nomeGerente'] == $value['gerente']){   
-                                if($hoje > $value['dataSubstituicao']){
-                                    if($value['concluida'] == NULL){
-                                        echo "<div class='row mt-2'>
-                                                <a href='visualizar-notificacao.php?nomeSubstituicao={$value['nome']}&id={$value['id']}' class='text-reset link'>".ucwords($value['nome'])."</a>
-                                            </div>";
-                                    }
-                                }
-                            }
-                        }
-                    ?>
+                        $query = "SELECT substituicao.id, substituicao.nome, substituicao.gerente, dataSub, situacao, eletricista.id, eletricista.nome FROM substituicao, eletricista WHERE eletricista.id = substituicao.eletricista";
 
-                    <h5 class="texto verde pt-4">CONCLUÍDAS</h5>
-                    <?php
-                        foreach($jsonSubstituicao as $value){
-                            if($_SESSION['nomeGerente'] == $value['gerente']){   
-                                if($value['concluida'] != NULL){
-                                    echo "<div class='row mt-2'>
-                                            <a href='visualizar-notificacao.php?nomeSubstituicao={$value['nome']}&id={$value['id']}' class='text-reset link'>".ucwords($value['nome'])."</a>
-                                        </div>";
-                                }
+                        $stmt = $conexao->prepare($query);
+                        $stmt->execute();
+                        $substituicoes = $stmt->fetchAll();
+                        
+                        foreach($substituicoes as $substituicao){
+                            if(strtolower($substituicao['situacao']) == "concluída"){
+                                echo "<div class='border border-success rounded mt-2 text-center'>
+                                        <a href='visualizar-gerente.php?idSubstituicao={$substituicao['0']}&idGerente={$substituicao['gerente']}&substituicao={$substituicao['nome']}' class='link texto fs-5 text-reset'>
+                                            <p class='texto mt-2'><b class='verde'>".ucWords($substituicao['1'])."</b> <br> <i class='tam10'> Eletricista: <br>".ucWords($substituicao['nome'])."</i></p>
+                                        </a>
+                                    </div>";
                             }
                         }
+                    }catch(PDOExeptio $e){
+                        print("Erro ao conectar com o banco de dados . . . <br>".$e->getMenssage());
+                        die();
+                    }
+                    ?>
+                    
+                    <h5 class="titulo text-danger pt-4">PENDENTES</h5>
+                    <?php
+                    try{
+                        $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
+
+                        $query = "SELECT substituicao.id, substituicao.nome, substituicao.gerente, dataSub, situacao, eletricista.id, eletricista.nome FROM substituicao, eletricista WHERE eletricista.id = substituicao.eletricista";
+
+                        $stmt = $conexao->prepare($query);
+                        $stmt->execute();
+                        $substituicoes = $stmt->fetchAll();
+                    
+                        foreach($substituicoes as $substituicao){
+                            if(strtolower($substituicao['situacao']) == "pendente"){
+                                echo "<div class='border border-danger rounded mt-2 text-center'>
+                                        <a href='visualizar-gerente.php?idSubstituicao={$substituicao['0']}&idGerente={$substituicao['gerente']}&substituicao={$substituicao['nome']}' class='link texto fs-5 text-reset'>
+                                            <p class='texto mt-2'><b class='text-danger'>".ucWords($substituicao['1'])."</b> <br> <i class='tam10'> Eletricista: <br>".ucWords($substituicao['nome'])."</i></p>
+                                        </a>
+                                    </div>";
+                            }
+                        }
+                    }catch(PDOExeptio $e){
+                        print("Erro ao conectar com o banco de dados . . . <br>".$e->getMenssage());
+                        die();
+                    }
                     ?>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-12 mt-1">
+            <div class="col-12">
                 <h5 class="text-center titulo verde">Mostrar:</h5>
             </div>
         </div>
@@ -154,8 +165,8 @@
                         print("Erro ao conectar com o banco de dados . . . <br>".$e->getMenssage());
                         die();
                     }
-                    ?>
-                    </table>
+                ?>
+                </table>
             </div>
         </div>
     </div>

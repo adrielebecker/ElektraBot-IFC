@@ -10,10 +10,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?=$pagina?></title>
-    <?php include '../eletricista/link.html';?>
+    <?php include '../gerente/link.html';?>
 </head>
 <body>
-    <?php include '../navbar/nav-eletricista.php';?>
+    <?php include '../navbar/nav-gerente.php';?>
     <div class="container">
         <div class="row">
             <div class="col-3">
@@ -28,12 +28,33 @@
                     </div>
                     <div class="offcanvas-body">
                         <?php
-                            foreach($jsonGravacao as $value){
-                                if($_SESSION['idGerente'] == $value['idGerente']){   
-                                    echo "<div class='row'>
-                                            <a href='video.php?video={$value['video']}' class='link texto fs-5 text-reset'> {$value['video']} </a>
-                                        </div>";
+                            try{
+                                $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
+            
+                                $query = "SELECT video, gravacao.gerente, gravacao.eletricista, substituicao.nome, substituicao.id, eletricista.nome, eletricista.id FROM substituicao, gravacao, eletricista WHERE substituicao.id = gravacao.substituicao AND gravacao.eletricista = eletricista.id";
+                
+                                $stmt = $conexao->prepare($query);
+                                $stmt->execute();
+                                $gravacoes = $stmt->fetchAll();
+                                
+                                foreach($gravacoes as $gravacao){
+                                    if($_SESSION['idGerente'] === $gravacao['gerente']){
+                                        if($gravacao == NULL){
+                                            echo "<h4 class='text-center titulo mt-5'>Ainda não há gravações!</h4>";
+                                            break;
+                                        } else{
+                                            echo "<div class='border border-success rounded mt-2 text-center'>
+                                                    <a href='video-gerente.php?video={$gravacao['video']}&nome={$gravacao['3']}&eletricista={$gravacao['eletricista']}' class='link texto fs-5 text-reset'>
+                                                        <p class='texto mt-2'><b class='verde'>".ucWords($gravacao['3'])."</b> <br> <i class='tam10'> Eletricista: <br>".ucWords($gravacao['nome'])."</i></p>
+                                                    </a>
+                                            </div>";
+                                        }
+                                    } 
                                 }
+                            } catch(Exception $e){
+                                print("Erro ...<br>".$e->getMessage());
+                                die();
+                            
                             }
                         ?>
                     </div>
@@ -63,7 +84,7 @@
                                 break;
                             } else{
                                 echo "<div class='col-2 mt-4 text-center'>
-                                    <a href='video-gerente.php?video={$gravacao['video']}&nome={$gravacao['nome']}&eletricista={$gravacao['eletricista']}' class='link texto fs-5 text-reset'><img src='../img/icones/video.png'></a>
+                                    <a href='video-gerente.php?video={$gravacao['video']}&nome={$gravacao['3']}&eletricista={$gravacao['eletricista']}' class='link texto fs-5 text-reset'><img src='../img/icones/video.png'></a>
                                     <p class='texto'><b>".ucWords($gravacao['3'])."</b> <br> <i class='tam10'> Eletricista: <br>".ucWords($gravacao['nome'])."</i></p>
                                 </div>";
                             }

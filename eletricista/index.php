@@ -2,10 +2,12 @@
 <?php
     session_start();
     // var_dump($_SESSION);
+    $nome = explode(" ", $_SESSION['nomeEletricista']);
+    // var_dump($nome);
     if($_SESSION['sexoEletricista'] == "Feminino"){
-        $pagina = "Bem Vinda, ".ucWords($_SESSION['nomeEletricista'])."!";
+        $pagina = "Bem Vinda, ".ucWords($nome[0])."!";
     } else{
-        $pagina = "Bem Vindo, ".ucWords($_SESSION['nomeEletricista'])."!";
+        $pagina = "Bem Vindo, ".ucWords($nome[0])."!";
     }
 ?>
 <html lang="pt-BR">
@@ -41,7 +43,7 @@
             </div>
 
             <div class="col-3">
-                <a href="gravacoes.php" class="link">
+                <a href="../gravacao/gravacao-eletricista.php" class="link">
                     <div class="card secundario border-success rounded-4">
                         <img src="../img/icones/gravacoes.png" alt="gravações" width="50%" class="rounded mx-auto d-block">
                         <div class="card-body">
@@ -55,7 +57,7 @@
             </div>
 
             <div class="col-3">
-                <a href="relatorios.php" class="link">
+                <a href="../relatorio/relatorios-eletricista.php" class="link">
                     <div class="card secundario border-success rounded-4">
                         <img src="../img/icones/relatorio.png" alt="Relatórios" width="40%" class="rounded mx-auto d-block mt-3">
                         <div class="card-body">
@@ -69,13 +71,13 @@
             </div>
 
             <div class="col-3">
-                <a href="notificacoes.php" class="link">
+                <a href="../substituicao/substituicoes-eletricista.php" class="link">
                     <div class="card secundario border-success rounded-4">
-                        <img src="../img/icones/notificacoes.png" alt="notificações" width="40%" class="rounded mx-auto d-block mt-3">
+                        <img src="../img/icones/medidor-eletrico.png" alt="substituições" width="40%" class="rounded mx-auto d-block mt-3">
                         <div class="card-body">
-                            <h5 class="titulo branco text-center mt-2">NOTIFICAÇÕES</h5>
+                            <h5 class="titulo branco text-center mt-2">SUBSTITUIÇÕES</h5>
                             <p class="texto branco text-center sobre-tam mt-3">
-                                A cada nova substituição designada, o eletricista é notificado e pode visualizar mais informações sobre.
+                                Esta funcionalidade permite que o eletricista visualize todas as substituições que lhe foram designadas.
                             </p>
                         </div>
                     </div>
@@ -86,22 +88,5 @@
     </div>
 
     <?php include "footer.html";?>
-</body>
-</html>
-
-<!DOCTYPE html>
-<?php 
-    session_start();
-    echo "Bem vindo, ".$_SESSION['nomeEletricista'];
-?>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>teste</title>
-</head>
-<body>
-    <br>
-    <a href="../funcao/acao.php?acao=sair">Sair</a>
 </body>
 </html>
