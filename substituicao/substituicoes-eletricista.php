@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
     session_start();
-    $pagina = "Notificações";
+    $pagina = "Substituições";
     $hoje = date("Y/m/d");
     $busca = isset($_POST['busca']) ? $_POST['busca'] : "";
     include '../sql/config.php';
@@ -111,7 +111,7 @@
         </div>
         <div class="row">
             <div class="col-12 mt-1">
-                <h5 class="text-center titulo verde">Mostrar:</h5>
+                <h5 class="text-center titulo verde">Pesquisar substituição:</h5>
             </div>
         </div>
 
@@ -119,7 +119,7 @@
             <div class="col-3"></div>
             <div class="col-4">
                 <form action="" method="post">
-                    <input type="text" name="busca" id="busca" placeholder="Pesquise aqui" class="form-control text-center border-success">
+                    <input type="text" name="busca" id="busca" placeholder="Pesquise pelo nome" class="form-control text-center border-success">
             </div>
             <div class="col-2">
                     <input type="submit" name="acao" id="acao" class="btn btn-success" value="Fazer a consulta">

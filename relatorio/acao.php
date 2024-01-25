@@ -34,6 +34,9 @@
         case 'excluir':
             excluir();
             break;
+        case 'Fazer a consulta':
+            buscar();
+            break;
     }
 
     function bindar($stmt){
@@ -102,6 +105,35 @@
             $stmt->execute();
     
         } catch(PDOExeptio $e){
+            print("Erro ao conectar com o banco de dados . . . <br>".$e->getMenssage());
+            die();
+        }
+    }
+
+    function buscar(){
+        try{
+            $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);  
+        
+            $busca = isset($_GET['busca']) ? $_GET['busca']:"";
+
+            $query = "SELECT  texto, codAntigo, codNovo, tipo, acidente, relatorio.eletricista, substituicao, substituicao.nome, substituicao.id, relatorio.id FROM substituicao, relatorio WHERE substituicao.id = relatorio.substituicao";
+
+            if ($busca != ""){
+                $busca = $busca.'%';
+                $query .= ' WHERE nome like :busca' ;
+            }
+        
+            $stmt = $conexao->prepare($query);
+        
+            if ($busca != ""){
+                $stmt->bindValue(':busca', $busca);
+            }
+        
+            $stmt->execute();
+            $relatorios = $stmt->fetchAll();
+            echo json_encode($relatorios);
+        
+        }catch(PDOExeptio $e){
             print("Erro ao conectar com o banco de dados . . . <br>".$e->getMenssage());
             die();
         }
