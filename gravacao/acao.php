@@ -21,6 +21,9 @@
         case 'salvar':
             salvar();
             break;
+        case 'Fazer a consulta':
+            buscar();
+            break;
     }
 
     function bindar($stmt){
@@ -54,5 +57,35 @@
         }
 
         header('Location: gravacao-eletricista.php');
+    }
+
+    function buscar(){
+        try{
+            $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);  
+        
+            $busca = isset($_GET['busca']) ? $_GET['busca']:"";
+            // $query = "SELECT * FROM substituicao";
+            $query = "SELECT video, gravacao.eletricista, substituicao.nome, substituicao, substituicao.id FROM substituicao, gravacao WHERE substituicao.id = gravacao.substituicao";
+
+            if ($busca != ""){
+                $busca = $busca.'%';
+                $query .= ' WHERE nome like :busca' ;
+            }
+        
+            $stmt = $conexao->prepare($query);
+        
+            if ($busca != ""){
+                $stmt->bindValue(':busca', $busca);
+            }
+        
+            $stmt->execute();
+            $gravacoes = $stmt->fetchAll();
+            // var_dump($gravacoes);
+            echo json_encode($gravacoes);
+        
+        }catch(PDOExeptio $e){
+            print("Erro ao conectar com o banco de dados . . . <br>".$e->getMenssage());
+            die();
+        }
     }
 ?>
