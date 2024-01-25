@@ -103,12 +103,12 @@
     }
     function excluir(){
         try{
-            $id = isset($_GET["id"])?$_GET["id"]:0;
+            $id = isset($_GET['id']) ? $_GET['id'] : 0;
     
             $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
             $query = "DELETE FROM gerente WHERE id = :id";
             $stmt = $conexao->prepare($query);
-            $stmt->bindValue(":id",$id);
+            $stmt->bindValue(":id", $id);
     
             $stmt->execute();
             echo "foi";

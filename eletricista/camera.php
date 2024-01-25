@@ -4,6 +4,8 @@
     $pagina = "Câmera";
     $diretorio = "video/substituicao-longa.mp4";
 
+    $erro = isset($_GET['erro_sql']) ? $_GET['erro_sql'] : "";
+    var_dump($erro);
     session_start();
 ?>
 <html lang="pt-BR">
@@ -105,5 +107,12 @@
             </div>
         </div>
     </div>
+
+    <script language="javascript">
+        var erro = "<?php echo $erro;?>";
+        if(erro == "true"){
+            erroDuplicado();
+        } 
+    </script>
 </body>
 </html>

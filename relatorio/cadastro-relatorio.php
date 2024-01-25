@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <?php
+    include '../sql/config.php';
     session_start();
     // var_dump($_SESSION);
     $acao = isset($_GET['acao']) ? $_GET['acao'] : "Salvar";
     $id = isset($_GET['id']) ? $_GET['id'] : 0;
-    include '../sql/config.php';
+
+    $erro = isset($_GET['erro_sql']) ? $_GET['erro_sql'] : "";
     
     if($acao = "editar"){
         try {
@@ -42,7 +44,7 @@
 </head>
 <body>
     <?php include "../navbar/nav-eletricista.php";?>
-
+    
     <div class="container-fluid">
         <div class="row mt-5 ms-2">
             <div class="col-7 mt-4 pt-4">
@@ -155,5 +157,12 @@
             </div>
         </div>
     </div>
+
+    <script language="javascript">
+        var erro = "<?php echo $erro;?>";
+        if(erro == "true"){
+            erroDuplicado();
+        } 
+    </script>
 </body>
 </html>

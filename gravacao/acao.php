@@ -1,5 +1,6 @@
 <?php
     include '../sql/config.php';
+    echo "<script src='../js/funcoes.js'></script>";
     session_start();
 
     $idEletricista = $_SESSION['idEletricista'];
@@ -42,9 +43,14 @@
             bindar($stmt);
 
             $stmt->execute();
+    
         }catch(Exception $e){
-            print("Erro ...<br>".$e->getMessage());
-            die();
+            if($e->getCode() == '23000'){
+               header('Location: ../eletricista/camera.php?erro_sql=true');
+            } else{
+                print("Erro ...<br>".$e->getMessage());
+                die();
+            }
         }
 
         header('Location: gravacao-eletricista.php');

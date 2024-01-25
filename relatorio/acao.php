@@ -56,17 +56,20 @@
             $query = "INSERT INTO relatorio(texto, codNovo, codAntigo, tipo, substituicao, acidente, eletricista, gerente) VALUES (:texto, :codNovo, :codAntigo, :tipo, :substituicao, :acidente, :eletricista, :gerente)";
             
             $stmt = $conexao->prepare($query);
-
             bindar($stmt);
-
             $stmt->execute();
 
-            echo "foi";
         } catch(Exception $e){
-            print("Erro ...<br>".$e->getMessage());
-            die();
+            if($e->getCode() == '23000'){
+                header('Location: cadastro-relatorio.php?erro_sql=true');
+            } else{
+                print("Erro ...<br>".$e->getMessage());
+                die();
+            }
         }
     }
+
+    header('Location: relatorios-eletricista.php');
 
     function editar(){
         try {

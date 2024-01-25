@@ -74,6 +74,7 @@
                                         </div>";
                                 }
                             }
+
                         }catch(PDOExeptio $e){
                             print("Erro ao conectar com o banco de dados . . . <br>".$e->getMenssage());
                             die();
