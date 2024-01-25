@@ -69,7 +69,7 @@
 
             if ($busca != ""){
                 $busca = $busca.'%';
-                $query .= ' WHERE nome like :busca' ;
+                $query .= ' WHERE substituicao.nome like :busca' ;
             }
         
             $stmt = $conexao->prepare($query);
