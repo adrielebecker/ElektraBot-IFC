@@ -95,7 +95,7 @@
 
     function excluir(){
         try{
-            $id = isset($_GET["id"])? $_GET["id"]:0;
+            $id = isset($_GET["id"]) ? $_GET["id"]: 0;
     
             $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
             $query = "DELETE FROM relatorio WHERE id = :id";

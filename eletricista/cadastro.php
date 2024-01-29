@@ -43,12 +43,12 @@
         <div class="row mt-4">
             <h5 class="titulo verde text-center">Preencha o Formulário:</h5>
         </div>
-        <form action="acao.php" method="post">
+        <form action="acao.php" method="post" id="cadEletricista">
             <input type="hidden" name="id" id="id" value="<?=$id?>">
             <div class="row mt-2">
                 <div class="col-4">
                     <label for="nome" class="form-label">Nome Completo:</label>
-                    <input type="text" name="nome" id="nome" class="form-control border-success text-center" value="<?php if($id != 0) echo $eletricista["nome"];?>" >
+                    <input type="text" name="nome" id="nome" minLength="3" class="form-control border-success text-center" value="<?php if($id != 0) echo $eletricista["nome"];?>" >
                 </div>
                 <div class="col-2">
                     <label for="dataNasc" class="form-label">Data de Nascimento:</label>
@@ -70,18 +70,18 @@
                 </div> 
                 <div class="col-2">
                     <label for="cpf" class="form-label">CPF:</label>
-                    <input type="text" name="cpf" id="cpf" class="form-control border-success text-center" placeholder="000.000.000-00" value="<?php if($id != 0) echo $eletricista["cpf"]?>">
+                    <input type="text" name="cpf" id="cpf" minLength="11" maxLength="11" class="form-control border-success text-center" placeholder="000.000.000-00" value="<?php if($id != 0) echo $eletricista["cpf"]?>">
                 </div>              
             </div>
     
             <div class="row mt-3"> 
                 <div class="col-3">
                     <label for="celular" class="form-label">Celular:</label>
-                    <input type="text" name="celular" id="celular" class="form-control border-success text-center" placeholder="(00) 00000-0000" value="<?php if($id != 0) echo $eletricista["celular"]?>">
+                    <input type="text" name="celular" id="celular" minLength="11" maxLength="11" class="form-control border-success text-center" placeholder="(00) 00000-0000" value="<?php if($id != 0) echo $eletricista["celular"]?>">
                 </div>
                 <div class="col-6">
                     <label for="email" class="form-label">E-mail:</label>
-                    <input type="text" name="email" id="email" class="form-control border-success text-center" placeholder="dominio@email.com" value="<?php if($id != 0) echo $eletricista["email"]?>">    
+                    <input type="email" name="email" id="email" class="form-control border-success text-center" placeholder="dominio@email.com" value="<?php if($id != 0) echo $eletricista["email"]?>">    
                 </div> 
                 <div class="col-3">
                     <label for="cep" class="form-label">CEP:</label>

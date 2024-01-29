@@ -1,5 +1,6 @@
 <?php
     include '../sql/config.php';
+    echo "<script src='../js/funcoes.js'></script>";
 
     $id = isset($_POST['id']) ? $_POST['id'] : 0;
     $usuario = isset($_POST['usuario']) ? $_POST['usuario'] : "";
@@ -18,6 +19,11 @@
     $numero = isset($_POST['numero']) ? $_POST['numero'] : "";
     $cep = isset($_POST['cep']) ? $_POST['cep'] : "";
     $senha = isset($_POST['senha']) ? $_POST['senha'] : "";
+
+    echo "<pre>";
+        var_dump($_POST);
+        var_dump($_GET);
+    echo "</pre>";
 
     switch ($_SERVER['REQUEST_METHOD']) {
         case 'POST':
@@ -41,6 +47,9 @@
             break;
         case 'Fazer a consulta':
             buscar();
+            break;
+        case 'Transferir eletricista(s)':
+            transferir();
             break;
     }
 
@@ -115,10 +124,14 @@
     
             $stmt->execute();
             echo "foi";
-    
-        }catch(PDOExeptio $e){
-            print("Erro ao conectar com o banco de dados . . . <br>".$e->getMenssage());
-            die();
+            
+        } catch(PDOException $e){
+            if($e->getCode() == '23000'){
+                header('Location: transferencia.php?erro_sql=true');
+            } else{
+                print("Erro ...<br>".$e->getMessage());
+                die();
+            }
         }
     }
 
@@ -149,4 +162,24 @@
             die();
         }
     }   
+
+    function transferir(){
+        try {
+            $idEletricista = isset($_POST['idEletricista']) ? $_POST['idEletricista'] : array();
+            $idGerente = isset($_POST['idGerente']) ? $_POST['idGerente'] : "";
+
+            foreach($idEletricista as $eletricista){
+                $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);  
+                $query = "UPDATE eletricista SET gerente = :gerente WHERE id = :id";
+
+                $stmt = $conexao->prepare($query);
+                $stmt->bindValue(":gerente",$idGerente);
+                $stmt->bindValue(":id", $eletricista);
+                $stmt->execute();
+            }
+        } catch(Exception $e){
+            print("Erro ...<br>".$e->getMessage());
+            die();
+        }   
+    }
 ?>
