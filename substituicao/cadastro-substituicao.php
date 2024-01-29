@@ -2,7 +2,7 @@
 <?php
     $pagina = "Designar Substituições";
     session_start();
-    var_dump($_SESSION);
+    // var_dump($_SESSION);
     include '../sql/config.php';
 
     $situacao = "pendente";

@@ -80,10 +80,10 @@
                     
                                     $stmt = $conexao->prepare($query);
                                     $stmt->execute();
-                                    $gerentes = $stmt->fetchAll();
+                                    $eletricistas = $stmt->fetchAll();
 
-                                    foreach($gerentes as $eletricista){
-                                        if($_SESSION['idGerente'] == $eletricista['id']){
+                                    foreach($eletricistas as $eletricista){
+                                        if($_SESSION['idEletricista'] == $eletricista['id']){
                                             echo "<tr>
                                                     <td>".ucWords($eletricista['nome'])."</td>
                                                     <td>".date("d/m/Y", strtotime($eletricista['dataNasc']))."</td>
@@ -124,10 +124,10 @@
                     
                                     $stmt = $conexao->prepare($query);
                                     $stmt->execute();
-                                    $gerentes = $stmt->fetchAll();
+                                    $eletricistas = $stmt->fetchAll();
 
-                                    foreach($gerentes as $eletricista){
-                                        if($_SESSION['idGerente'] == $eletricista['id']){
+                                    foreach($eletricistas as $eletricista){
+                                        if($_SESSION['idEletricista'] == $eletricista['id']){
                                             echo "<tr>
                                                     <td>".$eletricista['usuario']."</td>
                                                     <td>".$eletricista['matricula']."</td>
@@ -166,10 +166,10 @@
                     
                                     $stmt = $conexao->prepare($query);
                                     $stmt->execute();
-                                    $gerentes = $stmt->fetchAll();
+                                    $eletricistas = $stmt->fetchAll();
 
-                                    foreach($gerentes as $eletricista){
-                                        if($_SESSION['idGerente'] == $eletricista['id']){
+                                    foreach($eletricistas as $eletricista){
+                                        if($_SESSION['idEletricista'] == $eletricista['id']){
                                             echo "<tr>
                                                     <td>".formataTelefone($eletricista['celular'])."</td>
                                                     <td>".$eletricista['email']."</td>
@@ -212,10 +212,10 @@
                     
                                     $stmt = $conexao->prepare($query);
                                     $stmt->execute();
-                                    $gerentes = $stmt->fetchAll();
+                                    $eletricistas = $stmt->fetchAll();
 
-                                    foreach($gerentes as $eletricista){
-                                        if($_SESSION['idGerente'] == $eletricista['id']){
+                                    foreach($eletricistas as $eletricista){
+                                        if($_SESSION['idEletricista'] == $eletricista['id']){
                                             echo "<tr>
                                                     <td>".ucWords($eletricista['estado'])."</td>
                                                     <td>".ucWords($eletricista['cidade'])."</td>
