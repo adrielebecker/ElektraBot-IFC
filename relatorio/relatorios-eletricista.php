@@ -37,20 +37,23 @@
                                 $stmt->execute();
                                 $relatorios = $stmt->fetchAll();
                                 
-                                foreach($relatorios as $relatorio){
-                                    if($_SESSION['idEletricista'] === $relatorio['eletricista']){
-                                        if($relatorio == NULL){
-                                            echo "<h4 class='text-center titulo mt-5'>Ainda não há relatórios!</h4>";
-                                            break;
-                                        } else{
+                                if(empty($relatorio)){
+                                    echo "<h6 class='text-center titulo mt-5'>Ainda não há relatórios!</h6>";                            
+                                } else{
+                                    foreach($relatorios as $relatorio){
+                                        if($_SESSION['idEletricista'] === $relatorio['eletricista']){
                                             echo "<div class='border border-success rounded mt-2 text-center'>
                                                     <a href='visualizar-eletricista.php?relatorio={$relatorio['id']}' class='link texto fs-5 text-reset'>
                                                         <p class='texto mt-2'><b class='verde'>".ucWords($relatorio['nome'])."</b> <br> <i class='tam10'> Tipo do Medidor: <br>".ucWords($relatorio['tipo'])."</i></p>
                                                     </a>
                                             </div>";
+                                        } else{
+                                            echo "<h6 class='text-center titulo mt-5'>Ainda não há relatórios!</h6>";
+                                            break; 
                                         }
-                                    } 
+                                    }
                                 }
+                                
                             } catch(Exception $e){
                                 print("Erro ...<br>".$e->getMessage());
                                 die();
@@ -110,20 +113,26 @@
                             </a>
                         </div>";
 
-                        foreach($relatorios as $relatorio){
-                            if($_SESSION['idEletricista'] === $relatorio['eletricista']){
-                                if($relatorio == NULL){
-                                    echo "<h4 class='text-center titulo mt-5'>Ainda não há gravações!</h4>
+                        if(empty($relatorio)){
+                            echo "<h4 class='text-center titulo'>Ainda não há relatórios!</h4>
+                                <div class='col-4'></div>
+                                <div class='col-4 ms-4 bg-image'>
+                                    <img src='../img/icones/pasta.png' width='60%' class='ms-5'>
+                                </div>";
+                        } else{
+                            foreach($relatorios as $relatorio){
+                                if($_SESSION['idEletricista'] === $relatorio['eletricista']){                                    
+                                    echo "<div class='col-2 mt-4 text-center'>
+                                        <a href='visualizar-eletricista.php?relatorio={$relatorio['id']}' class='link texto fs-5 text-reset'><img src='../img/icones/pastaRelatorio.png'></a>
+                                        <p class='texto preto fs-6'>".ucWords($relatorio['nome'])."</p>
+                                    </div>";
+                                } else{
+                                    echo "<h4 class='text-center titulo mt-5'>Ainda não há relatórios!</h4>
                                         <div class='col-4'></div>
                                         <div class='col-4 ms-4 mt-4 bg-image'>
                                             <img src='../img/icones/pasta.png' width='60%' class='img-relatorio ms-5'>
                                         </div>";
                                     break;
-                                } else{
-                                    echo "<div class='col-2 mt-4 text-center'>
-                                        <a href='visualizar-eletricista.php?relatorio={$relatorio['id']}' class='link texto fs-5 text-reset'><img src='../img/icones/pastaRelatorio.png'></a>
-                                        <p class='texto preto fs-6'>".ucWords($relatorio['nome'])."</p>
-                                    </div>";
                                 }
                             } 
                         }
