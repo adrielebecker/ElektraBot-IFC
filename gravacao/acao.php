@@ -46,6 +46,8 @@
             bindar($stmt);
 
             $stmt->execute();
+
+            header('Location: gravacao-eletricista.php');
     
         }catch(Exception $e){
             if($e->getCode() == '23000'){
@@ -56,7 +58,6 @@
             }
         }
 
-        header('Location: gravacao-eletricista.php');
     }
 
     function buscar(){

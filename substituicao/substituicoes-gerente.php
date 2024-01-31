@@ -152,9 +152,9 @@
                         
                         echo "<thead class='bg-success branco'><tr><th>Nome</th><th>Data</th><th>Situação</th><th>Detalhes</th><th>Editar</th><th>Excluir</th></tr></thead>";
                         foreach($substituicoes as $substituicao){
-                            if($substituicao['situacao'] == "pendente"){
+                            if(strtolower($substituicao['situacao']) == "pendente"){
                                 $situacao = "<b style='color: #F00'>Pendente</b>";
-                            } elseif($substituicao['situacao'] == "concluída"){
+                            } elseif(strtolower($substituicao['situacao']) == "concluída"){
                                 $situacao = "<b style='color: #0F0'>Concluída</b>";
                             }
                             // var_dump($substituicao);

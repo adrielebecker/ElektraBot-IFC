@@ -62,6 +62,7 @@
             bindar($stmt);
             $stmt->execute();
 
+            header('Location: relatorios-eletricista.php');
         } catch(Exception $e){
             if($e->getCode() == '23000'){
                 header('Location: cadastro-relatorio.php?erro_sql=true');
@@ -71,8 +72,6 @@
             }
         }
     }
-
-    header('Location: relatorios-eletricista.php');
 
     function editar(){
         try {

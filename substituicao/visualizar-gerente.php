@@ -212,7 +212,7 @@
                                         
                                         foreach($substituicoes as $substituicao){
                                             if($idSubstituicao == $substituicao['id']){
-                                                if($substituicao['situacao'] == "pendente"){
+                                                if(strtolower($substituicao['situacao']) == "pendente"){
                                                     echo "<input type='text' style='color: #F00;' value='".ucWords($substituicao['situacao'])."' class='form-control text-center fw-bold border-success'>";
                                                 } else{
                                                     echo "<input type='text' value='".ucWords($substituicao['situacao'])."' class='form-control  fw-bold verde text-center border-success'>";
@@ -242,9 +242,9 @@
                                         $nome = explode(" ", $substituicao['nome']);
 
                                         if($idSubstituicao == $substituicao['id']){
-                                            if($substituicao['situacao'] == "pendente"){
+                                            if(strtolower($substituicao['situacao']) == "pendente"){
                                                 echo "<p class='texto'>Atenção: <b>".ucWords($nomeSubstituicao)."</b> ainda está <b style='color: #F00;'>pendente</b>!</p>";
-                                            } elseif($substituicao['situacao'] == "concluída"){
+                                            } elseif(strtolower($substituicao['situacao']) == "concluída"){
                                                 echo "<p class='texto'>".ucWords($nome['0'])." já <b class='verde'> concluiu </b><b>".ucWords($nomeSubstituicao)."</b>!</p>";
                                             } 
                                         }
