@@ -3,6 +3,7 @@
     include '../sql/config.php';
     session_start();
     $pagina = "Relatórios";
+    var_dump($_SESSION);
 ?>
 <html lang="pt-BR">
 <head>
@@ -37,7 +38,7 @@
                                 $stmt->execute();
                                 $relatorios = $stmt->fetchAll();
                                 
-                                if(empty($relatorio)){
+                                if(empty($relatorios)){
                                     echo "<h6 class='text-center titulo mt-5'>Ainda não há relatórios!</h6>";                            
                                 } else{
                                     foreach($relatorios as $relatorio){
@@ -53,7 +54,6 @@
                                         }
                                     }
                                 }
-                                
                             } catch(Exception $e){
                                 print("Erro ...<br>".$e->getMessage());
                                 die();
@@ -113,7 +113,7 @@
                             </a>
                         </div>";
 
-                        if(empty($relatorio)){
+                        if(empty($relatorios)){
                             echo "<h4 class='text-center titulo'>Ainda não há relatórios!</h4>
                                 <div class='col-4'></div>
                                 <div class='col-4 ms-4 bg-image'>

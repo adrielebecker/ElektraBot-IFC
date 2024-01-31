@@ -51,9 +51,9 @@
                 <div class="row">
                     <h6 class="titulo verde">Escreva seu relatório aqui:</h6>
                 </div>
-                <div class="row mt-3 pt-3">
+                <div class="row mt-2">
                     <form action="acao.php" method="post">
-                        <textarea name="relatorio" id="relatorio"><?php if($id != 0) echo $relatorio["texto"];?></textarea>
+                        <textarea name="relatorio" id="relatorio" cols="80" rows="20"><?php if($id != 0) echo $relatorio["texto"];?></textarea>
                 </div>
             </div>
             <div class="col-4 mt-5">  

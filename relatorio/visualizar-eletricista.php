@@ -40,19 +40,21 @@
                                 $stmt->execute();
                                 $relatorios = $stmt->fetchAll();
                                 
-                                foreach($relatorios as $relatorio){
-                                    if($_SESSION['idEletricista'] === $relatorio['eletricista']){
-                                        if($relatorio == NULL){
-                                            echo "<h4 class='text-center titulo mt-5'>Ainda não há relatórios!</h4>";
-                                            break;
-                                        } else{
+                                if(empty($relatorios)){
+                                    echo "<h6 class='text-center titulo mt-5'>Ainda não há relatórios!</h6>";                            
+                                } else{
+                                    foreach($relatorios as $relatorio){
+                                        if($_SESSION['idEletricista'] === $relatorio['eletricista']){
                                             echo "<div class='border border-success rounded mt-2 text-center'>
                                                     <a href='visualizar-eletricista.php?relatorio={$relatorio['id']}' class='link texto fs-5 text-reset'>
                                                         <p class='texto mt-2'><b class='verde'>".ucWords($relatorio['nome'])."</b> <br> <i class='tam10'> Tipo do Medidor: <br>".ucWords($relatorio['tipo'])."</i></p>
                                                     </a>
                                             </div>";
+                                        } else{
+                                            echo "<h6 class='text-center titulo mt-5'>Ainda não há relatórios!</h6>";
+                                            break; 
                                         }
-                                    } 
+                                    }
                                 }
                             } catch(Exception $e){
                                 print("Erro ...<br>".$e->getMessage());
@@ -66,8 +68,7 @@
         </div>
         
         <div class="row ms-2">
-            <div class="col-7 mt-2">
-                <div class="row mt-5 ms-4">
+            <div class="col-7 mt-5">
                 <?php
                     try{
                         $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
@@ -81,7 +82,7 @@
                         foreach($relatorios as $relatorio){
                             if($_SESSION['idEletricista'] === $relatorio['eletricista']){
                                 if($relatorio['id'] == $id){
-                                    echo "<textarea name='relatorio' id='relatorio'>{$relatorio['texto']}</textarea>";
+                                    echo "<textarea name='relatorio' id='relatorio' cols='80' rows='23'>{$relatorio['texto']}</textarea>";
                                     break;
                                 }
                             } 
@@ -92,7 +93,6 @@
                     
                     }
                 ?>
-                </div>
             </div>
             <div class="col-4 mt-3">  
                 <div class="row">
