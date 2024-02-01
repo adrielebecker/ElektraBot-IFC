@@ -3,7 +3,7 @@
     include '../sql/config.php';
     session_start();
     $pagina = "Relatórios";
-    var_dump($_SESSION);
+    // var_dump($_SESSION);
 ?>
 <html lang="pt-BR">
 <head>
@@ -127,7 +127,7 @@
                                         <p class='texto preto fs-6'>".ucWords($relatorio['nome'])."</p>
                                     </div>";
                                 } else{
-                                    echo "<h4 class='text-center titulo mt-5'>Ainda não há relatórios!</h4>
+                                    echo "<h4 class='text-center titulo'>Ainda não há relatórios!</h4>
                                         <div class='col-4'></div>
                                         <div class='col-4 ms-4 mt-4 bg-image'>
                                             <img src='../img/icones/pasta.png' width='60%' class='img-relatorio ms-5'>
