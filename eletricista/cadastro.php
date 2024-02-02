@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php
     include '../sql/config.php';
+    session_start();
     $acao = isset($_GET['acao']) ? $_GET['acao'] : "Salvar";
     $id = isset($_GET['id']) ? $_GET['id'] : 0;
     
@@ -43,7 +44,7 @@
         <div class="row mt-4">
             <h5 class="titulo verde text-center">Preencha o Formulário:</h5>
         </div>
-        <form action="acao.php" method="post" id="cadEletricista">
+        <form action="acao.php" method="post" id="cadEletricista" enctype="multipart/form-data">
             <input type="hidden" name="id" id="id" value="<?=$id?>">
             <div class="row mt-2">
                 <div class="col-4">
@@ -192,13 +193,45 @@
                 </div>
             </div>
 
-            <div class="row mt-4">
-                <div class="col-1">
-                    <button class="btn secundario border-success branco texto" name="acao" id="acao" value="<?php if($id != 0) echo "editar"; else echo "Salvar"?>"><?php if($id != 0) echo $acao; else echo "Salvar";?></button>
+            <div class="row mt-4 mb-5">
+                <?php
+                    if($id != 0){
+                        echo "<div class='col-2'>";
+                            try {
+                                $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
+                
+                                $query = "SELECT * FROM eletricista";
+                
+                                $stmt = $conexao->prepare($query);
+                                $stmt->execute();
+                                $eletricistas = $stmt->fetchAll();
+                                
+                                foreach($eletricistas as $eletricista){
+                                    if($_SESSION['idEletricista'] === $eletricista['id']){
+                                        echo "<div class='row'>
+                                                <div class='col-1'>
+                                                    <img src='../img/eletricistas/".$eletricista['foto']."' class='perfil' id='alteracao_foto'>
+                                                </div>
+                                            </div>";
+                                    }
+                                }
+                            } catch(Exception $e){
+                                print("Erro ...<br>".$e->getMessage());
+                                die();
+                            }
+                        echo "</div>";
+                    }
+                ?>
+                <div class="col-5 mt-4">
+                    <label for="foto" class="form-label"><?php if($id != 0) echo "Selecione uma foto para alterar seu perfil: "; else echo "Selecione uma foto de perfil (opcional):";?></label>
+                    <input type="file" name="foto" id="foto" class="form-control border-success" accept="image/*">
+                </div>
+                <div class="col-1 mt-4 pt-2">
+                    <button class="btn secundario border-success branco texto mt-4" name="acao" id="acao" value="<?php if($id != 0) echo "editar"; else echo "Salvar"?>"><?php if($id != 0) echo "Editar"; else echo "Salvar";?></button>
                 </div>
             </form>
-                <div class="col-1">
-                    <button class="btn btn-secondary border-dark"><a href="../index.php" class="link texto branco">Voltar</a></button>
+                <div class="col-1 mt-4 pt-2">
+                    <button class="btn btn-secondary border-dark mt-4"><a href="../index.php" class="link texto branco">Voltar</a></button>
                 </div>
             </div>
     </div>

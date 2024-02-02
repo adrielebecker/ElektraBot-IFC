@@ -82,3 +82,20 @@ nav{
     font-size: 13px;
     font-style: normal;
 }
+.perfil{
+    
+    object-fit: cover;
+    object-position: 50% 50%;
+    overflow: hidden;
+    border: 2px solid #015A06;
+    border-radius: 5%;
+    margin-left: -50%;
+}
+#perfil{
+    width: 200px; 
+    height: 200px; 
+}
+#alteracao_foto{
+    width: 150px; 
+    height: 150px; 
+}

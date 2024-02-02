@@ -19,12 +19,25 @@
     $cep = isset($_POST['cep']) ? $_POST['cep'] : "";
     $senha = isset($_POST['senha']) ? $_POST['senha'] : "";
     $gerente = isset($_POST['gerente']) ? $_POST['gerente'] : "";
+    $foto = isset($_FILES['foto']) ? $_FILES['foto'] : "nenhum";
 
-
+    
     echo "<pre>";
         var_dump($_POST);
         var_dump($_GET);
     echo "</pre>";
+    
+    echo "foto: ";
+    var_dump($foto);
+    
+    if(isset($foto) && $foto != "nenhum"){
+        $ext = strtolower(substr($foto['name'],-4)); //Pegando extensão do arquivo
+        $new_name = date("YmdHis") . $ext; // novo nome
+        $dir = '../img/eletricistas/'; //Diretório para uploads 
+        move_uploaded_file($foto['tmp_name'], $dir.$new_name); //Fazer upload do arquivo
+        echo("Imagen enviada com sucesso!");
+    }
+    
 
     switch ($_SERVER['REQUEST_METHOD']) {
         case 'POST':
@@ -49,7 +62,7 @@
     }
 
     function bindar($stmt){
-        global $id, $usuario, $nome, $dataNasc, $sexo, $cpf, $matricula, $celular, $email, $estado, $cidade, $bairro, $rua, $complemento, $numero, $cep, $senha, $gerente;
+        global $id, $usuario, $nome, $dataNasc, $sexo, $cpf, $matricula, $celular, $email, $estado, $cidade, $bairro, $rua, $complemento, $numero, $cep, $senha, $gerente, $new_name;
 
         /* bindar = trocar o valor genérico pelo real*/
         $stmt->bindValue(":usuario",$usuario);
@@ -69,15 +82,16 @@
         $stmt->bindValue(":cep",$cep);
         $stmt->bindValue(":senha",$senha);
         $stmt->bindValue(":gerente",$gerente);
-
+        $stmt->bindValue(":foto",$new_name);
     }
+
     function salvar(){
         global $usuario, $nome, $dataNasc, $sexo, $cpf, $matricula, $celular, $email, $estado, $cidade, $bairro, $rua, $complemento, $numero, $cep, $senha, $gerente;
 
         try {
             $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
             /* ":" deixa mais generico que usar variavel */
-            $query = "INSERT INTO eletricista(usuario, nome, dataNasc, sexo, cpf, matricula, celular, email, estado, cidade, bairro, rua, complemento, numero, cep, senha, gerente) VALUES(:usuario, :nome, :dataNasc, :sexo, :cpf, :matricula, :celular, :email, :estado, :cidade, :bairro, :rua, :complemento, :numero, :cep, :senha, :gerente)"; 
+            $query = "INSERT INTO eletricista(usuario, nome, dataNasc, sexo, cpf, matricula, celular, email, estado, cidade, bairro, rua, complemento, numero, cep, senha, gerente, foto) VALUES(:usuario, :nome, :dataNasc, :sexo, :cpf, :matricula, :celular, :email, :estado, :cidade, :bairro, :rua, :complemento, :numero, :cep, :senha, :gerente, :foto)"; 
             
             /* stmt -> statement -> execução do código -> mandar o BD executar algo */
             $stmt = $conexao->prepare($query);
@@ -95,7 +109,7 @@
         try {
             global $id;
             $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);  
-            $query = "UPDATE eletricista SET usuario = :usuario, nome = :nome, dataNasc = :dataNasc, sexo = :sexo, cpf = :cpf, matricula = :matricula, celular = :celular, email = :email, estado = :estado, cidade = :cidade, bairro = :bairro, rua = :rua, complemento = :complemento, numero = :numero, cep = :cep, senha = :senha, gerente = :gerente WHERE id = :id";
+            $query = "UPDATE eletricista SET usuario = :usuario, nome = :nome, dataNasc = :dataNasc, sexo = :sexo, cpf = :cpf, matricula = :matricula, celular = :celular, email = :email, estado = :estado, cidade = :cidade, bairro = :bairro, rua = :rua, complemento = :complemento, numero = :numero, cep = :cep, senha = :senha, gerente = :gerente, foto = :foto WHERE id = :id";
             
             /* stmt -> statement -> execução do código -> mandar o BD executar algo */
             $stmt = $conexao->prepare($query);

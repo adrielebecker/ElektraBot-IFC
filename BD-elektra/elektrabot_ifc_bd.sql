@@ -19,6 +19,7 @@ create table gerente(
     numero varchar(45),
     cep varchar(45) not null,
     senha varchar(45) not null,
+    foto varchar(45),
     primary key(id)
 );
 
@@ -41,6 +42,7 @@ create table eletricista(
     cep varchar(45) not null,
     senha varchar(45) not null,
     gerente int not null,
+    foto varchar(45),
     primary key(id),
     foreign key(gerente) references gerente(id)
 );

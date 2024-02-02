@@ -22,14 +22,32 @@
                     <h6 class="titulo verde text-center">Foto de Perfil</h6>
                 </div>
                 <div class="row mt-3">
-                    <img src="../img/icones/user.png" alt="" width="80%">
+                    <?php
+                        try {
+                            $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
+            
+                            $query = "SELECT * FROM eletricista";
+            
+                            $stmt = $conexao->prepare($query);
+                            $stmt->execute();
+                            $eletricistas = $stmt->fetchAll();
+                            
+                            foreach($eletricistas as $eletricista){
+                                if($_SESSION['idEletricista'] === $eletricista['id']){
+                                    echo "<div class='row'>
+                                            <div class='col-4 box'>
+                                                <img src='../img/eletricistas/".$eletricista['foto']."' class='perfil' id='perfil'>
+                                            </div>
+                                        </div>";
+                                }
+                            }
+                        } catch(Exception $e){
+                            print("Erro ...<br>".$e->getMessage());
+                            die();
+                        }
+                    ?>
                 </div>
-                <div class="row">
-                    <p class="text-center mt-2 texto">Alterar imagem:</p>
-                </div>
-                <div class="row">
-                    <input type="file" name="foto" id="foto" class="formFileSm">
-                </div>
+                
                 <div class="row mt-5">
                     <?php
                         try {
