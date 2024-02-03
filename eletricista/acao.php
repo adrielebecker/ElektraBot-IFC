@@ -36,10 +36,8 @@
             $new_name = date("YmdHis") . $ext; // novo nome
             $dir = '../img/eletricistas/'; //Diretório para uploads 
             move_uploaded_file($foto['tmp_name'], $dir.$new_name); //Fazer upload do arquivo
-            echo $new_name;
         }
     }
-    
 
     switch ($_SERVER['REQUEST_METHOD']) {
         case 'POST':
@@ -84,14 +82,17 @@
         $stmt->bindValue(":cep",$cep);
         $stmt->bindValue(":senha",$senha);
         $stmt->bindValue(":gerente",$gerente);
-        if($new_name != ""){
-            $stmt->bindValue(":foto",$new_name);
+
+        var_dump($new_name);
+        if($new_name == NULL && $id == 0){
+            $stmt->bindValue(":foto",'user.png');
+        } elseif($new_name != NULL && $id != 0){
+            $stmt->bindValue(":foto", $new_name);
         }
     }
 
     function salvar(){
-        global $usuario, $nome, $dataNasc, $sexo, $cpf, $matricula, $celular, $email, $estado, $cidade, $bairro, $rua, $complemento, $numero, $cep, $senha, $gerente;
-
+        global $usuario, $nome, $dataNasc, $sexo, $cpf, $matricula, $celular, $email, $estado, $cidade, $bairro, $rua, $complemento, $numero, $cep, $senha, $gerente, $new_name;
         try {
             $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
             /* ":" deixa mais generico que usar variavel */
