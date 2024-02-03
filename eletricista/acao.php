@@ -32,10 +32,12 @@
     
     if(isset($foto) && $foto != "nenhum"){
         $ext = strtolower(substr($foto['name'],-4)); //Pegando extensão do arquivo
-        $new_name = date("YmdHis") . $ext; // novo nome
-        $dir = '../img/eletricistas/'; //Diretório para uploads 
-        move_uploaded_file($foto['tmp_name'], $dir.$new_name); //Fazer upload do arquivo
-        echo("Imagen enviada com sucesso!");
+        if($ext != ""){
+            $new_name = date("YmdHis") . $ext; // novo nome
+            $dir = '../img/eletricistas/'; //Diretório para uploads 
+            move_uploaded_file($foto['tmp_name'], $dir.$new_name); //Fazer upload do arquivo
+            echo $new_name;
+        }
     }
     
 
@@ -82,7 +84,9 @@
         $stmt->bindValue(":cep",$cep);
         $stmt->bindValue(":senha",$senha);
         $stmt->bindValue(":gerente",$gerente);
-        $stmt->bindValue(":foto",$new_name);
+        if($new_name != ""){
+            $stmt->bindValue(":foto",$new_name);
+        }
     }
 
     function salvar(){
@@ -103,13 +107,19 @@
             print("Erro ...<br>".$e->getMessage());
             die();
         }
+
+        header('Location: ../login.php?cadastro=true');
     }
 
     function editar(){
         try {
-            global $id;
-            $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);  
-            $query = "UPDATE eletricista SET usuario = :usuario, nome = :nome, dataNasc = :dataNasc, sexo = :sexo, cpf = :cpf, matricula = :matricula, celular = :celular, email = :email, estado = :estado, cidade = :cidade, bairro = :bairro, rua = :rua, complemento = :complemento, numero = :numero, cep = :cep, senha = :senha, gerente = :gerente, foto = :foto WHERE id = :id";
+            global $id, $new_name;
+            $conexao = new PDO(MYSQL_DSN,USER,PASSWORD); 
+            if($new_name != ""){
+                $query = "UPDATE eletricista SET usuario = :usuario, nome = :nome, dataNasc = :dataNasc, sexo = :sexo, cpf = :cpf, matricula = :matricula, celular = :celular, email = :email, estado = :estado, cidade = :cidade, bairro = :bairro, rua = :rua, complemento = :complemento, numero = :numero, cep = :cep, senha = :senha, gerente = :gerente, foto = :foto WHERE id = :id";
+            } else{
+                $query = "UPDATE eletricista SET usuario = :usuario, nome = :nome, dataNasc = :dataNasc, sexo = :sexo, cpf = :cpf, matricula = :matricula, celular = :celular, email = :email, estado = :estado, cidade = :cidade, bairro = :bairro, rua = :rua, complemento = :complemento, numero = :numero, cep = :cep, senha = :senha, gerente = :gerente WHERE id = :id";
+            }
             
             /* stmt -> statement -> execução do código -> mandar o BD executar algo */
             $stmt = $conexao->prepare($query);
@@ -118,6 +128,7 @@
             $stmt->bindValue(":id", $id);
             $stmt->execute();
 
+            header('Location: conta.php?salvo=true');
         } catch(Exception $e){
             print("Erro ...<br>".$e->getMessage());
             die();

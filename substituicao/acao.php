@@ -64,6 +64,8 @@
             bindar($stmt);
 
             $stmt->execute();
+
+            header('Location: substituicoes-gerente.php?sucesso=true');
         } catch (Exception $e) {
             print("Erro ...<br>".$e->getMessage());
             die();
@@ -90,7 +92,7 @@
 
     function excluir(){
         try{
-            $id = isset($_GET["id"])? $_GET["id"]:0;
+            $id = isset($_GET["id"])? $_GET["id"] : 0;
     
             $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
             $query = "DELETE FROM substituicao WHERE id = :id";
@@ -98,6 +100,8 @@
             $stmt->bindValue(":id",$id);
     
             $stmt->execute();
+
+            header('Location: substituicoes-gerente.php');
     
         } catch(PDOExeptio $e){
             print("Erro ao conectar com o banco de dados . . . <br>".$e->getMenssage());
@@ -119,7 +123,7 @@
             $stmt->bindValue(":situacao", $situacao);
 
             $stmt->execute();
-            header('Location: substituicoes-eletricista.php');
+            header('Location: substituicoes-eletricista.php?concluida=true');
 
         } catch(Exception $e){
             print("Erro ...<br>".$e->getMessage());

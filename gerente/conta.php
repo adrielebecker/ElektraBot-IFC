@@ -6,6 +6,7 @@
     $_GET['acao'] = "";
     include '../funcao/acao.php';
     $pagina = "Minha Conta";
+    $salvo = isset($_GET['salvo']) ? $_GET['salvo'] : "";
     ?>
 <html lang="pt-BR">
 <head>
@@ -239,5 +240,11 @@
 
         </div>
     </div>
+    <script language='javascript'>
+        var salvo = <?=$salvo?>;
+        if(salvo == true){
+            alert("Alterações salvas com sucesso!");
+        }
+    </script>
 </body>
 </html>

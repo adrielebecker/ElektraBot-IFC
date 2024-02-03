@@ -45,6 +45,8 @@
                                             <p class='texto mt-2'><b class='verde'>".ucWords($substituicao['1'])."</b> <br> <i class='tam10'> Data da Substituição: <br>".date("d/m/Y", strtotime($substituicao['dataSub']))."</i></p>
                                         </a>
                                     </div>";
+                            } else{
+                                echo "<p class='texto'>Nenhuma substituição concluída!</p>";
                             }
                         }
                     }catch(PDOExeptio $e){
@@ -72,6 +74,8 @@
                                             <p class='texto mt-2'><b class='text-danger'>".ucWords($substituicao['1'])."</b> <br> <i class='tam10'> Data da Substituição: <br>".date("d/m/Y", strtotime($substituicao['dataSub']))."</i></p>
                                         </a>
                                     </div>";
+                            } else{
+                                echo "<p class='texto'>Nenhuma substituição pendente!</p>";
                             }
                         }
                     }catch(PDOExeptio $e){
@@ -88,9 +92,9 @@
         </div>
 
         <div class="row">
-            <div class="col-6 mt-3">
+            <div class="col-6 mt-4">
                 <form action="acao.php" method="post">
-                <div class="row mt-5">
+                <div class="row mt-1">
                     <div class="col-5">
                         <div class="row bg-success rounded">
                             <p class="texto branco text-center mt-3">Nome da Substituição:</p>
@@ -214,7 +218,11 @@
                                         
                                         foreach($substituicoes as $substituicao){
                                             if($idSubstituicao == $substituicao['id']){
-                                                echo "<input type='text' name='situacao' id='situacao' value='".ucWords($substituicao['situacao'])."' class='form-control text-center border-success'>";
+                                                if(strtolower($substituicao['situacao']) == "pendente"){
+                                                    echo "<input type='text' style='color: #F00;' value='".ucWords($substituicao['situacao'])."' class='form-control text-center fw-bold border-success'>";
+                                                } else{
+                                                    echo "<input type='text' value='".ucWords($substituicao['situacao'])."' class='form-control  fw-bold verde text-center border-success'>";
+                                                }
                                             }
                                         }
                                     }catch(Exception $e){
@@ -238,8 +246,8 @@
                                     
                                     foreach($substituicoes as $substituicao){
                                         if($idSubstituicao == $substituicao['id']){
-                                            if($substituicao['situacao'] == "pendente"){
-                                                echo "<a href=acao.php?acao=concluir&id=".$substituicao["id"]."&situacao=concluída>Concluir</a>";
+                                            if(strtolower($substituicao['situacao']) == "pendente"){
+                                                echo "<a href=acao.php?acao=concluir&id=".$substituicao["id"]."&situacao=concluída class='btn btn-success mt-1'>Concluir</a>";
                                             } else{
                                                 echo "<p class='texto'>Parabéns: <b>".ucWords($substituicao['nome'])."</b> está <b class='verde'>Concluída</b>!</p>";
                                             }
@@ -253,7 +261,7 @@
                         </div>
                     </div>
             </div>
-            <div class="col-6 mt-4">
+            <div class="col-6">
                 <div class="row">
                     <div class="col-1"></div>
                     <div class="col-10">
@@ -262,7 +270,7 @@
                 </div>
                 <div class="row">
                     <div class="col-2"></div>
-                    <div class="col-10 mt-3">
+                    <div class="col-10 mt-1">
                         <?php
                             try{
                                 $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);

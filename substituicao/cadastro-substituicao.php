@@ -114,10 +114,10 @@
                         </div>
                         <div class="col-1 ms-5"></div>
                         <div class="col-2 ms-4 mt-4">
-                            <button class="btn btn-danger">Cancelar</button>
+                            <button type="submit" class="btn btn-success" name="acao" id="acao" value="<?php if($id != 0) echo "editar"; else echo "salvar"?>">Enviar</button>
                         </div>
                         <div class="col-2 mt-4">                            
-                            <button type="submit" class="btn btn-success" name="acao" id="acao" value="<?php if($id != 0) echo "editar"; else echo "salvar"?>">Enviar</button>
+                            <a href="substituicoes-gerente.php" class='btn btn-danger'>Cancelar</a>
                         </div>
                     </div>
             </div>

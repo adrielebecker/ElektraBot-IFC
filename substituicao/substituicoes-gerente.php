@@ -4,6 +4,7 @@
     $pagina = "Substituições";
     $hoje = date("Y/m/d");
     $busca = isset($_POST['busca']) ? $_POST['busca'] : "";
+    $sucesso = isset($_GET['sucesso']) ? $_GET['sucesso'] : "";
     include '../sql/config.php';
 
     try{
@@ -158,7 +159,7 @@
                                 $situacao = "<b style='color: #0F0'>Concluída</b>";
                             }
                             // var_dump($substituicao);
-                            echo "<tbody><tr><td>".ucWords($substituicao["1"])."</td><td>".date("d/m/Y", strtotime($substituicao['dataSub']))."</td><td>".ucWords($situacao)."</td><td><a href=visualizar-gerente.php?idSubstituicao={$substituicao['0']}&idGerente={$substituicao['gerente']}&substituicao={$substituicao['nome']}>Detalhes</a></td><td><a href=cadastro-substituicao.php?id={$substituicao['0']}&acao=editar>Editar</a></td><td><a href=acao.php?idSubstituicao={$substituicao['0']}&idGerente={$substituicao['gerente']}&acao=excluir>Excluir</a></td></tr></tbody>";
+                            echo "<tbody><tr><td>".ucWords($substituicao["1"])."</td><td>".date("d/m/Y", strtotime($substituicao['dataSub']))."</td><td>".ucWords($situacao)."</td><td><a href=visualizar-gerente.php?idSubstituicao={$substituicao['0']}&idGerente={$substituicao['gerente']}&substituicao={$substituicao['nome']}>Detalhes</a></td><td><a href=cadastro-substituicao.php?id={$substituicao['0']}&acao=editar>Editar</a></td><td><button onclick='excluirSubstituicao({$substituicao['0']}, {$substituicao['gerente']});'>Excluir</button></td></tr></tbody>";
                         }
 
                     }catch(PDOExeptio $e){
@@ -170,5 +171,11 @@
             </div>
         </div>
     </div>
+    <script language='javascript'>
+        var sucesso = <?=$sucesso?>;
+        if(sucesso == true){
+            alert("Substituição designada com sucesso!");
+        }
+    </script>
 </body>
 </html>

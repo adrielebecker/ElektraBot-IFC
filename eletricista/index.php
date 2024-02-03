@@ -30,7 +30,7 @@
         <div class="row mt-5">
             <div class="col-3">
                 <a href="camera.php" class="link">
-                    <div class="card secundario border-success rounded-4">
+                    <div class="card secundario border-success rounded-4 pb-4">
                         <img src="../img/icones/camera.png" alt="camera" width="50%" class="rounded mx-auto d-block">
                         <div class="card-body">
                             <h5 class="titulo branco text-center">CÂMERA</h5>
@@ -44,7 +44,7 @@
 
             <div class="col-3">
                 <a href="../gravacao/gravacao-eletricista.php" class="link">
-                    <div class="card secundario border-success rounded-4">
+                    <div class="card secundario border-success rounded-4 pb-4">
                         <img src="../img/icones/gravacoes.png" alt="gravações" width="50%" class="rounded mx-auto d-block">
                         <div class="card-body">
                             <h5 class="titulo branco text-center">GRAVAÇÕES</h5>
@@ -59,7 +59,7 @@
             <div class="col-3">
                 <a href="../relatorio/relatorios-eletricista.php" class="link">
                     <div class="card secundario border-success rounded-4">
-                        <img src="../img/icones/relatorio.png" alt="Relatórios" width="40%" class="rounded mx-auto d-block mt-3">
+                        <img src="../img/icones/relatorio.png" alt="Relatórios" width="50%" class="rounded mx-auto d-block mt-3">
                         <div class="card-body">
                             <h5 class="titulo branco text-center mt-2">RELATÓRIOS</h5>
                             <p class="texto branco text-center sobre-tam mt-3">
@@ -73,7 +73,7 @@
             <div class="col-3">
                 <a href="../substituicao/substituicoes-eletricista.php" class="link">
                     <div class="card secundario border-success rounded-4">
-                        <img src="../img/icones/medidor-eletrico.png" alt="substituições" width="40%" class="rounded mx-auto d-block mt-3">
+                        <img src="../img/icones/medidor-eletrico.png" alt="substituições" width="50%" class="rounded mx-auto d-block mt-3">
                         <div class="card-body">
                             <h5 class="titulo branco text-center mt-2">SUBSTITUIÇÕES</h5>
                             <p class="texto branco text-center sobre-tam mt-3">

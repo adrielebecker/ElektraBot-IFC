@@ -88,6 +88,8 @@
             bindar($stmt);
 
             $stmt->execute();
+
+            header('Location: ../login.php?cadastro=true');
         } catch(Exception $e){
             print("Erro ...<br>".$e->getMessage());
             die();
@@ -107,6 +109,7 @@
             $stmt->bindValue(":id", $id);
             $stmt->execute();
 
+            header('Location: conta.php?salvo=true');
         } catch(Exception $e){
             print("Erro ...<br>".$e->getMessage());
             die();

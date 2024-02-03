@@ -3,7 +3,7 @@
     include '../sql/config.php';
     session_start();
     $pagina = "Gravações";
-
+    $salvo = isset($_GET['salvo']) ? $_GET['salvo'] : "";
 ?>
 <html lang="pt-BR">
 <head>
@@ -140,5 +140,11 @@
             </div>
         </div>
     </div>
+    <script language='javascript'>
+        var salvo = <?=$salvo?>;
+        if(salvo == true){
+            alert("Gravação salva com sucesso");
+        }
+    </script>
 </body>
 </html>

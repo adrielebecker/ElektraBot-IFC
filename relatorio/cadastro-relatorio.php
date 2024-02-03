@@ -5,6 +5,7 @@
     // var_dump($_SESSION);
     $acao = isset($_GET['acao']) ? $_GET['acao'] : "Salvar";
     $id = isset($_GET['id']) ? $_GET['id'] : 0;
+    $idSubstituicao = isset($_GET['substituicao']) ? $_GET['substituicao'] : 0;
 
     $erro = isset($_GET['erro_sql']) ? $_GET['erro_sql'] : "";
     
@@ -46,7 +47,7 @@
     <?php include "../navbar/nav-eletricista.php";?>
     
     <div class="container-fluid">
-        <div class="row mt-5 ms-2">
+        <div class="row mt-2 ms-2">
             <div class="col-7 mt-4 pt-4">
                 <div class="row">
                     <h6 class="titulo verde">Escreva seu relatório aqui:</h6>
@@ -114,10 +115,10 @@
                                     
                                     foreach($substituicao as $value){
                                         if($_SESSION['idEletricista'] == $value['eletricista']){
-                                            if($id != 0 && $id == $value['id']){
+                                            if($id != 0 && $idSubstituicao == $value['id']){
                                                 echo "<option value='{$value['id']}' selected>".ucWords($value['nome'])."</option>";
                                             } else{
-                                                echo "<option value='{$value['id']}'>".ucWords($value['nome'])."</option>";
+                                                echo "<option value='{$value['id']}'>".ucWords($value['id'])."</option>";
                                             }
                                         }
                                     }
@@ -143,17 +144,17 @@
                     </div>
                 </div>   
 
-                <div class="row mt-3">
+                <div class="row mt-3 mb-5">
                     <div class="col-6"></div>
-                    <div class="col-1 ms-4">
-                        <button class="btn btn-danger">Cancelar</button>
+                    <div class="col-1 ms-3">
+                        <button type="submit" class="btn btn-success" name="acao" id="acao" value="<?php if($id != 0) echo "editar"; else echo "salvar";?>">Enviar</button>
+                        </form>
                     </div>
                     <div class="col-2"></div>
                     <div class="col-1">
-                        <button class="btn btn-success" name="acao" id="acao" value="<?php if($id != 0) echo "editar"; else echo "salvar";?>">Enviar</button>
+                        <a href="relatorios-eletricista.php"><button class="btn btn-danger">Cancelar</button></a>
                     </div>
                 </div>
-            </form>
             </div>
         </div>
     </div>

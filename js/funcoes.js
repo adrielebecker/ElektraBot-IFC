@@ -3,20 +3,35 @@ function erroDuplicado(){
 }
 
 function excluirRelatorio(id){
-    var excluir = confirm("Tem certeza que deseja excluir este relatório?");
-    if(excluir == "true"){
-       windows.location.href = "../relatorio/acao.php?acao=excluir&id=".id;
+    var acao = confirm("Tem certeza que deseja excluir este relatório?");
+    if(acao == true){
+        window.location.href = "../relatorio/acao.php?acao=excluir&id=" + id;
     } else{
-        alert("NO");
+        window.location.href = "../relatorio/relatorios-eletricista.php";
+    }
+}
+
+function excluirConta(id){
+    var acao = confirm("Tem certeza que deseja excluir?");
+    if(acao == true){
+        window.location.href = '../eletricista/acao.php?acao=excluir&id=' + id;
+    } else{
+        window.location.href = "../eletricista/camera.php";
+    }
+
+}
+
+function excluirSubstituicao(substituicao, gerente){
+    var acao = confirm("Tem certeza que deseja excluir?");
+    if(acao == true){
+        window.location.href = "../substituicao/acao.php?acao=excluir&id=" + substituicao;
+    } else{
+        window.location.href = "../substituicao/substituicoes-gerente.php";
     }
 }
 
 function transferir(){
     alert("Antes de excluir sua conta transfira seus eletricistas para outro gerente!");
 }
-// function transferencia(){
-//     var transferir = confirm("Tem certeza que deseja transferir todos os seus eletricistas para outro gerente?");
-//     if(transferir == true){
-//         windows.location.href = "../gerente/acao.php?acao="
-//     }
-// }
+
+

@@ -14,7 +14,8 @@
     
     echo "<pre> POST:";
     var_dump($_POST);
-
+    echo "<pre> GET:";
+    var_dump($_GET);
     switch ($_SERVER['REQUEST_METHOD']) {
         case 'POST':
             $acao = $_POST['acao'] ? $_POST['acao'] : "";
@@ -62,7 +63,7 @@
             bindar($stmt);
             $stmt->execute();
 
-            header('Location: relatorios-eletricista.php');
+            header('Location: relatorios-eletricista.php?salvo=true');
         } catch(Exception $e){
             if($e->getCode() == '23000'){
                 header('Location: cadastro-relatorio.php?erro_sql=true');
@@ -85,7 +86,7 @@
             $stmt->bindValue(":id", $id);
             $stmt->execute();
 
-            header('Location: cadastro-relatorio.php');
+            header('Location: relatorios-eletricista.php?salvo=true');
         } catch(Exception $e){
             print("Erro ...<br>".$e->getMessage());
             die();
@@ -107,6 +108,7 @@
             print("Erro ao conectar com o banco de dados . . . <br>".$e->getMenssage());
             die();
         }
+        header('Location: ../relatorio/relatorios-eletricista.php?excluido=true');
     }
 
     function buscar(){

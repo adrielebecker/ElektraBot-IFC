@@ -47,7 +47,7 @@
 
             $stmt->execute();
 
-            header('Location: gravacao-eletricista.php');
+            header('Location: gravacao-eletricista.php?salvo=true');
     
         }catch(Exception $e){
             if($e->getCode() == '23000'){

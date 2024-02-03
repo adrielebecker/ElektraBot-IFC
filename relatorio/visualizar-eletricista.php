@@ -289,12 +289,33 @@
                     <div class="col-2"></div>
                     <div class="col-5">
                         <?php
-                            echo "<a href='cadastro-relatorio.php?acao=editar&id={$id}'><button class='btn btn-dark'>Editar Relatório</button></a>";
+                            try{
+                                $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
+
+                                $query = "SELECT substituicao, id, eletricista FROM relatorio";
+                
+                                $stmt = $conexao->prepare($query);
+                                $stmt->execute();
+                                $relatorios = $stmt->fetchAll();
+                                
+                                foreach($relatorios as $relatorio){
+                                    if($_SESSION['idEletricista'] === $relatorio['eletricista']){
+                                        if($relatorio['id'] == $id){
+                                            echo "<a href='cadastro-relatorio.php?acao=editar&id={$relatorio['id']}&substituicao={$relatorio['substituicao']}'><button class='btn btn-dark'>Editar Relatório</button></a>";
+                                            break; 
+                                        }
+                                    } 
+                                }
+                            } catch(Exception $e){
+                                print("Erro ...<br>".$e->getMessage());
+                                die();
+                            
+                            }
                         ?>
                     </div>
                     <div class="col-1">
                         <?php
-                            echo "<a href='acao.php?acao=excluir&id={$id}'><button class='btn btn-danger'>Excluir</button></a>";
+                            echo "<button class='btn btn-danger' onclick='excluirRelatorio({$id});'>Excluir</button>";
                         ?>
                     </div>
                 </div>

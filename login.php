@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<?php
+    $cadastro = isset($_GET['cadastro']) ? $_GET['cadastro'] : "";
+?>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -66,5 +69,11 @@
             </div>
         </div>
     </div>
+    <script language="javascript">
+        var cadastro = "<?php echo $cadastro;?>";
+        if(cadastro == "true"){
+            alert("Cadastro efetuado com sucesso!");
+        }
+    </script>
 </body>
 </html>

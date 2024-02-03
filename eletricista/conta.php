@@ -5,6 +5,7 @@
     $_GET['acao'] = "";
     include '../funcao/acao.php';
     $pagina = "Minha Conta";
+    $salvo = isset($_GET['salvo']) ? $_GET['salvo'] : "";
     ?>
 <html lang="pt-BR">
 <head>
@@ -62,7 +63,7 @@
                             foreach($eletricistas as $eletricista){
                                 if($_SESSION['idEletricista'] === $eletricista['id']){
                                     echo "<a class='btn btn-success texto' href='cadastro.php?acao=editar&id=".$eletricista["id"]."'>Alterar Dados</a>";
-                                    echo "<a class='btn btn-danger mt-3 texto' href='acao.php?acao=excluir&id=".$eletricista["id"]."'>Excluir Conta</a>";
+                                    echo "<a class='btn btn-danger mt-3 texto' onclick='excluirConta({$eletricista['id']});'>Excluir Conta</a>";
                                 }
                             }
                         } catch(Exception $e){
@@ -255,5 +256,12 @@
                 </div>
         </div>
     </div>
+
+    <script language='javascript'>
+        var salvo = <?=$salvo?>;
+        if(salvo == true){
+            alert("Alterações salvas com sucesso!");
+        }
+    </script>
 </body>
 </html>

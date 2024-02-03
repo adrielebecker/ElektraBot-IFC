@@ -3,6 +3,7 @@
     include '../sql/config.php';
     session_start();
     $pagina = "Relatórios";
+    $salvo = isset($_GET['salvo']) ? $_GET['salvo'] : "";
     // var_dump($_SESSION);
 ?>
 <html lang="pt-BR">
@@ -146,5 +147,11 @@
             </div>
         </div>
     </div>  
+    <script language='javascript'>
+        var salvo = <?=$salvo?>;
+        if(salvo == true){
+            alert("Relatório salvo com sucesso");
+        }
+    </script>
 </body>
 </html>

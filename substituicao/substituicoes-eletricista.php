@@ -4,6 +4,7 @@
     $pagina = "Substituições";
     $hoje = date("Y/m/d");
     $busca = isset($_POST['busca']) ? $_POST['busca'] : "";
+    $concluida = isset($_GET['concluida']) ? $_GET['concluida'] : "";
     include '../sql/config.php';
 
     try{
@@ -173,5 +174,13 @@
             </div>
         </div>
     </div>
+    <script language='javascript'>
+        var concluida = <?=$concluida?>;
+        if(concluida == true){
+            alert('Substituição concluída!');
+        } else{
+            alert('Substituição pendente');
+        }
+    </script>
 </body>
 </html>

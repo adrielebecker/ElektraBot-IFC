@@ -62,7 +62,7 @@
                         ?>
                         <div class="row mt-5">
                             <div class="col-8">
-                                <a href="gravacoes.php" class="link texto verde"> Voltar para gravações</a>
+                                <a href="gravacao-gerente.php" class="link texto verde"> Voltar para gravações</a>
                             </div>
                         </div>
                     </div>
@@ -70,7 +70,7 @@
             </div>
             <div class="col-6 ms-4"></div>
             <div class="col-2 mt-2 pt-1 ms-5">
-                <a href="gravacao-eletricista.php" class="link verde mt-5">Voltar</a>
+                <a href="gravacao-gerente.php" class="link verde mt-5">Voltar</a>
             </div>
         </div>
 
