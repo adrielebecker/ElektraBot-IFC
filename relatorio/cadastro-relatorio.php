@@ -118,7 +118,7 @@
                                             if($id != 0 && $idSubstituicao == $value['id']){
                                                 echo "<option value='{$value['id']}' selected>".ucWords($value['nome'])."</option>";
                                             } else{
-                                                echo "<option value='{$value['id']}'>".ucWords($value['id'])."</option>";
+                                                echo "<option value='{$value['id']}'>".ucWords($value['nome'])."</option>";
                                             }
                                         }
                                     }
