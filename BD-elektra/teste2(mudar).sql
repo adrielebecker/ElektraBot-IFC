@@ -79,6 +79,9 @@ create table gravacao(
 alter table gravacao 
 add column substituicao int not null unique;
 
+alter table relatorio 
+add column substituicao int not null unique;
+
 create table relatorio(
 	id int not null auto_increment unique,
     texto varchar(1000) not null, 
