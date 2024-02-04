@@ -9,7 +9,6 @@
     
     $id = isset($_POST['id']) ? $_POST['id'] : 0;
     $nome = isset($_POST['nome']) ? $_POST['nome'] : "";
-    $gerente = isset($_POST['gerente']) ? $_POST['gerente'] : "";
     $eletricista = isset($_POST['eletricista']) ? $_POST['eletricista'] : "";
     $localizacao = isset($_POST['localizacao']) ? $_POST['localizacao'] : "";
     $dataSub = isset($_POST['dataSub']) ? $_POST['dataSub'] : "";
@@ -43,21 +42,19 @@
     }
 
     function bindar($stmt){
-        global $nome, $gerente, $eletricista, $localizacao, $dataSub, $situacao;
+        global $nome, $eletricista, $localizacao, $dataSub, $situacao;
         $stmt->bindValue(":nome", $nome);
-        $stmt->bindValue(":gerente", $gerente);
         $stmt->bindValue(":eletricista", $eletricista);
         $stmt->bindValue(":localizacao", $localizacao);
         $stmt->bindValue(":dataSub", $dataSub);
         $stmt->bindValue(":situacao", $situacao);
-
     }
 
     function salvar(){
         try {
             $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
-            $query = "INSERT INTO substituicao(nome, gerente, eletricista, localizacao, dataSub, situacao) VALUES(:nome, :gerente, :eletricista, :localizacao, :dataSub, :situacao)";
+            $query = "INSERT INTO substituicao(nome, eletricista, localizacao, dataSub, situacao) VALUES(:nome, :eletricista, :localizacao, :dataSub, :situacao)";
 
             $stmt = $conexao->prepare($query);
 
@@ -76,7 +73,7 @@
         try {
             global $id;
             $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);  
-            $query = "UPDATE substituicao SET nome = :nome, gerente = :gerente, eletricista = :eletricista, localizacao = :localizacao, dataSub = :dataSub, situacao = :situacao WHERE id = :id";
+            $query = "UPDATE substituicao SET nome = :nome, eletricista = :eletricista, localizacao = :localizacao, dataSub = :dataSub, situacao = :situacao WHERE id = :id";
             
             $stmt = $conexao->prepare($query);
 

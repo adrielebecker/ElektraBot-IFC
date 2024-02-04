@@ -56,8 +56,7 @@ create table substituicao(
     gerente int not null,
     situacao varchar(45) not null,
     primary key(id),
-    foreign key(eletricista) references eletricista(id),
-    foreign key(gerente) references gerente(id)
+    foreign key(eletricista) references eletricista(id)
 );
 
 create table gravacao(

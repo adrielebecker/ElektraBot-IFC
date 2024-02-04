@@ -3,7 +3,7 @@ use teste2;
 
 create table gerente(
 	id int not null auto_increment unique,
-    usuario varchar(45) not null,
+    usuario varchar(45) not null unique,
     nome varchar(45) not null,
     dataNasc date not null,
     sexo varchar(45) not null,
@@ -20,12 +20,13 @@ create table gerente(
     cep varchar(45) not null,
     senha varchar(45) not null,
     foto varchar(45),
+    ativo varchar(45),
     primary key(id)
 );
 
 create table eletricista(
 	id int not null auto_increment unique,
-    usuario varchar(45) not null,
+    usuario varchar(45) not null unique,
     nome varchar(45) not null,
     dataNasc date not null,
     sexo varchar(45) not null,
@@ -41,8 +42,9 @@ create table eletricista(
     numero varchar(45),
     cep varchar(45) not null,
     senha varchar(45) not null,
-    gerente int not null,
     foto varchar(45),
+    ativo varchar(45),
+    gerente int not null,
     primary key(id),
     foreign key(gerente) references gerente(id)
 );
@@ -54,12 +56,10 @@ create table substituicao(
     localizacao varchar(250) not null,
     situacao varchar(45) not null,
     eletricista int not null,
-    gerente int not null,
 	gravacao int not null unique,
     relatorio int not null unique,
     primary key(id),
     foreign key(eletricista) references eletricista(id),
-    foreign key(gerente) references gerente(id),
     foreign key(gravacao) references gravacao(id),
     foreign key(relatorio) references relatorio(id)
 );
@@ -77,8 +77,5 @@ create table relatorio(
     codNovo varchar(45) not null,
     tipo varchar(45) not null,
     acidente varchar(45) not null,
-    primary key(id),
-    foreign key(eletricista) references eletricista(id),
-    foreign key(gerente) references gerente(id),
-    foreign key(substituicao) references substituicao(id)
+    primary key(id)
 );

@@ -60,7 +60,7 @@
                     try{
                         $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
-                        $query = "SELECT substituicao.id, substituicao.nome, substituicao.gerente, dataSub, situacao, eletricista.id, eletricista.nome FROM substituicao, eletricista WHERE eletricista.id = substituicao.eletricista";
+                        $query = "SELECT substituicao.id, substituicao.nome, substituicao.eletricista dataSub, situacao, eletricista.id, eletricista.nome, eletricista.gerente FROM substituicao, eletricista WHERE eletricista.id = substituicao.eletricista";
 
                         $stmt = $conexao->prepare($query);
                         $stmt->execute();
@@ -86,7 +86,7 @@
                     try{
                         $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
-                        $query = "SELECT substituicao.id, substituicao.nome, substituicao.gerente, dataSub, situacao, eletricista.id, eletricista.nome FROM substituicao, eletricista WHERE eletricista.id = substituicao.eletricista";
+                        $query = "SELECT substituicao.id, substituicao.nome, substituicao.eletricista dataSub, situacao, eletricista.id, eletricista.nome, eletricista.gerente FROM substituicao, eletricista WHERE eletricista.id = substituicao.eletricista";
 
                         $stmt = $conexao->prepare($query);
                         $stmt->execute();
@@ -135,8 +135,8 @@
                         $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
                         $busca = isset($_POST['busca'])?$_POST['busca']:"";
-                        // $query = "SELECT substituicao.id, substituicao.nome, substituicao.gerente, dataSub, situacao, eletricista.id, eletricista.nome FROM substituicao, eletricista WHERE eletricista.id = substituicao.eletricista";
-                        $query = "SELECT * FROM substituicao";
+                        $query = "SELECT substituicao.id, substituicao.nome, substituicao.eletricista, dataSub, situacao, eletricista.id, eletricista.nome, eletricista.gerente FROM substituicao, eletricista WHERE eletricista.id = substituicao.eletricista";
+                       
                         if ($busca != ""){
                             $busca = $busca.'%';
                             $query .= ' WHERE nome like :busca' ;
@@ -153,6 +153,7 @@
                         
                         echo "<thead class='bg-success branco'><tr><th>Nome</th><th>Data</th><th>Situação</th><th>Detalhes</th><th>Editar</th><th>Excluir</th></tr></thead>";
                         foreach($substituicoes as $substituicao){
+                            var_dump($substituicao);
                             if(strtolower($substituicao['situacao']) == "pendente"){
                                 $situacao = "<b style='color: #F00'>Pendente</b>";
                             } elseif(strtolower($substituicao['situacao']) == "concluída"){
