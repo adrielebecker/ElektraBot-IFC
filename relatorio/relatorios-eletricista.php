@@ -33,7 +33,7 @@
                             try{
                                 $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
             
-                                $query = "SELECT  texto, codAntigo, codNovo, tipo, acidente, relatorio.eletricista, substituicao, substituicao.nome, substituicao.id, relatorio.id FROM substituicao, relatorio WHERE substituicao.id = relatorio.substituicao";
+                                $query = "SELECT tipo, substituicao.relatorio, relatorio.substituicao, substituicao.nome, substituicao.id, substituicao.eletricista, relatorio.id FROM substituicao, relatorio WHERE relatorio.substituicao = substituicao.id";
                 
                                 $stmt = $conexao->prepare($query);
                                 $stmt->execute();
@@ -43,6 +43,7 @@
                                     echo "<h6 class='text-center titulo mt-5'>Ainda não há relatórios!</h6>";                            
                                 } else{
                                     foreach($relatorios as $relatorio){
+                                        // var_dump($relatorio);
                                         if($_SESSION['idEletricista'] === $relatorio['eletricista']){
                                             echo "<div class='border border-success rounded mt-2 text-center'>
                                                     <a href='visualizar-eletricista.php?relatorio={$relatorio['id']}' class='link texto fs-5 text-reset'>
@@ -91,7 +92,7 @@
                         $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
                         $busca = isset($_POST['busca']) ? $_POST['busca']: "";
-                        $query = "SELECT  texto, codAntigo, codNovo, tipo, acidente, relatorio.eletricista, substituicao, substituicao.nome, substituicao.id, relatorio.id FROM substituicao, relatorio WHERE substituicao.id = relatorio.substituicao";
+                        $query = "SELECT  texto, codAntigo, codNovo, tipo, acidente, relatorio.substituicao, substituicao.relatorio, substituicao.nome, substituicao.id, substituicao.eletricista, relatorio.id FROM substituicao, relatorio WHERE relatorio.substituicao = substituicao.id";
                         
                         if ($busca != ""){
                             $busca = $busca.'%';
@@ -106,7 +107,7 @@
 
                         $stmt->execute();
                         $relatorios = $stmt->fetchAll();
-                        
+                        // var_dump($relatorios);
                         echo "<div class='col-2 mt-4 text-center'>
                             <a href='cadastro-relatorio.php' class='link'>
                                 <img src='../img/icones/novo_relatorio.png'>
@@ -122,6 +123,7 @@
                                 </div>";
                         } else{
                             foreach($relatorios as $relatorio){
+                                // var_dump($relatorio);
                                 if($_SESSION['idEletricista'] === $relatorio['eletricista']){                                    
                                     echo "<div class='col-2 mt-4 text-center'>
                                         <a href='visualizar-eletricista.php?relatorio={$relatorio['id']}' class='link texto fs-5 text-reset'><img src='../img/icones/pastaRelatorio.png'></a>

@@ -34,7 +34,7 @@
                             try{
                                 $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
             
-                                $query = "SELECT  texto, codAntigo, codNovo, tipo, acidente, relatorio.eletricista, substituicao, substituicao.nome, substituicao.id, relatorio.id FROM substituicao, relatorio WHERE substituicao.id = relatorio.substituicao";
+                                $query = "SELECT tipo, substituicao.relatorio, relatorio.substituicao, substituicao.nome, substituicao.id, substituicao.eletricista, relatorio.id FROM substituicao, relatorio WHERE relatorio.substituicao = substituicao.id";
                 
                                 $stmt = $conexao->prepare($query);
                                 $stmt->execute();
@@ -73,7 +73,7 @@
                     try{
                         $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
-                        $query = "SELECT  texto, id, eletricista FROM relatorio";
+                        $query = "SELECT  texto, relatorio.id, substituicao.eletricista FROM relatorio, substituicao WHERE relatorio.substituicao = substituicao.id";
         
                         $stmt = $conexao->prepare($query);
                         $stmt->execute();
@@ -105,15 +105,15 @@
                             <?php
                                 try{
                                     $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
-
-                                    $query = "SELECT  codAntigo, id, eletricista FROM relatorio";
+                                    $query = "SELECT codAntigo, relatorio.id, substituicao.eletricista FROM relatorio, substituicao WHERE relatorio.substituicao = substituicao.id";
                     
                                     $stmt = $conexao->prepare($query);
                                     $stmt->execute();
                                     $relatorios = $stmt->fetchAll();
                                     
                                     foreach($relatorios as $relatorio){
-                                        if($_SESSION['idEletricista'] === $relatorio['eletricista']){
+                                        // var_dump($relatorio);
+                                        if($_SESSION['idEletricista'] == $relatorio['eletricista']){
                                             if($relatorio['id'] == $id){
                                                 echo "<input type='text' readonly value='{$relatorio['codAntigo']}' class='form-control rounded-0 text-center'>";
                                                 break;
@@ -135,7 +135,7 @@
                                 try{
                                     $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
-                                    $query = "SELECT  codNovo, id, eletricista FROM relatorio";
+                                    $query = "SELECT codNovo, substituicao.eletricista, relatorio.id FROM relatorio, substituicao WHERE relatorio.substituicao = substituicao.id";
                     
                                     $stmt = $conexao->prepare($query);
                                     $stmt->execute();
@@ -168,7 +168,7 @@
                                 try{
                                     $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
-                                    $query = "SELECT  tipo, id, eletricista FROM relatorio";
+                                    $query = "SELECT tipo, relatorio.id, substituicao.eletricista FROM relatorio, substituicao WHERE relatorio.substituicao = substituicao.id";
                     
                                     $stmt = $conexao->prepare($query);
                                     $stmt->execute();
@@ -203,7 +203,7 @@
                                 try{
                                     $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
-                                    $query = "SELECT  substituicao.nome, substituicao, substituicao.id, relatorio.id, relatorio.eletricista FROM relatorio, substituicao WHERE relatorio.substituicao = substituicao.id";
+                                    $query = "SELECT substituicao.nome, relatorio.id, substituicao.eletricista FROM relatorio, substituicao WHERE relatorio.substituicao = substituicao.id";
                     
                                     $stmt = $conexao->prepare($query);
                                     $stmt->execute();
@@ -232,7 +232,7 @@
                                 try{
                                     $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
-                                    $query = "SELECT  dataSub, relatorio.id, relatorio.eletricista FROM relatorio, substituicao";
+                                    $query = "SELECT dataSub, relatorio.id, substituicao.eletricista FROM relatorio, substituicao WHERE substituicao.id = relatorio.substituicao";
                     
                                     $stmt = $conexao->prepare($query);
                                     $stmt->execute();
@@ -261,7 +261,7 @@
                                 try{
                                     $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
-                                    $query = "SELECT  acidente, id, eletricista FROM relatorio";
+                                    $query = "SELECT acidente, relatorio.id, substituicao.eletricista FROM relatorio, substituicao WHERE relatorio.substituicao = substituicao.id";
                     
                                     $stmt = $conexao->prepare($query);
                                     $stmt->execute();
@@ -292,7 +292,7 @@
                             try{
                                 $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
-                                $query = "SELECT substituicao, id, eletricista FROM relatorio";
+                                $query = "SELECT relatorio.substituicao, relatorio.id, substituicao.eletricista FROM relatorio, substituicao WHERE relatorio.substituicao = substituicao.id";
                 
                                 $stmt = $conexao->prepare($query);
                                 $stmt->execute();

@@ -9,13 +9,12 @@
     $tipo = isset($_POST['tipo']) ? $_POST['tipo'] : "";
     $substituicao = isset($_POST['substituicao']) ? $_POST['substituicao'] : "";
     $acidente = isset($_POST['acidente']) ? $_POST['acidente'] : "";
-    $idEletricista = $_SESSION['idEletricista'];
-    $idGerente = $_SESSION['idGerente'];
     
-    echo "<pre> POST:";
-    var_dump($_POST);
-    echo "<pre> GET:";
-    var_dump($_GET);
+    // echo "<pre> POST:";
+    // var_dump($_POST);
+    // echo "<pre> GET:";
+    // var_dump($_GET);
+
     switch ($_SERVER['REQUEST_METHOD']) {
         case 'POST':
             $acao = $_POST['acao'] ? $_POST['acao'] : "";
@@ -41,7 +40,7 @@
     }
 
     function bindar($stmt){
-        global $texto, $codNovo, $codAntigo, $tipo, $substituicao, $acidente, $idEletricista, $idGerente;
+        global $texto, $codNovo, $codAntigo, $tipo, $substituicao, $acidente;
 
         $stmt->bindValue(":texto", $texto);
         $stmt->bindValue(":codNovo", $codNovo);
@@ -49,15 +48,12 @@
         $stmt->bindValue(":tipo", $tipo);
         $stmt->bindValue(":substituicao", $substituicao);
         $stmt->bindValue(":acidente", $acidente);
-        $stmt->bindValue(":eletricista", $idEletricista);
-        $stmt->bindValue(":gerente", $idGerente);
-
     }
     function salvar(){
         try {
             $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
           
-            $query = "INSERT INTO relatorio(texto, codNovo, codAntigo, tipo, substituicao, acidente, eletricista, gerente) VALUES (:texto, :codNovo, :codAntigo, :tipo, :substituicao, :acidente, :eletricista, :gerente)";
+            $query = "INSERT INTO relatorio(texto, codNovo, codAntigo, tipo, substituicao, acidente) VALUES (:texto, :codNovo, :codAntigo, :tipo, :substituicao, :acidente)";
             
             $stmt = $conexao->prepare($query);
             bindar($stmt);
