@@ -11,11 +11,11 @@
         $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);  
     
         $busca = isset($_POST['busca'])?$_POST['busca']:"";
-        $query = "SELECT * FROM substituicao";
+        $query = "SELECT substituicao.id, substituicao.nome, substituicao.eletricista, dataSub, situacao, eletricista.id, eletricista.nome, eletricista.gerente FROM substituicao, eletricista WHERE eletricista.id = substituicao.eletricista";
         
         if ($busca != ""){
             $busca = '%'.$busca.'%';
-            $query .= ' WHERE nome like :busca' ;
+            $query .= ' AND substituicao.nome like :busca' ;
         }
     
         $stmt = $conexao->prepare($query);
@@ -134,12 +134,12 @@
                     try{
                         $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
-                        $busca = isset($_POST['busca'])?$_POST['busca']:"";
+                        $busca = isset($_POST['busca']) ? $_POST['busca'] : "";
                         $query = "SELECT substituicao.id, substituicao.nome, substituicao.eletricista, dataSub, situacao, eletricista.id, eletricista.nome, eletricista.gerente FROM substituicao, eletricista WHERE eletricista.id = substituicao.eletricista";
                        
                         if ($busca != ""){
                             $busca = $busca.'%';
-                            $query .= ' WHERE nome like :busca' ;
+                            $query .= 'AND substituicao.nome like :busca' ;
                         }
 
                         $stmt = $conexao->prepare($query);

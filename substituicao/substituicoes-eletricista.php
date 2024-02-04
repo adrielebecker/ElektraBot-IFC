@@ -135,7 +135,7 @@
                     try{
                         $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
-                        $busca = isset($_POST['busca'])?$_POST['busca']:"";
+                        $busca = isset($_POST['busca']) ? $_POST['busca']:"";
                         $query = "SELECT * FROM substituicao";
                         
                         if ($busca != ""){
