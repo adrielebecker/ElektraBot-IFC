@@ -128,14 +128,15 @@
                                     try{
                                         $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
                         
-                                        $query = "SELECT gerente.nome, gerente.id, substituicao.id FROM gerente, substituicao WHERE gerente.id = substituicao.gerente";
+                                        $query = "SELECT substituicao.id, gerente.nome, gerente.id, eletricista.id, eletricista.gerente FROM substituicao, eletricista, gerente WHERE substituicao.eletricista = eletricista.id AND eletricista.gerente = gerente.id";
                         
                                         $stmt = $conexao->prepare($query);
                                         $stmt->execute();
                                         $substituicoes = $stmt->fetchAll();
 
                                         foreach($substituicoes as $substituicao){
-                                            if($idSubstituicao == $substituicao['id']){
+                                            // var_dump($substituicao);
+                                            if($idSubstituicao == $substituicao['0']){
                                                 echo "<input type='text' name='gerente' id='gerente' value='".ucWords($substituicao['nome'])."' class='form-control text-center border-success'>";
                                             }
                                         }
