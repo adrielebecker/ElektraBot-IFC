@@ -31,7 +31,7 @@
                             try{
                                 $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
             
-                                $query = "SELECT video, gravacao.gerente, gravacao.eletricista, substituicao.nome, substituicao.id, eletricista.nome, eletricista.id FROM substituicao, gravacao, eletricista WHERE substituicao.id = gravacao.substituicao AND gravacao.eletricista = eletricista.id";
+                                $query = "SELECT video, gravacao.substituicao, substituicao.nome, substituicao.id, substituicao.eletricista, eletricista.id FROM substituicao, gravacao, eletricista WHERE substituicao.id = gravacao.substituicao AND substituicao.eletricista = eletricista.id";
                 
                                 $stmt = $conexao->prepare($query);
                                 $stmt->execute();
@@ -41,10 +41,11 @@
                                     echo "<h4 class='text-center titulo mt-5'>Ainda não há gravações!</h4>";
                                 } else{
                                     foreach($gravacoes as $gravacao){
+                                        // var_dump($gravacao);
                                         if($_SESSION['idEletricista'] === $gravacao['eletricista']){
                                             echo "<div class='border border-success rounded mt-2 text-center'>
-                                                    <a href='video-eletricista.php?video={$gravacao['video']}&nome={$gravacao['3']}&eletricista={$gravacao['eletricista']}' class='link texto fs-5 text-reset'>
-                                                        <p class='texto mt-3'><b class='verde'>".ucWords($gravacao['3'])."</b></p>
+                                                    <a href='video-eletricista.php?video={$gravacao['video']}&nome={$gravacao['nome']}&eletricista={$gravacao['eletricista']}' class='link texto fs-5 text-reset'>
+                                                        <p class='texto mt-3'><b class='verde'>".ucWords($gravacao['nome'])."</b></p>
                                                     </a>
                                             </div>";
                                         } else{
@@ -90,7 +91,7 @@
                         $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
                         $busca = isset($_POST['busca']) ? $_POST['busca']: "";
-                        $query = "SELECT video, gravacao.id, substituicao.nome, substituicao.id, substituicao.gravacao, substituicao.eletricista FROM substituicao, gravacao WHERE gravacao.id = substituicao.gravacao";
+                        $query = "SELECT video, gravacao.substituicao, substituicao.nome, substituicao.id, substituicao.eletricista, eletricista.id FROM substituicao, gravacao, eletricista WHERE substituicao.id = gravacao.substituicao AND substituicao.eletricista = eletricista.id";
                         
                         if ($busca != ""){
                             $busca = $busca.'%';
@@ -114,7 +115,7 @@
                                 </div>";
                         } else{
                             foreach($gravacoes as $gravacao){
-                                var_dump($gravacao);
+                                // var_dump($gravacao);
                                 if($_SESSION['idEletricista'] === $gravacao['eletricista']){
                                     echo "<div class='col-2 mt-4 text-center'>
                                         <a href='video-eletricista.php?video={$gravacao['video']}&nome={$gravacao['nome']}' class='link texto fs-5 text-reset'><img src='../img/icones/video.png'></a>

@@ -4,6 +4,7 @@
     $video = isset($_GET['video']) ? $_GET['video'] : "";
     $nome = isset($_GET['nome']) ? $_GET['nome'] : "";
     session_start();
+    include '../sql/config.php';
 ?>
 <html lang="pt-BR">
 <head>
@@ -29,17 +30,41 @@
                     </div>
                     <div class="offcanvas-body">
                         <?php
-                            foreach($json as $value){
-                                if($_SESSION['idEletri'] == $value['idEletri']){
-                                    echo "<div class='row'>
-                                            <a href='video.php?video={$value['video']}' class='link texto fs-5 text-reset'> {$value['video']} </a>
-                                        </div>";
+                            try{
+                                $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
+            
+                                $query = "SELECT video, gravacao.substituicao, substituicao.nome, substituicao.id, substituicao.eletricista, eletricista.id FROM substituicao, gravacao, eletricista WHERE substituicao.id = gravacao.substituicao AND substituicao.eletricista = eletricista.id";
+                
+                                $stmt = $conexao->prepare($query);
+                                $stmt->execute();
+                                $gravacoes = $stmt->fetchAll();
+                                
+                                if(empty($gravacoes)){
+                                    echo "<h4 class='text-center titulo mt-5'>Ainda não há gravações!</h4>";
+                                } else{
+                                    foreach($gravacoes as $gravacao){
+                                        // var_dump($gravacao);
+                                        if($_SESSION['idEletricista'] === $gravacao['eletricista']){
+                                            echo "<div class='border border-success rounded mt-2 text-center'>
+                                                    <a href='video-eletricista.php?video={$gravacao['video']}&nome={$gravacao['nome']}&eletricista={$gravacao['eletricista']}' class='link texto fs-5 text-reset'>
+                                                        <p class='texto mt-3'><b class='verde'>".ucWords($gravacao['nome'])."</b></p>
+                                                    </a>
+                                            </div>";
+                                        } else{
+                                            echo "<h4 class='text-center titulo mt-5'>Ainda não há gravações!</h4>";
+                                            break;
+                                        }
+                                    }
                                 }
+                            } catch(Exception $e){
+                                print("Erro ...<br>".$e->getMessage());
+                                die();
+                            
                             }
                         ?>
                         <div class="row mt-5">
                             <div class="col-8">
-                                <a href="gravacoes.php" class="link texto verde"> Voltar para gravações</a>
+                                <a href="gravacao-eletricista.php" class="link texto verde"> Voltar para gravações</a>
                             </div>
                         </div>
                     </div>

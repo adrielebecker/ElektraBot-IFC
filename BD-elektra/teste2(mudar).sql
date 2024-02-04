@@ -1,6 +1,12 @@
 create database teste2;
 use teste2;
 
+ALTER TABLE `teste2`.`eletricista` 
+CHANGE COLUMN `ativo` `ativo` VARCHAR(45) NULL DEFAULT 'sim' ;
+
+ALTER TABLE `teste2`.`gerente` 
+CHANGE COLUMN `ativo` `ativo` VARCHAR(45) NULL DEFAULT 'sim' ;
+
 create table gerente(
 	id int not null auto_increment unique,
     usuario varchar(45) not null unique,
@@ -56,8 +62,8 @@ create table substituicao(
     localizacao varchar(250) not null,
     situacao varchar(45) not null,
     eletricista int not null,
-	gravacao int not null unique,
-    relatorio int not null unique,
+	gravacao int unique,
+    relatorio int unique,
     primary key(id),
     foreign key(eletricista) references eletricista(id),
     foreign key(gravacao) references gravacao(id),
@@ -69,6 +75,9 @@ create table gravacao(
     video varchar(45) not null,
     primary key(id)
 );
+
+alter table gravacao 
+add column substituicao int not null unique;
 
 create table relatorio(
 	id int not null auto_increment unique,

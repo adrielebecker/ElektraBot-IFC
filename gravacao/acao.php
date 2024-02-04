@@ -1,10 +1,7 @@
 <?php
     include '../sql/config.php';
     echo "<script src='../js/funcoes.js'></script>";
-    session_start();
-
-    $idEletricista = $_SESSION['idEletricista'];
-    $idGerente = $_SESSION['idGerente'];
+    
     $diretorio = isset($_POST['diretorio']) ? $_POST['diretorio'] : "";
     $substituicao = isset($_POST['substituicao']) ? $_POST['substituicao'] : "";
 
@@ -27,19 +24,17 @@
     }
 
     function bindar($stmt){
-        global $idGerente, $idEletricista, $diretorio, $substituicao;
+        global $diretorio, $substituicao;
 
-        $stmt->bindValue(":gerente", $idGerente);
-        $stmt->bindValue(":eletricista", $idEletricista);
-        $stmt->bindValue(":video", $diretorio);
         $stmt->bindValue(":substituicao", $substituicao);
+        $stmt->bindValue(":video", $diretorio);
     }
 
     function salvar(){
         try{
             $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
-            $query = "INSERT INTO gravacao(eletricista, gerente, video, substituicao) VALUES(:eletricista, :gerente, :video, :substituicao)";
+            $query = "INSERT INTO gravacao(video, substituicao) VALUES(:video, :substituicao)";
 
             $stmt = $conexao->prepare($query);
 
