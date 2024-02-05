@@ -59,7 +59,7 @@
                         <div class="row bg-success rounded">
                             <p class="texto branco text-center mt-3">Gerente:</p>
                             <input type="hidden" name="gerente" id="gerente" class="form-control text-center border-success" value="<?=$_SESSION['idGerente']?>">
-                            <input type="text" class="form-control text-center border-success" value="<?=$_SESSION['nomeGerente']?>" readonly>
+                            <input type="text" class="form-control text-center border-success" value="<?=ucWords($_SESSION['nomeGerente'])?>" readonly>
                         </div>
                     </div>
                 </div>

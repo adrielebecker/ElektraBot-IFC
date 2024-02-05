@@ -137,7 +137,7 @@
             
             if ($busca != ""){
                 $busca = $busca.'%';
-                $query .= 'WHERE nome like :busca' ;
+                $query .= ' AND nome like :busca' ;
             }
         
             $stmt = $conexao->prepare($query);

@@ -11,11 +11,11 @@
         $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);  
     
         $busca = isset($_POST['busca'])?$_POST['busca']:"";
-        $query = "SELECT substituicao.id, substituicao.nome, substituicao.eletricista, dataSub, situacao, eletricista.id, eletricista.nome, eletricista.gerente FROM substituicao, eletricista WHERE eletricista.id = substituicao.eletricista";
+        $query = "SELECT substituicao.id, substituicao.nome, substituicao.eletricista dataSub, situacao, eletricista.id, eletricista.nome, eletricista.gerente FROM substituicao, eletricista WHERE eletricista.id = substituicao.eletricista";
         
         if ($busca != ""){
             $busca = '%'.$busca.'%';
-            $query .= ' AND substituicao.nome like :busca' ;
+            $query .= ' AND substituicao.nome LIKE :busca' ;
         }
     
         $stmt = $conexao->prepare($query);
@@ -73,6 +73,8 @@
                                             <p class='texto mt-2'><b class='verde'>".ucWords($substituicao['1'])."</b> <br> <i class='tam10'> Eletricista: <br>".ucWords($substituicao['nome'])."</i></p>
                                         </a>
                                     </div>";
+                            } else{
+                                echo "<p class='texto'>Nenhuma substituição concluída!</p>";
                             }
                         }
                     }catch(PDOExeptio $e){
@@ -93,12 +95,15 @@
                         $substituicoes = $stmt->fetchAll();
                     
                         foreach($substituicoes as $substituicao){
+                            // var_dump($substituicao);
                             if(strtolower($substituicao['situacao']) == "pendente"){
                                 echo "<div class='border border-danger rounded mt-2 text-center'>
                                         <a href='visualizar-gerente.php?idSubstituicao={$substituicao['0']}&idGerente={$substituicao['gerente']}&substituicao={$substituicao['nome']}' class='link texto fs-5 text-reset'>
                                             <p class='texto mt-2'><b class='text-danger'>".ucWords($substituicao['1'])."</b> <br> <i class='tam10'> Eletricista: <br>".ucWords($substituicao['nome'])."</i></p>
                                         </a>
                                     </div>";
+                            } else{
+                                echo "<p class='texto'>Nenhuma substituição pendente!</p>";
                             }
                         }
                     }catch(PDOExeptio $e){
@@ -139,7 +144,7 @@
                        
                         if ($busca != ""){
                             $busca = $busca.'%';
-                            $query .= 'AND substituicao.nome like :busca' ;
+                            $query .= ' AND substituicao.nome like :busca' ;
                         }
 
                         $stmt = $conexao->prepare($query);
@@ -153,14 +158,14 @@
                         
                         echo "<thead class='bg-success branco'><tr><th>Nome</th><th>Data</th><th>Situação</th><th>Detalhes</th><th>Editar</th><th>Excluir</th></tr></thead>";
                         foreach($substituicoes as $substituicao){
-                            var_dump($substituicao);
+                            // var_dump($substituicao);
                             if(strtolower($substituicao['situacao']) == "pendente"){
                                 $situacao = "<b style='color: #F00'>Pendente</b>";
                             } elseif(strtolower($substituicao['situacao']) == "concluída"){
                                 $situacao = "<b style='color: #0F0'>Concluída</b>";
                             }
                             // var_dump($substituicao);
-                            echo "<tbody><tr><td>".ucWords($substituicao["1"])."</td><td>".date("d/m/Y", strtotime($substituicao['dataSub']))."</td><td>".ucWords($situacao)."</td><td><a href=visualizar-gerente.php?idSubstituicao={$substituicao['0']}&idGerente={$substituicao['gerente']}&substituicao={$substituicao['nome']}>Detalhes</a></td><td><a href=cadastro-substituicao.php?id={$substituicao['0']}&acao=editar>Editar</a></td><td><button onclick='excluirSubstituicao({$substituicao['0']}, {$substituicao['gerente']});'>Excluir</button></td></tr></tbody>";
+                            echo "<tbody><tr><td>".ucWords($substituicao["1"])."</td><td>".date("d/m/Y", strtotime($substituicao['dataSub']))."</td><td>".ucWords($situacao)."</td><td><a href=visualizar-gerente.php?idSubstituicao={$substituicao['0']}&idGerente={$substituicao['gerente']}&substituicao={$substituicao['1']}>Detalhes</a></td><td><a href=cadastro-substituicao.php?id={$substituicao['0']}&acao=editar>Editar</a></td><td><button onclick='excluirSubstituicao({$substituicao['0']}, {$substituicao['gerente']});'>Excluir</button></td></tr></tbody>";
                         }
 
                     }catch(PDOExeptio $e){

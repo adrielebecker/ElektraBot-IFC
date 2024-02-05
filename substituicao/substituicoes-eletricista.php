@@ -73,6 +73,8 @@
                                                 <p class='texto mt-2'><b class='verde'>".ucWords($substituicao['1'])."</b> <br> <i class='tam10'> Data da Substituição: <br>".date("d/m/Y", strtotime($substituicao['dataSub']))."</i></p>
                                             </a>
                                         </div>";
+                                } else{
+                                    echo "<p class='texto'>Nenhuma substituição concluída!</p>";
                                 }
                             }
 
@@ -100,6 +102,8 @@
                                             <p class='texto mt-2'><b class='text-danger'>".ucWords($substituicao['1'])."</b> <br> <i class='tam10'> Data da Substituição: <br>".date("d/m/Y", strtotime($substituicao['dataSub']))."</i></p>
                                         </a>
                                     </div>";
+                            } else{
+                                echo "<p class='texto'>Nenhuma substituição pendente!</p>";
                             }
                         }
                     }catch(PDOExeptio $e){

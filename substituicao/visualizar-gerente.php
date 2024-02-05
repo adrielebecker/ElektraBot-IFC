@@ -34,19 +34,22 @@
                         $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
                         $busca = isset($_POST['busca'])?$_POST['busca']:"";
-                        $query = "SELECT substituicao.id, substituicao.nome, substituicao.gerente, dataSub, situacao, eletricista.id, eletricista.nome FROM substituicao, eletricista WHERE eletricista.id = substituicao.eletricista";
+                        $query = "SELECT substituicao.id, substituicao.nome, situacao, substituicao.eletricista, eletricista.gerente FROM substituicao, eletricista WHERE substituicao.eletricista = eletricista.id";
 
                         $stmt = $conexao->prepare($query);
                         $stmt->execute();
                         $substituicoes = $stmt->fetchAll();
                         
                         foreach($substituicoes as $substituicao){
+                            // var_dump($substituicao);
                             if(strtolower($substituicao['situacao']) == "concluída"){
                                 echo "<div class='border border-success rounded mt-2 text-center'>
                                         <a href='visualizar-gerente.php?idSubstituicao={$substituicao['0']}&idGerente={$substituicao['gerente']}&substituicao={$substituicao['nome']}' class='link texto fs-5 text-reset'>
                                             <p class='texto mt-2'><b class='verde'>".ucWords($substituicao['1'])."</b> <br> <i class='tam10'> Eletricista: <br>".ucWords($substituicao['nome'])."</i></p>
                                         </a>
                                     </div>";
+                            } else{
+                                echo "<p class='texto'>Nenhuma substituição concluída!</p>";
                             }
                         }
                     }catch(PDOExeptio $e){
@@ -61,7 +64,7 @@
                         $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
                         $busca = isset($_POST['busca'])?$_POST['busca']:"";
-                        $query = "SELECT substituicao.id, substituicao.nome, substituicao.gerente, dataSub, situacao, eletricista.id, eletricista.nome FROM substituicao, eletricista WHERE eletricista.id = substituicao.eletricista";
+                        $query = "SELECT substituicao.id, substituicao.nome, situacao, substituicao.eletricista, eletricista.gerente FROM substituicao, eletricista WHERE eletricista.id = substituicao.eletricista";
 
                         $stmt = $conexao->prepare($query);
                         $stmt->execute();
@@ -74,6 +77,8 @@
                                             <p class='texto mt-2'><b class='text-danger'>".ucWords($substituicao['1'])."</b> <br> <i class='tam10'> Eletricista: <br>".ucWords($substituicao['nome'])."</i></p>
                                         </a>
                                     </div>";
+                            } else{
+                                echo "<p class='texto'>Nenhuma substituição pendente!</p>";
                             }
                         }
                     }catch(PDOExeptio $e){
@@ -122,7 +127,7 @@
                                     try{
                                         $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
                         
-                                        $query = "SELECT gerente.nome, gerente.id, substituicao.id FROM gerente, substituicao WHERE gerente.id = substituicao.gerente";
+                                        $query = "SELECT substituicao.id, gerente.nome FROM substituicao, eletricista, gerente WHERE substituicao.eletricista = eletricista.id AND eletricista.gerente = gerente.id";
                         
                                         $stmt = $conexao->prepare($query);
                                         $stmt->execute();
@@ -149,7 +154,7 @@
                                         try{
                                             $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
                             
-                                            $query = "SELECT eletricista.nome, eletricista.id, substituicao.id FROM eletricista, substituicao WHERE eletricista.id = substituicao.eletricista";
+                                            $query = "SELECT eletricista.nome, substituicao.id FROM eletricista, substituicao WHERE eletricista.id = substituicao.eletricista";
                             
                                             $stmt = $conexao->prepare($query);
                                             $stmt->execute();
@@ -232,7 +237,7 @@
                                 try{
                                     $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
-                                    $query = "SELECT eletricista.nome, eletricista.id, substituicao.id, situacao FROM eletricista, substituicao WHERE eletricista.id = substituicao.eletricista";
+                                    $query = "SELECT eletricista.nome, substituicao.id, situacao FROM eletricista, substituicao WHERE eletricista.id = substituicao.eletricista";
                     
                                     $stmt = $conexao->prepare($query);
                                     $stmt->execute();
