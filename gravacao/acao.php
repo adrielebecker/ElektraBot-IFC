@@ -30,20 +30,42 @@
         $stmt->bindValue(":video", $diretorio);
     }
 
+    function buscarId($substituicao, $conexao){
+        $query = "SELECT * FROM gravacao";
+        $stmt = $conexao->prepare($query);
+        $stmt->execute();
+        $gravacoes = $stmt->fetchALL();
+
+        foreach($gravacoes as $gravacao){
+            if($gravacao['substituicao'] == $substituicao){
+                $idGravacao = $gravacao['id'];
+                return $idGravacao;
+            }
+        }
+    }
+
     function salvar(){
+        global $substituicao;
         try{
             $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
             $query = "INSERT INTO gravacao(video, substituicao) VALUES(:video, :substituicao)";
 
             $stmt = $conexao->prepare($query);
-
             bindar($stmt);
-
             $stmt->execute();
 
-            header('Location: gravacao-eletricista.php?salvo=true');
-    
+            
+            $idGravacao = buscarId($substituicao, $conexao);
+            echo "id".$idGravacao;
+            $query = "UPDATE substituicao SET gravacao = :gravacao WHERE id = :substituicao";
+            $stmt = $conexao->prepare($query);
+            $stmt->bindValue(':substituicao', $substituicao);
+            $stmt->bindValue(':gravacao', $idGravacao);
+            $stmt->execute();
+            
+            header('Location: gravacao-eletricista.php?salvo=true');            
+            echo "foi";
         }catch(Exception $e){
             if($e->getCode() == '23000'){
                header('Location: ../eletricista/camera.php?erro_sql=true');
