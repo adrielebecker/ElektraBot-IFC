@@ -303,7 +303,7 @@
     <script language='javascript'>
         var pendente = <?=$pendente?>;
         if(pendente == true){
-            alert("Antes de concluir a substituição, verifique se relatório e gravação já estão concluídos!")
+            alert("Relatório ou gravação ainda não estão concluídos, verifique!")
         }
     </script>
 </body>

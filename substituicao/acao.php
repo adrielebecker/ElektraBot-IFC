@@ -106,34 +106,43 @@
         }
     }
 
+    function verificacao($conexao, $id){
+        $query = "SELECT * FROM substituicao";
+            
+        $stmt = $conexao->prepare($query);
+        $stmt->execute();
+        $substituicoes = $stmt->fetchAll();
+        
+        foreach($substituicoes as $substituicao){
+            if($substituicao['id'] == $id){
+                if($substituicao['gravacao'] == null || $substituicao['relatorio'] == null){
+                    return true;
+                } 
+            }
+        }
+    }
+
     function concluir(){
         try {
             $situacao = isset($_GET['situacao']) ? $_GET['situacao'] : "pendente";
             $id = isset($_GET['id']) ? $_GET['id'] : 0;
 
             $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);  
-            $query = "SELECT * FROM substituicao";
             
-            $stmt = $conexao->prepare($query);
-            $stmt->execute();
-            $substituicoes = $stmt->fetchAll();
-            
-            foreach($substituicoes as $substituicao){
-                if($substituicao['id'] == $id){
-                    if($substituicao['gravacao'] == null || $substituicao['relatorio'] == null){
-                        header('Location: visualizar-eletricista.php?pendente=true&idSubstituicao='.$id);
-                    }
-                }
+            $verficacao = verificacao($conexao, $id);
+
+            if($verficacao == true){
+                header('Location: visualizar-eletricista.php?pendente=true&idSubstituicao='.$id);
+            } else{
+                $query = "UPDATE substituicao SET situacao = :situacao WHERE id = :id";
+                $stmt = $conexao->prepare($query);
+                
+                $stmt->bindValue(":id", $id);
+                $stmt->bindValue(":situacao", $situacao);
+    
+                $stmt->execute();
+                header('Location: substituicoes-eletricista.php?concluida=true');
             }
-            
-            $query = "UPDATE substituicao SET situacao = :situacao WHERE id = :id";
-            
-
-            $stmt->bindValue(":id", $id);
-            $stmt->bindValue(":situacao", $situacao);
-
-            $stmt->execute();
-            header('Location: substituicoes-eletricista.php?concluida=true');
 
         } catch(Exception $e){
             print("Erro ...<br>".$e->getMessage());
