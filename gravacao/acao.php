@@ -60,12 +60,11 @@
             $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);  
         
             $busca = isset($_GET['busca']) ? $_GET['busca']:"";
-            // $query = "SELECT * FROM substituicao";
-            $query = "SELECT video, gravacao.eletricista, substituicao.nome, substituicao, substituicao.id FROM substituicao, gravacao WHERE substituicao.id = gravacao.substituicao";
+            $query = "SELECT * FROM substituicao";
 
             if ($busca != ""){
                 $busca = $busca.'%';
-                $query .= ' WHERE substituicao.nome like :busca' ;
+                $query .= ' AND substituicao.nome like :busca' ;
             }
         
             $stmt = $conexao->prepare($query);

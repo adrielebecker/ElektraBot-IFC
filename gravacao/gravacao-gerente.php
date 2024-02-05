@@ -31,7 +31,7 @@
                             try{
                                 $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
             
-                                $query = "SELECT video, gravacao.gerente, gravacao.eletricista, substituicao.nome, substituicao.id, eletricista.nome, eletricista.id FROM substituicao, gravacao, eletricista WHERE substituicao.id = gravacao.substituicao AND gravacao.eletricista = eletricista.id";
+                                $query = "SELECT video, substituicao.nome, substituicao.id, eletricista.gerente, eletricista.nome  FROM substituicao, gravacao, eletricista WHERE substituicao.id = gravacao.substituicao AND substituicao.eletricista = eletricista.id";
                 
                                 $stmt = $conexao->prepare($query);
                                 $stmt->execute();
@@ -41,10 +41,11 @@
                                     echo "<h4 class='text-center titulo mt-5'>Ainda não há gravações!</h4>";
                                 } else{
                                     foreach($gravacoes as $gravacao){
+                                        // var_dump($gravacao);
                                         if($_SESSION['idGerente'] === $gravacao['gerente']){                                        
                                             echo "<div class='border border-success rounded mt-2 text-center'>
-                                                    <a href='video-gerente.php?video={$gravacao['video']}&nome={$gravacao['3']}&eletricista={$gravacao['eletricista']}' class='link texto fs-5 text-reset'>
-                                                        <p class='texto mt-2'><b class='verde'>".ucWords($gravacao['3'])."</b> <br> <i class='tam10'> Eletricista: <br>".ucWords($gravacao['nome'])."</i></p>
+                                                    <a href='video-gerente.php?video={$gravacao['video']}&nome={$gravacao['1']}&eletricista={$gravacao['nome']}' class='link texto fs-5 text-reset'>
+                                                        <p class='texto mt-2'><b class='verde'>".ucWords($gravacao['1'])."</b> <br> <i class='tam10'> Eletricista: <br>".ucWords($gravacao['nome'])."</i></p>
                                                     </a>
                                                 </div>";                                           
                                         } else{
@@ -84,12 +85,10 @@
             
         <div class="col-12">
             <div class="row mt-4">
-                <table class="table text-center table-bordered border-dark mt-3">
                 <?php
                     try{
                         $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
-                        $query = "SELECT video, gravacao.gerente, gravacao.eletricista, substituicao.nome, substituicao.id, eletricista.nome, eletricista.id FROM substituicao, gravacao, eletricista WHERE substituicao.id = gravacao.substituicao AND gravacao.eletricista = eletricista.id";
-
+                        $query = "SELECT video, eletricista.nome, substituicao.nome, substituicao.eletricista, eletricista.gerente FROM gravacao, substituicao, eletricista WHERE gravacao.substituicao = substituicao.id AND substituicao.eletricista = eletricista.id";
                         $busca = isset($_POST['busca']) ? $_POST['busca']: "";
                         
                         if ($busca != ""){
@@ -114,10 +113,11 @@
                                 </div>";
                         } else{
                             foreach($gravacoes as $gravacao){
+                                // var_dump($gravacao);
                                 if($_SESSION['idGerente'] === $gravacao['gerente']){                                    
                                     echo "<div class='col-2 mt-4 text-center'>
-                                        <a href='video-gerente.php?video={$gravacao['video']}&nome={$gravacao['3']}&eletricista={$gravacao['eletricista']}' class='link texto fs-5 text-reset'><img src='../img/icones/video.png'></a>
-                                        <p class='texto'><b>".ucWords($gravacao['3'])."</b> <br> <i class='tam10'> Eletricista: <br>".ucWords($gravacao['nome'])."</i></p>
+                                        <a href='video-gerente.php?video={$gravacao['video']}&nome={$gravacao['nome']}&eletricista={$gravacao['eletricista']}' class='link texto fs-5 text-reset'><img src='../img/icones/video.png'></a>
+                                        <p class='texto'><b>".ucWords($gravacao['nome'])."</b> <br> <i class='tam10'> Eletricista: <br>".ucWords($gravacao['1'])."</i></p>
                                     </div>";                                    
                                 } else{
                                     echo "<h4 class='text-center verde titulo mt-5'>Ainda não há gravações!</h4>
@@ -133,8 +133,7 @@
                         print("Erro ao conectar com o banco de dados . . . <br>".$e->getMenssage());
                         die();
                     }
-                    ?>
-                    </table>
+                ?>
             </div>
         </div>
     </div>
