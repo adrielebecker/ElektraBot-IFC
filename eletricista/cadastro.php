@@ -4,6 +4,7 @@
     session_start();
     $acao = isset($_GET['acao']) ? $_GET['acao'] : "Salvar";
     $id = isset($_GET['id']) ? $_GET['id'] : 0;
+    $erro = isset($_GET['erro_sql']) ? $_GET['erro_sql'] : "";
     
     if($acao = "editar"){
         try {
@@ -23,7 +24,6 @@
         }
     }
 
-    $acao = isset($_GET['acao']) ? $_GET['acao'] : "salvar";
     if($acao == "salvar"){
         $pagina = "Cadastro";
     } else{
@@ -242,5 +242,11 @@
                 </div>
             </div>
     </div>
+    <script language='javascript'> 
+        var erro = <?=$erro?>;
+        if(erro = true){
+            alert("Esse nome de usuário não está mais disponível");
+        }
+    </script>
 </body>
 </html>

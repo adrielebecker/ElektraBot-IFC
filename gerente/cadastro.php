@@ -3,6 +3,7 @@
     include '../sql/config.php';
     $acao = isset($_GET['acao']) ? $_GET['acao'] : "Salvar";
     $id = isset($_GET['id']) ? $_GET['id'] : 0;
+    $erro = isset($_GET['erro_sql']) ? $_GET['erro_sql'] : "";
     
     if($acao = "editar"){
         try {
@@ -21,6 +22,13 @@
             die();
         }
     }
+
+    if($acao == "salvar"){
+        $pagina = "Cadastro";
+    } else{
+        $pagina = "Alterar Dados";
+    }
+    $id = isset($_GET['id']) ? $_GET['id'] : 0;
 ?>
 <html lang="pt-BR">
 <head>
@@ -30,6 +38,7 @@
     <?php include 'link.html';?>
 </head>
 <body>
+    <?php if($id != 0) include '../navbar/nav-gerente.php'; else include '../navbar/nav-outro.php'; ?>
     <div class="container">
         <div class="row mt-4">
             <h5 class="titulo verde text-center">Preencha o Formulário:</h5>
