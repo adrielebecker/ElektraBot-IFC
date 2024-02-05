@@ -31,7 +31,7 @@
                             try{
                                 $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
             
-                                $query = "SELECT  texto, codAntigo, codNovo, tipo, acidente, relatorio.gerente, substituicao, substituicao.nome, substituicao.id, relatorio.id FROM substituicao, relatorio WHERE substituicao.id = relatorio.substituicao";
+                                $query = "SELECT  tipo, relatorio.id, substituicao.nome, eletricista.gerente FROM substituicao, relatorio, eletricista WHERE relatorio.substituicao = substituicao.id AND substituicao.eletricista = eletricista.id";
                 
                                 $stmt = $conexao->prepare($query);
                                 $stmt->execute();
@@ -41,6 +41,7 @@
                                     echo "<h6 class='text-center titulo mt-5'>Ainda não há relatórios!</h6>";
                                 } else{
                                     foreach($relatorios as $relatorio){
+                                        // var_dump($relatorio);
                                         if($_SESSION['idGerente'] === $relatorio['gerente']){
                                             echo "<div class='border border-success rounded mt-2 text-center'>
                                                     <a href='visualizar-gerente.php?relatorio={$relatorio['id']}' class='link texto fs-5 text-reset'>
@@ -89,7 +90,7 @@
                         $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
                         $busca = isset($_POST['busca']) ? $_POST['busca']: "";
-                        $query = "SELECT  texto, codAntigo, codNovo, tipo, acidente, relatorio.gerente, substituicao, substituicao.nome, substituicao.id, relatorio.id FROM substituicao, relatorio WHERE substituicao.id = relatorio.substituicao";
+                        $query = "SELECT relatorio.id, substituicao.nome, eletricista.gerente FROM substituicao, relatorio, eletricista WHERE substituicao.id = relatorio.substituicao AND substituicao.eletricista = eletricista.id";
                         
                         if ($busca != ""){
                             $busca = $busca.'%';
@@ -113,6 +114,7 @@
                                 </div>";
                         } else{
                             foreach($relatorios as $relatorio){
+                                // var_dump($relatorio);
                                 if($_SESSION['idGerente'] === $relatorio['gerente']){
                                     echo "<div class='col-2 mt-4 text-center'>
                                         <a href='visualizar-gerente.php?relatorio={$relatorio['id']}' class='link texto fs-5 text-reset'><img src='../img/icones/pastaRelatorio.png'></a>

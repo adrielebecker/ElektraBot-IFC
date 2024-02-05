@@ -92,7 +92,7 @@
                         $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
                         $busca = isset($_POST['busca']) ? $_POST['busca']: "";
-                        $query = "SELECT  texto, codAntigo, codNovo, tipo, acidente, relatorio.substituicao, substituicao.relatorio, substituicao.nome, substituicao.id, substituicao.eletricista, relatorio.id FROM substituicao, relatorio WHERE relatorio.substituicao = substituicao.id";
+                        $query = "SELECT  relatorio.substituicao, substituicao.relatorio, substituicao.nome, substituicao.id, substituicao.eletricista, relatorio.id FROM substituicao, relatorio WHERE relatorio.substituicao = substituicao.id";
                         
                         if ($busca != ""){
                             $busca = $busca.'%';

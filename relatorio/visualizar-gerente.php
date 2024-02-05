@@ -34,7 +34,7 @@
                             try{
                                 $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
             
-                                $query = "SELECT  texto, codAntigo, codNovo, tipo, acidente, relatorio.gerente, substituicao, substituicao.nome, substituicao.id, relatorio.id FROM substituicao, relatorio WHERE substituicao.id = relatorio.substituicao";
+                                $query = "SELECT  tipo, relatorio.id, substituicao.nome, eletricista.gerente FROM substituicao, relatorio, eletricista WHERE relatorio.substituicao = substituicao.id AND substituicao.eletricista = eletricista.id";
                 
                                 $stmt = $conexao->prepare($query);
                                 $stmt->execute();
@@ -73,7 +73,7 @@
                     try{
                         $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
-                        $query = "SELECT  texto, id, gerente FROM relatorio";
+                        $query = "SELECT  texto, relatorio.id, eletricista.gerente FROM relatorio, substituicao, eletricista WHERE relatorio.substituicao = substituicao.id AND substituicao.eletricista = eletricista.id";
         
                         $stmt = $conexao->prepare($query);
                         $stmt->execute();
@@ -106,7 +106,7 @@
                                 try{
                                     $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
-                                    $query = "SELECT  codAntigo, id, gerente FROM relatorio";
+                                    $query = "SELECT  codAntigo, relatorio.id, eletricista.gerente FROM relatorio, substituicao, eletricista WHERE relatorio.substituicao = substituicao.id AND substituicao.eletricista = eletricista.id";
                     
                                     $stmt = $conexao->prepare($query);
                                     $stmt->execute();
@@ -135,7 +135,7 @@
                                 try{
                                     $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
-                                    $query = "SELECT  codNovo, id, gerente FROM relatorio";
+                                    $query = "SELECT  codNovo, relatorio.id, eletricista.gerente FROM relatorio, substituicao, eletricista WHERE relatorio.substituicao = substituicao.id AND substituicao.eletricista = eletricista.id";
                     
                                     $stmt = $conexao->prepare($query);
                                     $stmt->execute();
@@ -168,7 +168,7 @@
                                 try{
                                     $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
-                                    $query = "SELECT  tipo, id, gerente FROM relatorio";
+                                    $query = "SELECT  tipo, relatorio.id, eletricista.gerente FROM relatorio, substituicao, eletricista WHERE relatorio.substituicao = substituicao.id AND substituicao.eletricista = eletricista.id";
                     
                                     $stmt = $conexao->prepare($query);
                                     $stmt->execute();
@@ -203,7 +203,7 @@
                                 try{
                                     $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
-                                    $query = "SELECT  substituicao.nome, substituicao, substituicao.id, relatorio.id, relatorio.gerente FROM relatorio, substituicao WHERE relatorio.substituicao = substituicao.id";
+                                    $query = "SELECT  substituicao.nome, relatorio.id, eletricista.gerente FROM relatorio, substituicao, eletricista WHERE relatorio.substituicao = substituicao.id AND substituicao.eletricista = eletricista.id";
                     
                                     $stmt = $conexao->prepare($query);
                                     $stmt->execute();
@@ -232,7 +232,7 @@
                                 try{
                                     $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
-                                    $query = "SELECT  dataSub, relatorio.id, relatorio.gerente FROM relatorio, substituicao";
+                                    $query = "SELECT  dataSub, relatorio.id, eletricista.gerente FROM relatorio, substituicao, eletricista WHERE relatorio.substituicao = substituicao.id AND substituicao.eletricista = eletricista.id";
                     
                                     $stmt = $conexao->prepare($query);
                                     $stmt->execute();
@@ -261,7 +261,7 @@
                                 try{
                                     $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
-                                    $query = "SELECT  acidente, id, gerente FROM relatorio";
+                                    $query = "SELECT  acidente, relatorio.id, eletricista.gerente FROM relatorio, substituicao, eletricista WHERE relatorio.substituicao = substituicao.id AND substituicao.eletricista = eletricista.id";
                     
                                     $stmt = $conexao->prepare($query);
                                     $stmt->execute();
