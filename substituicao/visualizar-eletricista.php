@@ -3,6 +3,8 @@
     $pagina = "Visualizar Substituição";
     session_start();
     $idSubstituicao = isset($_GET['idSubstituicao']) ? $_GET['idSubstituicao'] : 0;
+    $pendente = isset($_GET['pendente']) ? $_GET['pendente'] : 0;
+
     include '../sql/config.php';
 ?>
 <html lang="pt-BR">
@@ -298,5 +300,11 @@
             </div>
         </div>
     </div>
+    <script language='javascript'>
+        var pendente = <?=$pendente?>;
+        if(pendente == true){
+            alert("Antes de concluir a substituição, verifique se relatório e gravação já estão concluídos!")
+        }
+    </script>
 </body>
 </html>

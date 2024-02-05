@@ -112,9 +112,22 @@
             $id = isset($_GET['id']) ? $_GET['id'] : 0;
 
             $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);  
-            $query = "UPDATE substituicao SET situacao = :situacao WHERE id = :id";
+            $query = "SELECT * FROM substituicao";
             
             $stmt = $conexao->prepare($query);
+            $stmt->execute();
+            $substituicoes = $stmt->fetchAll();
+            
+            foreach($substituicoes as $substituicao){
+                if($substituicao['id'] == $id){
+                    if($substituicao['gravacao'] == null || $substituicao['relatorio'] == null){
+                        header('Location: visualizar-eletricista.php?pendente=true&idSubstituicao='.$id);
+                    }
+                }
+            }
+            
+            $query = "UPDATE substituicao SET situacao = :situacao WHERE id = :id";
+            
 
             $stmt->bindValue(":id", $id);
             $stmt->bindValue(":situacao", $situacao);
