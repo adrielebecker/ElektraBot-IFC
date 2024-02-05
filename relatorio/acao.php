@@ -49,7 +49,23 @@
         $stmt->bindValue(":substituicao", $substituicao);
         $stmt->bindValue(":acidente", $acidente);
     }
+
+    function buscarId($substituicao, $conexao){
+        $query = "SELECT * FROM relatorio";
+        $stmt = $conexao->prepare($query);
+        $stmt->execute();
+        $relatorios = $stmt->fetchALL();
+
+        foreach($relatorios as $relatorio){
+            if($relatorio['substituicao'] == $substituicao){
+                $idGravacao = $relatorio['id'];
+                return $idGravacao;
+            }
+        }
+    }
+
     function salvar(){
+        global $substituicao;
         try {
             $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
           
@@ -59,6 +75,14 @@
             bindar($stmt);
             $stmt->execute();
 
+            $idRelatorio = buscarId($substituicao, $conexao);
+
+            echo "id".$idRelatorio;
+            $query = "UPDATE substituicao SET relatorio = :relatorio WHERE id = :substituicao";
+            $stmt = $conexao->prepare($query);
+            $stmt->bindValue(':substituicao', $substituicao);
+            $stmt->bindValue(':relatorio', $idRelatorio);
+            $stmt->execute();
             header('Location: relatorios-eletricista.php?salvo=true');
         } catch(Exception $e){
             if($e->getCode() == '23000'){
