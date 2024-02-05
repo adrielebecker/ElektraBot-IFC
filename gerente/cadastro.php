@@ -30,7 +30,6 @@
     <?php include 'link.html';?>
 </head>
 <body>
-    <?php include "../navbar/nav-outro.php"; ?>
     <div class="container">
         <div class="row mt-4">
             <h5 class="titulo verde text-center">Preencha o Formulário:</h5>
@@ -166,9 +165,21 @@
                     </div>
                 </form>
                     <div class="col-1">
-                        <button class="btn btn-secondary border-dark"><a href="../index.php" class="link texto branco">Voltar</a></button>
+                        <?php
+                            if($id != 0){
+                                echo "<button class='btn btn-secondary border-dark'><a href='conta.php' class='link texto branco'>Voltar</a></button>";
+                            } elseif($id == 0){
+                                echo "<button class='btn btn-secondary border-dark'><a href='../index.php' class='link texto branco'>Voltar</a></button>";
+                            }
+                        ?>
                     </div>
                 </div>
     </div>
+    <script language='javascript'> 
+        var erro = <?=$erro?>;
+        if(erro = true){
+            alert("Esse nome de usuário não está mais disponível");
+        }
+    </script>
 </body>
 </html>

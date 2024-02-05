@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-3">
                 <button class="navbar-toggler border border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarToggleExternalContent">
-                    <h6 class="texto verde mt-1">Acesso rápido</h6>
+                    <h6 class="texto verde mt-1"><u>Acesso rápido</u></h6>
                 </button>
 
                 <div class="offcanvas p-5 offcanvas-start text-center" id="navbarToggleExternalContent">

@@ -62,7 +62,7 @@
                         </div>
                     </div>
                     <div class="row mt-4">
-                        <a href="cadastrar.php" class="text-end">Cadastrar</a>
+                        <a href="cadastrar.php" class="text-end text-success">Cadastrar</a>
                     </div>
                 </form>
                 <br>
@@ -70,8 +70,8 @@
         </div>
     </div>
     <script language="javascript">
-        var cadastro = "<?php echo $cadastro;?>";
-        if(cadastro == "true"){
+        var cadastro = <?=$cadastro;?>;
+        if(cadastro == true){
             alert("Cadastro efetuado com sucesso!");
         }
     </script>

@@ -39,7 +39,8 @@
     <?php include 'link.html';?>
 </head>
 <body>
-    <?php include '../navbar/nav-outro.php';?>
+    <?php  
+        if($id != 0) include '../navbar/nav-eletricista.php'; else include '../navbar/nav-outro.php';?>
     <div class="container">
         <div class="row mt-4">
             <h5 class="titulo verde text-center">Preencha o Formulário:</h5>
@@ -231,7 +232,13 @@
                 </div>
             </form>
                 <div class="col-1 mt-4 pt-2">
-                    <button class="btn btn-secondary border-dark mt-4"><a href="../index.php" class="link texto branco">Voltar</a></button>
+                    <?php
+                        if($id != 0){
+                            echo "<button class='btn btn-secondary border-dark mt-4'><a href='conta.php' class='link texto branco'>Voltar</a></button>";
+                        } else{
+                            echo "<button class='btn btn-secondary border-dark mt-4'><a href='../index.php' class='link texto branco'>Voltar</a></button>";
+                        }
+                    ?>
                 </div>
             </div>
     </div>

@@ -111,8 +111,12 @@
 
             header('Location: conta.php?salvo=true');
         } catch(Exception $e){
-            print("Erro ...<br>".$e->getMessage());
-            die();
+            if($e->getCode() == '23000'){
+                header('Location: cadastro.php?erro_sql=true');
+            } else{
+                print("Erro ...<br>".$e->getMessage());
+                die();
+            }
         }
         
     }
