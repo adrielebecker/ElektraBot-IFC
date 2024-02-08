@@ -74,22 +74,42 @@
         $stmt->bindValue(":cep",$cep);
         $stmt->bindValue(":senha",$senha);
     }
+
+    function verificaUsuario($conexao, $usuario){
+        $query = "SELECT * FROM gerente";
+        $stmt = $conexao->prepare($query);
+        $stmt->execute();
+        $gerentes = $stmt->fetchAll();
+
+        foreach($gerentes as $gerente){
+            if($gerente['usuario'] != $usuario){
+                $user = true;
+            } else{
+                $user = false;
+            }
+        }
+        return $user;
+    }
+
     function salvar(){
         global $usuario, $nome, $dataNasc, $sexo, $cpf, $matricula, $celular, $email, $estado, $cidade, $bairro, $rua, $complemento, $numero, $cep, $senha;
 
         try {
             $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
             /* ":" deixa mais generico que usar variavel */
-            $query = "INSERT INTO gerente(usuario, nome, dataNasc, sexo, cpf, matricula, celular, email, estado, cidade, bairro, rua, complemento, numero, cep, senha) VALUES(:usuario, :nome, :dataNasc, :sexo, :cpf, :matricula, :celular, :email, :estado, :cidade, :bairro, :rua, :complemento, :numero, :cep, :senha)"; 
-            
-            /* stmt -> statement -> execução do código -> mandar o BD executar algo */
-            $stmt = $conexao->prepare($query);
+            $user = verificaUsuario($conexao, $usuario);
 
-            bindar($stmt);
-
-            $stmt->execute();
-
-            header('Location: ../login.php?cadastro=true');
+            if($user == true){
+                $query = "INSERT INTO gerente(usuario, nome, dataNasc, sexo, cpf, matricula, celular, email, estado, cidade, bairro, rua, complemento, numero, cep, senha) VALUES(:usuario, :nome, :dataNasc, :sexo, :cpf, :matricula, :celular, :email, :estado, :cidade, :bairro, :rua, :complemento, :numero, :cep, :senha)"; 
+                
+                /* stmt -> statement -> execução do código -> mandar o BD executar algo */
+                $stmt = $conexao->prepare($query);
+                bindar($stmt);
+                $stmt->execute();    
+                header('Location: ../login.php?cadastro=true');
+            } else{
+                header('Location: cadastro.php?erroUsuario=true');
+            }
         } catch(Exception $e){
             if($e->getCode() == '23000'){
                 header('Location: cadastro.php?erro_sql=true');

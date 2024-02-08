@@ -4,6 +4,7 @@
     $acao = isset($_GET['acao']) ? $_GET['acao'] : "Salvar";
     $id = isset($_GET['id']) ? $_GET['id'] : 0;
     $erro = isset($_GET['erro_sql']) ? $_GET['erro_sql'] : "";
+    $erroUsuario = isset($_GET['erroUsuario']) ? $_GET['erroUsuario'] : "";
     
     if($acao = "editar"){
         try {
@@ -187,6 +188,12 @@
     <script language='javascript'> 
         var erro = <?=$erro?>;
         if(erro = true){
+            alert("Esse nome de usuário não está mais disponível");
+        }
+    </script>
+    <script> 
+        var erroUsuario = <?=$erroUsuario?>;
+        if(erroUsuario == true){
             alert("Esse nome de usuário não está mais disponível");
         }
     </script>
