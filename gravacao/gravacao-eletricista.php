@@ -31,7 +31,7 @@
                             try{
                                 $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
             
-                                $query = "SELECT video, gravacao.substituicao, substituicao.nome, substituicao.id, substituicao.eletricista, eletricista.id FROM substituicao, gravacao, eletricista WHERE substituicao.id = gravacao.substituicao AND substituicao.eletricista = eletricista.id";
+                                $query = "SELECT substituicao.nome, substituicao.eletricista, gravacao.id FROM substituicao, gravacao, eletricista WHERE substituicao.id = gravacao.substituicao AND substituicao.eletricista = eletricista.id";
                 
                                 $stmt = $conexao->prepare($query);
                                 $stmt->execute();
@@ -44,7 +44,7 @@
                                         // var_dump($gravacao);
                                         if($_SESSION['idEletricista'] === $gravacao['eletricista']){
                                             echo "<div class='border border-success rounded mt-2 text-center'>
-                                                    <a href='video-eletricista.php?video={$gravacao['video']}&nome={$gravacao['nome']}&eletricista={$gravacao['eletricista']}' class='link texto fs-5 text-reset'>
+                                                    <a href='video-eletricista.php?gravacao={$gravacao['id']}' class='link texto fs-5 text-reset'>
                                                         <p class='texto mt-3'><b class='verde'>".ucWords($gravacao['nome'])."</b></p>
                                                     </a>
                                             </div>";
@@ -91,7 +91,7 @@
                         $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
                         $busca = isset($_POST['busca']) ? $_POST['busca']: "";
-                        $query = "SELECT video, gravacao.substituicao, substituicao.nome, substituicao.id, substituicao.eletricista, eletricista.id FROM substituicao, gravacao, eletricista WHERE substituicao.id = gravacao.substituicao AND substituicao.eletricista = eletricista.id";
+                        $query = "SELECT substituicao.nome, substituicao.id, substituicao.eletricista, eletricista.id, gravacao.id FROM substituicao, gravacao, eletricista WHERE substituicao.id = gravacao.substituicao AND substituicao.eletricista = eletricista.id";
                         
                         if ($busca != ""){
                             $busca = $busca.'%';
@@ -118,7 +118,7 @@
                                 // var_dump($gravacao);
                                 if($_SESSION['idEletricista'] === $gravacao['eletricista']){
                                     echo "<div class='col-2 mt-4 text-center'>
-                                        <a href='video-eletricista.php?video={$gravacao['video']}&nome={$gravacao['nome']}' class='link texto fs-5 text-reset'><img src='../img/icones/video.png'></a>
+                                        <a href='video-eletricista.php?gravacao={$gravacao['id']}' class='link texto fs-5 text-reset'><img src='../img/icones/video.png'></a>
                                         <p class='texto fs-6'>".ucWords($gravacao['nome'])."</p>
                                     </div>";
                                 } else{

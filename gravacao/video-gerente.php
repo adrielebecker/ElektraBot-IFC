@@ -2,9 +2,7 @@
 <?php
     include '../sql/config.php';
     $pagina = 'Vídeo';
-    $video = isset($_GET['video']) ? $_GET['video'] : "";
-    $nome = isset($_GET['nome']) ? $_GET['nome'] : "";
-    $idEletricista = isset($_GET['eletricista']) ? $_GET['eletricista'] : 0;
+    $id = isset($_GET['gravacao']) ? $_GET['gravacao'] : 0;
     session_start();
 ?>
 <html lang="pt-BR">
@@ -34,7 +32,7 @@
                             try{
                                 $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
             
-                                $query = "SELECT video, substituicao.nome, eletricista.nome, eletricista.gerente FROM substituicao, gravacao, eletricista WHERE substituicao.id = gravacao.substituicao AND substituicao.eletricista = eletricista.id";
+                                $query = "SELECT substituicao.nome, eletricista.nome, eletricista.gerente, gravacao.id FROM substituicao, gravacao, eletricista WHERE substituicao.id = gravacao.substituicao AND substituicao.eletricista = eletricista.id";
                 
                                 $stmt = $conexao->prepare($query);
                                 $stmt->execute();
@@ -48,7 +46,7 @@
                                             break;
                                         } else{
                                             echo "<div class='border border-success rounded mt-2 text-center'>
-                                                    <a href='video-gerente.php?video={$gravacao['video']}&nome={$gravacao['1']}&eletricista={$gravacao['nome']}' class='link texto fs-5 text-reset'>
+                                                    <a href='video-gerente.php?gravacao={$gravacao['id']}' class='link texto fs-5 text-reset'>
                                                         <p class='texto mt-2'><b class='verde'>".ucWords($gravacao['1'])."</b> <br> <i class='tam10'> Eletricista: <br>".ucWords($gravacao['nome'])."</i></p>
                                                     </a>
                                             </div>";
@@ -79,23 +77,47 @@
             <div class="col-2"></div>
             <div class="col-8">
                 <div class="row">
-                    <h4 class="text-center titulo verde"><?=$nome?></h4>
+                <?php
+                    try{
+                        $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
+    
+                        $query = "SELECT substituicao.nome, eletricista.gerente, gravacao.id FROM substituicao, gravacao, eletricista WHERE substituicao.id = gravacao.substituicao AND substituicao.eletricista = eletricista.id";
+        
+                        $stmt = $conexao->prepare($query);
+                        $stmt->execute();
+                        $gravacoes = $stmt->fetchAll();
+                        
+                        foreach($gravacoes as $gravacao){
+                            // var_dump($gravacao);
+                            if($_SESSION['idGerente'] == $gravacao['gerente']){
+                                if($gravacao['id'] == $id){
+                                    echo "<h4 class='text-center titulo verde'>".$gravacao['nome']."</h4>";
+                                    break;
+                                }
+                            } 
+                        }
+                    } catch(Exception $e){
+                        print("Erro ...<br>".$e->getMessage());
+                        die();
+                    
+                    }
+                ?>
                 </div>
                 <div class="row text-center">
                     <?php
                         try{
                             $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
         
-                            $query = "SELECT nome, id, gerente FROM eletricista";
+                            $query = "SELECT eletricista.nome, eletricista.gerente, gravacao.id FROM eletricista, gravacao, substituicao WHERE gravacao.substituicao = substituicao.id AND substituicao.eletricista = eletricista.id";
             
                             $stmt = $conexao->prepare($query);
                             $stmt->execute();
-                            $eletricistas = $stmt->fetchAll();
+                            $gravacoes = $stmt->fetchAll();
                             
-                            foreach($eletricistas as $eletricista){
-                                if($_SESSION['idGerente'] === $eletricista['gerente']){
-                                    if($idEletricista == $eletricista['id']){
-                                        echo "<p>Eletricista: <em>".ucWords($eletricista['nome'])."</em></p>";
+                            foreach($gravacoes as $gravacao){
+                                if($_SESSION['idGerente'] === $gravacao['gerente']){
+                                    if($gravacao['id'] == $id){
+                                        echo "<p>Eletricista: <em>".ucWords($gravacao['nome'])."</em></p>";
                                     }
                                 } 
                             }
@@ -112,11 +134,32 @@
         <div class="row">
             <div class="col-2"></div>
             <div class="col-8 ms-5">
-                <?php
-                    echo "<video width='600' controls autoplay muted>
-                            <source src='../{$video}' type='video/mp4'>
-                        </video>";
-                ?>
+            <?php
+                try{
+                    $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
+
+                    $query = "SELECT video, eletricista.gerente, gravacao.id FROM substituicao, gravacao, eletricista WHERE substituicao.id = gravacao.substituicao AND substituicao.eletricista = eletricista.id";
+    
+                    $stmt = $conexao->prepare($query);
+                    $stmt->execute();
+                    $gravacoes = $stmt->fetchAll();
+                    
+                    foreach($gravacoes as $gravacao){
+                        // var_dump($gravacao);
+                        if($_SESSION['idGerente'] == $gravacao['gerente']){
+                            if($gravacao['id'] == $id){
+                                echo "<video width='600' controls autoplay muted>
+                                        <source src='../{$gravacao['video']}' type='video/mp4'>
+                                    </video>";
+                            }
+                        } 
+                    }
+                } catch(Exception $e){
+                    print("Erro ...<br>".$e->getMessage());
+                    die();
+                
+                }
+            ?>
             </div>
         </div>
     </div>

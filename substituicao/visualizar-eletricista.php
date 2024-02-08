@@ -256,7 +256,7 @@
                                         foreach($substituicoes as $substituicao){
                                             if($idSubstituicao == $substituicao['id']){
                                                 if($substituicao['gravacao'] != null){
-                                                    echo "<a href='../gravacao/video-eletricista.php?idGravacao={$substituicao['gravacao']}'><button class='btn btn-outline-success texto verde'>Gravação</button></a>";
+                                                    echo "<a href='../gravacao/video-eletricista.php?gravacao={$substituicao['gravacao']}'><button class='btn btn-outline-success texto verde'>Gravação</button></a>";
                                                 } else{
                                                     echo "<button class='btn btn-outline-success texto verde' onClick='mensagemG();'>Gravação</button>";
                                                 }

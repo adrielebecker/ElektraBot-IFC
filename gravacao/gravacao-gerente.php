@@ -88,7 +88,7 @@
                 <?php
                     try{
                         $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
-                        $query = "SELECT video, eletricista.nome, substituicao.nome, substituicao.eletricista, eletricista.gerente FROM gravacao, substituicao, eletricista WHERE gravacao.substituicao = substituicao.id AND substituicao.eletricista = eletricista.id";
+                        $query = "SELECT eletricista.nome, substituicao.nome, eletricista.gerente, gravacao.id FROM gravacao, substituicao, eletricista WHERE gravacao.substituicao = substituicao.id AND substituicao.eletricista = eletricista.id";
                         $busca = isset($_POST['busca']) ? $_POST['busca']: "";
                         
                         if ($busca != ""){
@@ -116,8 +116,8 @@
                                 // var_dump($gravacao);
                                 if($_SESSION['idGerente'] === $gravacao['gerente']){                                    
                                     echo "<div class='col-2 mt-4 text-center'>
-                                        <a href='video-gerente.php?video={$gravacao['video']}&nome={$gravacao['nome']}&eletricista={$gravacao['eletricista']}' class='link texto fs-5 text-reset'><img src='../img/icones/video.png'></a>
-                                        <p class='texto'><b>".ucWords($gravacao['nome'])."</b> <br> <i class='tam10'> Eletricista: <br>".ucWords($gravacao['1'])."</i></p>
+                                        <a href='video-gerente.php?gravacao={$gravacao['id']}' class='link texto fs-5 text-reset'><img src='../img/icones/video.png'></a>
+                                        <p class='texto'><b>".ucWords($gravacao['nome'])."</b> <br> <i class='tam10'> Eletricista: <br>".ucWords($gravacao['0'])."</i></p>
                                     </div>";                                    
                                 } else{
                                     echo "<h4 class='text-center verde titulo mt-5'>Ainda não há gravações!</h4>
