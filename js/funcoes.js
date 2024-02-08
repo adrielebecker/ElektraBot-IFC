@@ -16,7 +16,7 @@ function excluirConta(id){
     if(acao == true){
         window.location.href = '../eletricista/acao.php?acao=excluir&id=' + id;
     } else{
-        window.location.href = "../eletricista/camera.php";
+        window.location.href = "../eletricista/conta.php";
     }
 
 }

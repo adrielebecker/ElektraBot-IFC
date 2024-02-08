@@ -127,15 +127,19 @@
     function excluir(){
         try{
             $id = isset($_GET['id']) ? $_GET['id'] : 0;
-    
+
             $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
-            $query = "DELETE FROM gerente WHERE id = :id";
+            $query = "UPDATE gerente SET ativo = :ativo WHERE id = :id";
             $stmt = $conexao->prepare($query);
+            $stmt->bindValue(":ativo", "nao");
             $stmt->bindValue(":id", $id);
-    
+
             $stmt->execute();
-            echo "foi";
-            
+
+            header('Location: ../login.php?excluido=true');
+        } catch(PDOExeptio $e){
+            print("Erro ao conectar com o banco de dados . . . <br>".$e->getMenssage());
+            die();
         } catch(PDOException $e){
             if($e->getCode() == '23000'){
                 header('Location: transferencia.php?erro_sql=true');
@@ -144,6 +148,26 @@
                 die();
             }
         }
+
+        // try{
+        //     $id = isset($_GET['id']) ? $_GET['id'] : 0;
+    
+        //     $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
+        //     $query = "DELETE FROM gerente WHERE id = :id";
+        //     $stmt = $conexao->prepare($query);
+        //     $stmt->bindValue(":id", $id);
+    
+        //     $stmt->execute();
+        //     echo "foi";
+            
+        // } catch(PDOException $e){
+        //     if($e->getCode() == '23000'){
+        //         header('Location: transferencia.php?erro_sql=true');
+        //     } else{
+        //         print("Erro ...<br>".$e->getMessage());
+        //         die();
+        //     }
+        // }
     }
 
     function buscar(){

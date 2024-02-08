@@ -39,7 +39,7 @@
                 $gerentes = $stmt->fetchAll();
 
                 foreach($gerentes as $gerente){
-                    if(strtolower($gerente['usuario']) == strtolower($usuario) && $gerente['senha'] == $senha){
+                    if(strtolower($gerente['usuario']) == strtolower($usuario) && $gerente['senha'] == $senha && $gerente['ativo'] != 'nao'){
                         session_start();
                         $_SESSION['nomeGerente'] = $gerente['nome'];
                         $_SESSION['idGerente'] = $gerente['id'];
@@ -47,7 +47,7 @@
                         header('Location: ../gerente/index.php');
                     } 
                     else{
-                        echo "Usuário ou senha incorretos!";
+                        header('Location: ../login.php?incorreto=true');
                     }
                 }
             } catch(Exception $e){
@@ -65,7 +65,7 @@
                 $eletricistas = $stmt->fetchAll();
 
                 foreach($eletricistas as $eletricista){
-                    if(strtolower($eletricista['usuario']) == strtolower($usuario) && $eletricista['senha'] == $senha){
+                    if(strtolower($eletricista['usuario']) == strtolower($usuario) && $eletricista['senha'] == $senha && $eletricista['ativo'] != 'nao'){
                         session_start();
                         $_SESSION['nomeEletricista'] = $eletricista['nome'];
                         $_SESSION['idEletricista'] = $eletricista['id'];
@@ -74,7 +74,7 @@
                         header('Location: ../eletricista/index.php');
                     } 
                     else{
-                        echo "Usuário ou senha incorretos!";
+                        header('Location: ../login.php?incorreto=true');
                     }
                 }
             } catch(Exception $e){

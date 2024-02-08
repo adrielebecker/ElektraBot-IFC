@@ -145,16 +145,33 @@
     }
     
     function excluir(){
-        try{
-            $id = isset($_GET["id"]) ? $_GET["id"]: 0;
+        // try{
+        //     $id = isset($_GET["id"]) ? $_GET["id"]: 0;
     
+        //     $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
+        //     $query = "DELETE FROM eletricista WHERE id = :id";
+        //     $stmt = $conexao->prepare($query);
+        //     $stmt->bindValue(":id", $id);
+
+        //     $stmt->execute();
+    
+        // } catch(PDOExeptio $e){
+        //     print("Erro ao conectar com o banco de dados . . . <br>".$e->getMenssage());
+        //     die();
+        // }
+
+        try{
+            $id = isset($_GET['id']) ? $_GET['id'] : 0;
+
             $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
-            $query = "DELETE FROM eletricista WHERE id = :id";
+            $query = "UPDATE eletricista SET ativo = :ativo WHERE id = :id";
             $stmt = $conexao->prepare($query);
+            $stmt->bindValue(":ativo", "nao");
             $stmt->bindValue(":id", $id);
 
             $stmt->execute();
-    
+
+            header('Location: ../login.php');
         } catch(PDOExeptio $e){
             print("Erro ao conectar com o banco de dados . . . <br>".$e->getMenssage());
             die();

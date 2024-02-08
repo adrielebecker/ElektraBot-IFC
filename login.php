@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <?php
     $cadastro = isset($_GET['cadastro']) ? $_GET['cadastro'] : "";
+    $excluido = isset($_GET['excluido']) ? $_GET['excluido'] : "";
+    $incorreto = isset($_GET['incorreto']) ? $_GET['incorreto'] : "";
 ?>
 <html lang="pt-BR">
 <head>
@@ -73,6 +75,18 @@
         var cadastro = <?=$cadastro;?>;
         if(cadastro == true){
             alert("Cadastro efetuado com sucesso!");
+        }
+    </script>
+    <script>
+        var excluido = <?=$excluido?>;
+        if(excluido == true){
+            alert("A conta foi excluída com sucesso!");
+        }
+    </script>
+    <script>
+        var incorreto = <?=$incorreto?>;
+        if(incorreto == true){
+            alert("Usuário ou senha incorretos!");
         }
     </script>
 </body>
