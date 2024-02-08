@@ -92,7 +92,6 @@
 
         <div class="row">
             <div class="col-6 mt-3">
-                <form action="acao.php" method="post">
                 <div class="row mt-5">
                     <div class="col-5">
                         <div class="row bg-success rounded">
@@ -231,35 +230,69 @@
                                 ?>
                             </div>
                         </div>
-                        <div class="col-1 ms-5"></div>
-                        <div class="col-4 text-center ms-4 mt-3">
-                            <?php
-                                try{
-                                    $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
-                                    $query = "SELECT eletricista.nome, substituicao.id, situacao FROM eletricista, substituicao WHERE eletricista.id = substituicao.eletricista";
-                    
-                                    $stmt = $conexao->prepare($query);
-                                    $stmt->execute();
-                                    $substituicoes = $stmt->fetchAll();
-                                    
-                                    foreach($substituicoes as $substituicao){
-                                        $nome = explode(" ", $substituicao['nome']);
-
-                                        if($idSubstituicao == $substituicao['id']){
-                                            if(strtolower($substituicao['situacao']) == "pendente"){
-                                                echo "<p class='texto'>Atenção: <b>".ucWords($nomeSubstituicao)."</b> ainda está <b style='color: #F00;'>pendente</b>!</p>";
-                                            } elseif(strtolower($substituicao['situacao']) == "concluída"){
-                                                echo "<p class='texto'>".ucWords($nome['0'])." já <b class='verde'> concluiu </b><b>".ucWords($nomeSubstituicao)."</b>!</p>";
-                                            } 
+                        <div class="col-2"></div>
+                        <div class="col-5">
+                            <div class="row">
+                                <h6 class="texto verde text-center mt-3"><b>Visualizar:</b></h6>
+                            </div>
+                        
+                            <div class="row mt-2">
+                                <div class="col-2">
+                                <?php
+                                    try{
+                                        $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
+                        
+                                        $query = "SELECT * FROM substituicao";
+                        
+                                        $stmt = $conexao->prepare($query);
+                                        $stmt->execute();
+                                        $substituicoes = $stmt->fetchAll();
+                                        
+                                        foreach($substituicoes as $substituicao){
+                                            if($idSubstituicao == $substituicao['id']){
+                                                if($substituicao['gravacao'] != null){
+                                                    echo "<a href='../gravacao/video-gerente.php?idGravacao={$substituicao['gravacao']}'><button class='btn btn-outline-success texto verde'>Gravação</button></a>";
+                                                } else{
+                                                    echo "<button class='btn btn-outline-success texto verde' onClick='mensagemG();'>Gravação</button>";
+                                                }
+                                            }
                                         }
+                                    }catch(Exception $e){
+                                        print("Erro ...<br>".$e->getMessage());
+                                        die();
                                     }
-                                }catch(Exception $e){
-                                    print("Erro ...<br>".$e->getMessage());
-                                    die();
-                                }
-                            ?>
-                        </div>
+                                ?>
+                                </div>
+                                <div class="col-4"></div>
+                                <div class="col-2">
+                                <?php
+                                    try{
+                                        $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
+                        
+                                        $query = "SELECT * FROM substituicao";
+                        
+                                        $stmt = $conexao->prepare($query);
+                                        $stmt->execute();
+                                        $substituicoes = $stmt->fetchAll();
+                                        
+                                        foreach($substituicoes as $substituicao){
+                                            if($idSubstituicao == $substituicao['id']){
+                                                if($substituicao['relatorio'] != null){
+                                                    echo "<a href='../relatorio/visualizar-gerente.php?relatorio={$substituicao['relatorio']}'><button class='btn btn-outline-success texto verde'>Relatório</button></a>";
+                                                } else{
+                                                    echo "<button class='btn btn-outline-success texto verde' onClick='mensagemR();'>Relatório</button>";
+                                                }
+                                            }
+                                        }
+                                    }catch(Exception $e){
+                                        print("Erro ...<br>".$e->getMessage());
+                                        die();
+                                    }
+                                ?>
+                                </div>
+                            </div>
+                        </div>    
                     </div>
             </div>
             <div class="col-6 mt-4">
@@ -294,7 +327,6 @@
                         ?>
                     </div>
                 </div>
-                </form>
             </div>
         </div>
     </div>

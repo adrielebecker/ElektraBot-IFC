@@ -95,7 +95,6 @@
 
         <div class="row">
             <div class="col-6 mt-4">
-                <form action="acao.php" method="post">
                 <div class="row mt-1">
                     <div class="col-5">
                         <div class="row bg-success rounded">
@@ -235,33 +234,96 @@
                                 ?>
                             </div>
                         </div>
-                        <div class="col-1 ms-5"></div>
-                        <div class="col-4 text-center ms-4 mt-3">
-                            <?php
-                                try{
-                                    $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
-                    
-                                    $query = "SELECT * FROM substituicao";
-                    
-                                    $stmt = $conexao->prepare($query);
-                                    $stmt->execute();
-                                    $substituicoes = $stmt->fetchAll();
-                                    
-                                    foreach($substituicoes as $substituicao){
-                                        if($idSubstituicao == $substituicao['id']){
-                                            if(strtolower($substituicao['situacao']) == "pendente"){
-                                                echo "<a href=acao.php?acao=concluir&id=".$substituicao["id"]."&situacao=concluída class='btn btn-success mt-1'>Concluir</a>";
-                                            } else{
-                                                echo "<p class='texto'>Parabéns: <b>".ucWords($substituicao['nome'])."</b> está <b class='verde'>Concluída</b>!</p>";
+
+                        <div class="col-2"></div>
+                        <div class="col-5">
+                            <div class="row">
+                                <h6 class="texto verde text-center mt-3"><b>Visualizar:</b></h6>
+                            </div>
+                        
+                            <div class="row mt-2">
+                                <div class="col-2">
+                                <?php
+                                    try{
+                                        $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
+                        
+                                        $query = "SELECT * FROM substituicao";
+                        
+                                        $stmt = $conexao->prepare($query);
+                                        $stmt->execute();
+                                        $substituicoes = $stmt->fetchAll();
+                                        
+                                        foreach($substituicoes as $substituicao){
+                                            if($idSubstituicao == $substituicao['id']){
+                                                if($substituicao['gravacao'] != null){
+                                                    echo "<a href='../gravacao/video-eletricista.php?idGravacao={$substituicao['gravacao']}'><button class='btn btn-outline-success texto verde'>Gravação</button></a>";
+                                                } else{
+                                                    echo "<button class='btn btn-outline-success texto verde' onClick='mensagemG();'>Gravação</button>";
+                                                }
                                             }
                                         }
+                                    }catch(Exception $e){
+                                        print("Erro ...<br>".$e->getMessage());
+                                        die();
                                     }
-                                }catch(Exception $e){
-                                    print("Erro ...<br>".$e->getMessage());
-                                    die();
-                                }
-                            ?>
+                                ?>
+                                </div>
+                                <div class="col-4"></div>
+                                <div class="col-2">
+                                <?php
+                                    try{
+                                        $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
+                        
+                                        $query = "SELECT * FROM substituicao";
+                        
+                                        $stmt = $conexao->prepare($query);
+                                        $stmt->execute();
+                                        $substituicoes = $stmt->fetchAll();
+                                        
+                                        foreach($substituicoes as $substituicao){
+                                            if($idSubstituicao == $substituicao['id']){
+                                                if($substituicao['relatorio'] != null){
+                                                    echo "<a href='../relatorio/visualizar-eletricista.php?relatorio={$substituicao['relatorio']}'><button class='btn btn-outline-success texto verde'>Relatório</button></a>";
+                                                } else{
+                                                    echo "<button class='btn btn-outline-success texto verde' onClick='mensagemR();'>Relatório</button>";
+                                                }
+                                            }
+                                        }
+                                    }catch(Exception $e){
+                                        print("Erro ...<br>".$e->getMessage());
+                                        die();
+                                    }
+                                ?>
+                                </div>
+                            </div>
                         </div>
+
+                        <!-- <div class="col-4 text-center ms-4 mt-3"> -->
+                            <?php
+                                // try{
+                                //     $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
+                    
+                                //     $query = "SELECT * FROM substituicao";
+                    
+                                //     $stmt = $conexao->prepare($query);
+                                //     $stmt->execute();
+                                //     $substituicoes = $stmt->fetchAll();
+                                    
+                                //     foreach($substituicoes as $substituicao){
+                                //         if($idSubstituicao == $substituicao['id']){
+                                //             if(strtolower($substituicao['situacao']) == "pendente"){
+                                //                 echo "<a href=acao.php?acao=concluir&id=".$substituicao["id"]."&situacao=concluída class='btn btn-success mt-1'>Concluir</a>";
+                                //             } else{
+                                //                 echo "<p class='texto'>Parabéns: <b>".ucWords($substituicao['nome'])."</b> está <b class='verde'>Concluída</b>!</p>";
+                                //             }
+                                //         }
+                                //     }
+                                // }catch(Exception $e){
+                                //     print("Erro ...<br>".$e->getMessage());
+                                //     die();
+                                // }
+                            ?>
+                        <!-- </div> -->
                     </div>
             </div>
             <div class="col-6">
@@ -296,14 +358,13 @@
                         ?>
                     </div>
                 </div>
-                </form>
             </div>
         </div>
     </div>
     <script language='javascript'>
         var pendente = <?=$pendente?>;
         if(pendente == true){
-            alert("Relatório ou gravação ainda não estão concluídos, verifique!")
+            alert("Relatório ou gravação ainda não estão concluídos, verifique!");
         }
     </script>
 </body>

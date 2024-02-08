@@ -34,4 +34,11 @@ function transferir(){
     alert("Antes de excluir sua conta transfira seus eletricistas para outro gerente!");
 }
 
+function mensagemR(){
+    alert("Nenhum relatório no momento!");
+}
+
+function mensagemG(){
+    alert("Nenhuma gravação no momento!");
+}
 

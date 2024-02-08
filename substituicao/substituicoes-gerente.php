@@ -5,6 +5,8 @@
     $hoje = date("Y/m/d");
     $busca = isset($_POST['busca']) ? $_POST['busca'] : "";
     $sucesso = isset($_GET['sucesso']) ? $_GET['sucesso'] : "";
+    $erro = isset($_GET['erro']) ? $_GET['erro'] : "";
+
     include '../sql/config.php';
 
     try{
@@ -106,7 +108,7 @@
                                 echo "<p class='texto'>Nenhuma substituição pendente!</p>";
                             }
                         }
-                    }catch(PDOExeptio $e){
+                    } catch(PDOExeptio $e){
                         print("Erro ao conectar com o banco de dados . . . <br>".$e->getMenssage());
                         die();
                     }
@@ -177,10 +179,17 @@
             </div>
         </div>
     </div>
-    <script language='javascript'>
-        var sucesso = <?=$sucesso?>;
+    <script>
+        var sucesso = <?=$sucesso?>; 
         if(sucesso == true){
             alert("Substituição designada com sucesso!");
+        }
+        
+    </script>
+    <script>
+        var erro = <?=$erro?>;
+        if(erro == true){
+            alert("O eletricista já está trabalhando na substituição, não é mais possível excluí-la!");
         }
     </script>
 </body>

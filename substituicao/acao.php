@@ -87,18 +87,43 @@
         }
     }
 
+    function buscarSubstituicao($conexao, $id){
+        $query = "SELECT * FROM substituicao";
+        $stmt = $conexao->prepare($query);
+        $stmt->execute();
+
+        $substituicoess = $stmt->fetchAll();
+        foreach($substituicao as $substituicao){
+            if($substituicao['id'] == $id){
+                if($substituicao['gravacao'] != null || $substituicao['relatorio'] != null){
+                    $excluir = false;
+                } else{
+                    $excluir = true;
+                }
+            }
+        }
+        return $excluir;
+    }
+
     function excluir(){
         try{
             $id = isset($_GET["id"])? $_GET["id"] : 0;
     
             $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
-            $query = "DELETE FROM substituicao WHERE id = :id";
-            $stmt = $conexao->prepare($query);
-            $stmt->bindValue(":id",$id);
-    
-            $stmt->execute();
 
-            header('Location: substituicoes-gerente.php');
+            $excluir = buscarSubstituicao($conexao, $id);
+            
+            if($excluir == true){
+                $query = "DELETE FROM substituicao WHERE id = :id";
+                $stmt = $conexao->prepare($query);
+                $stmt->bindValue(":id",$id);
+        
+                $stmt->execute();
+    
+                header('Location: substituicoes-gerente.php');
+            } else{
+                header('Location: substituicoes-gerente.php?erro=true');
+            }
     
         } catch(PDOExeptio $e){
             print("Erro ao conectar com o banco de dados . . . <br>".$e->getMenssage());
