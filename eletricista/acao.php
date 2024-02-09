@@ -17,9 +17,10 @@
     $complemento = isset($_POST['complemento']) ? $_POST['complemento'] : "";
     $numero = isset($_POST['numero']) ? $_POST['numero'] : "";
     $cep = isset($_POST['cep']) ? $_POST['cep'] : "";
-    $senha = isset($_POST['senha']) ? $_POST['senha'] : "";
     $gerente = isset($_POST['gerente']) ? $_POST['gerente'] : "";
     $foto = isset($_FILES['foto']) ? $_FILES['foto'] : "nenhum";
+    $senha = isset($_POST['senha']) ? $_POST['senha'] : "";
+    $senha = sha1($senha);
 
     
     echo "<pre>";

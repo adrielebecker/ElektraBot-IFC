@@ -25,6 +25,7 @@
         $usuario = isset($_POST['usuario']) ? $_POST['usuario'] : "";
         $cargo = isset($_POST['cargo']) ? $_POST['cargo'] : "";
         $senha = isset($_POST['senha']) ? $_POST['senha'] : "";
+        $senha = sha1($senha);
 
         include '../sql/config.php';
 
