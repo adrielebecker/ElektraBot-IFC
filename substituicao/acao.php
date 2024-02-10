@@ -85,6 +85,7 @@
             print("Erro ...<br>".$e->getMessage());
             die();
         }
+        header('Location: substituicoes-gerente.php?alterado=true');
     }
 
     function buscarSubstituicao($conexao, $id){

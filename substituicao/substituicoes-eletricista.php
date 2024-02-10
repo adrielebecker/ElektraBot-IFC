@@ -134,7 +134,6 @@
             
         <div class="col-12">
             <div class="row mt-4">
-                <table class="table text-center table-bordered border-dark mt-3">
                 <?php
                     try{
                         $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
@@ -156,7 +155,8 @@
                         $stmt->execute();
                         $substituicoes = $stmt->fetchAll();
                         
-                        echo "<thead class='bg-success branco'><tr><th>Nome</th><th>Data</th><th>Situação</th><th>Detalhes</th></tr></thead>";
+                        echo "<table class='table text-center table-bordered border-dark mt-3 align-middle'>
+                        <thead class='bg-success branco'><tr><th>Nome</th><th>Data</th><th>Situação</th><th>Detalhes</th></tr></thead>";
                         foreach($substituicoes as $substituicao){
                             if(strtolower($substituicao['situacao']) == "pendente"){
                                 $situacao = "<b style='color: #F00'>Pendente</b>";
@@ -165,16 +165,16 @@
                             }
                             // var_dump($substituicao);
                             if($_SESSION['idEletricista'] == $substituicao['eletricista']){
-                                echo "<tbody><tr><td>".ucWords($substituicao["nome"])."</td><td>".date("d/m/Y", strtotime($substituicao['dataSub']))."</td><td>".ucWords($situacao)."</td><td><a href=visualizar-eletricista.php?idSubstituicao={$substituicao['0']}>Detalhes</a></td></tr></tbody>";
+                                echo "<tbody><tr><td>".ucWords($substituicao["nome"])."</td><td>".date("d/m/Y", strtotime($substituicao['dataSub']))."</td><td>".ucWords($situacao)."</td><td><a href='visualizar-eletricista.php?idSubstituicao={$substituicao['0']}' class='btn btn-outline-success'>Detalhes</a></td></tr></tbody>";
                             }
                         }
+                        echo "</table>";
 
                     }catch(PDOExeptio $e){
                         print("Erro ao conectar com o banco de dados . . . <br>".$e->getMenssage());
                         die();
                     }
                     ?>
-                    </table>
             </div>
         </div>
     </div>
