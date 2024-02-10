@@ -21,6 +21,7 @@
     $senha = isset($_POST['senha']) ? $_POST['senha'] : "";
     $senha = sha1($senha);
 
+
     echo "<pre>";
         var_dump($_POST);
         var_dump($_GET);
@@ -82,12 +83,17 @@
         $stmt->execute();
         $gerentes = $stmt->fetchAll();
 
-        foreach($gerentes as $gerente){
-            if($gerente['usuario'] != $usuario){
-                $user = true;
-            } else{
-                $user = false;
+        var_dump($gerentes);
+        if($gerentes != NULL){
+            foreach($gerentes as $gerente){
+                if($gerente['usuario'] != $usuario){
+                    $user = true;
+                } else{
+                    $user = false;
+                }
             }
+        } else{
+            $user = true;
         }
         return $user;
     }
@@ -97,23 +103,49 @@
 
         try {
             $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
-            /* ":" deixa mais generico que usar variavel */
+
             $user = verificaUsuario($conexao, $usuario);
 
             if($user == true){
                 $query = "INSERT INTO gerente(usuario, nome, dataNasc, sexo, cpf, matricula, celular, email, estado, cidade, bairro, rua, complemento, numero, cep, senha) VALUES(:usuario, :nome, :dataNasc, :sexo, :cpf, :matricula, :celular, :email, :estado, :cidade, :bairro, :rua, :complemento, :numero, :cep, :senha)"; 
-                
                 /* stmt -> statement -> execução do código -> mandar o BD executar algo */
                 $stmt = $conexao->prepare($query);
                 bindar($stmt);
                 $stmt->execute();    
                 header('Location: ../login.php?cadastro=true');
             } else{
-                header('Location: cadastro.php?erroUsuario=true');
+                header('Location: cadastro.php?erroUsuario=true');   
             }
+            /* ":" deixa mais generico que usar variavel */
+            // $query = "SELECT * FROM gerente";
+            // $stmt = $conexao->prepare($query);
+            // $stmt->execute();
+            // $gerentes = $stmt->fetchAll();
+    
+            // if($gerentes != NULL){
+            //     foreach($gerentes as $gerente){
+            //         if($gerente['usuario'] != $usuario){
+            //             $query = "INSERT INTO gerente(usuario, nome, dataNasc, sexo, cpf, matricula, celular, email, estado, cidade, bairro, rua, complemento, numero, cep, senha) VALUES(:usuario, :nome, :dataNasc, :sexo, :cpf, :matricula, :celular, :email, :estado, :cidade, :bairro, :rua, :complemento, :numero, :cep, :senha)"; 
+            //             /* stmt -> statement -> execução do código -> mandar o BD executar algo */
+            //             $stmt = $conexao->prepare($query);
+            //             bindar($stmt);
+            //             $stmt->execute();    
+            //             header('Location: ../login.php?cadastro=true');
+            //         } else{
+            //             header('Location: cadastro.php?erroUsuario=true');
+            //         }
+            //     }
+            // } else{
+            //     $query = "INSERT INTO gerente(usuario, nome, dataNasc, sexo, cpf, matricula, celular, email, estado, cidade, bairro, rua, complemento, numero, cep, senha) VALUES(:usuario, :nome, :dataNasc, :sexo, :cpf, :matricula, :celular, :email, :estado, :cidade, :bairro, :rua, :complemento, :numero, :cep, :senha)"; 
+            //     /* stmt -> statement -> execução do código -> mandar o BD executar algo */
+            //     $stmt = $conexao->prepare($query);
+            //     bindar($stmt);
+            //     $stmt->execute();    
+            //     header('Location: ../login.php?cadastro=true');   
+            // }
         } catch(Exception $e){
             if($e->getCode() == '23000'){
-                header('Location: cadastro.php?erro_sql=true');
+                header('Location: cadastro.php?erroUsuario=true');
             } else{
                 print("Erro ...<br>".$e->getMessage());
                 die();

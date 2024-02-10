@@ -1,11 +1,5 @@
-create database teste2;
-use teste2;
-
-ALTER TABLE `teste2`.`eletricista` 
-CHANGE COLUMN `ativo` `ativo` VARCHAR(45) NULL DEFAULT 'sim' ;
-
-ALTER TABLE `teste2`.`gerente` 
-CHANGE COLUMN `ativo` `ativo` VARCHAR(45) NULL DEFAULT 'sim' ;
+create database elektrabotifc;
+use elektrabotifc;
 
 create table gerente(
 	id int not null auto_increment unique,
@@ -55,6 +49,30 @@ create table eletricista(
     foreign key(gerente) references gerente(id)
 );
 
+ALTER TABLE `elektrabotifc`.`eletricista` 
+CHANGE COLUMN `ativo` `ativo` VARCHAR(45) NULL DEFAULT 'sim' ;
+
+ALTER TABLE `elektrabotifc`.`gerente` 
+CHANGE COLUMN `ativo` `ativo` VARCHAR(45) NULL DEFAULT 'sim' ;
+
+create table gravacao(
+	id int not null auto_increment unique,
+    video varchar(45) not null,
+    substituicao int not null unique,
+    primary key(id)
+);
+
+create table relatorio(
+	id int not null auto_increment unique,
+    texto varchar(1000) not null, 
+    codAntigo varchar(45) not null,
+    codNovo varchar(45) not null,
+    tipo varchar(45) not null,
+    acidente varchar(45) not null,
+    substituicao int not null unique,
+    primary key(id)
+);
+
 create table substituicao(
 	id int not null auto_increment unique,
 	nome varchar(45) not null,
@@ -68,26 +86,4 @@ create table substituicao(
     foreign key(eletricista) references eletricista(id),
     foreign key(gravacao) references gravacao(id),
     foreign key(relatorio) references relatorio(id)
-);
-
-create table gravacao(
-	id int not null auto_increment unique,
-    video varchar(45) not null,
-    primary key(id)
-);
-
-alter table gravacao 
-add column substituicao int not null unique;
-
-alter table relatorio 
-add column substituicao int not null unique;
-
-create table relatorio(
-	id int not null auto_increment unique,
-    texto varchar(1000) not null, 
-    codAntigo varchar(45) not null,
-    codNovo varchar(45) not null,
-    tipo varchar(45) not null,
-    acidente varchar(45) not null,
-    primary key(id)
 );

@@ -185,16 +185,16 @@
                     </div>
                 </div>
     </div>
-    <script language='javascript'> 
+    <script> 
         var erro = <?=$erro?>;
-        if(erro = true){
-            alert("Esse nome de usuário não está mais disponível");
+        if(erro == true){
+            window.onload = alert("Não foi possível realizar o cadastro!");
         }
     </script>
     <script> 
         var erroUsuario = <?=$erroUsuario?>;
         if(erroUsuario == true){
-            alert("Esse nome de usuário não está mais disponível");
+            window.onload = alert("Esse nome de usuário não está mais disponível");
         }
     </script>
 </body>

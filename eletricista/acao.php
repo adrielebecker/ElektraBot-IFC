@@ -98,12 +98,16 @@
         $stmt->execute();
         $eletricistas = $stmt->fetchAll();
 
-        foreach($eletricistas as $eletricista){
-            if($eletricista['usuario'] != $usuario){
-                $user = true;
-            } else{
-                $user = false;
+        if($eletricistas != NULL){
+            foreach($eletricistas as $eletricista){
+                if($eletricista['usuario'] != $usuario){
+                    $user = true;
+                } else{
+                    $user = false;
+                }
             }
+        } else{
+            $user = true;
         }
         return $user;
     }
