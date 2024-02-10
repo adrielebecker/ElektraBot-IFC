@@ -87,9 +87,9 @@
         var_dump($new_name);
         if($new_name == NULL && $id == 0){
             $stmt->bindValue(":foto",'user.png');
-        } elseif($new_name != NULL && $id != 0){
+        } else{
             $stmt->bindValue(":foto", $new_name);
-        }
+        } 
     }
 
     function verificaUsuario($conexao, $usuario){
