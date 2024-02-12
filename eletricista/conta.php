@@ -261,6 +261,7 @@
         var salvo = <?=$salvo?>;
         if(salvo == true){
             alert("Alterações salvas com sucesso!");
+            window.location.href = 'conta.php';
         }
     </script>
 </body>

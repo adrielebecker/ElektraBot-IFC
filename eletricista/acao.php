@@ -20,8 +20,6 @@
     $gerente = isset($_POST['gerente']) ? $_POST['gerente'] : "";
     $foto = isset($_FILES['foto']) ? $_FILES['foto'] : "nenhum";
     $senha = isset($_POST['senha']) ? $_POST['senha'] : "";
-    $senha = sha1($senha);
-
     
     echo "<pre>";
         var_dump($_POST);
@@ -87,6 +85,8 @@
         var_dump($new_name);
         if($new_name == NULL && $id == 0){
             $stmt->bindValue(":foto",'user.png');
+        } elseif($new_name != NULL && $id != 0){
+            $stmt->bindValue(":foto", $new_name);
         } else{
             $stmt->bindValue(":foto", $new_name);
         } 

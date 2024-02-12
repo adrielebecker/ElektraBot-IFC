@@ -112,6 +112,7 @@
         var erro = "<?php echo $erro;?>";
         if(erro == "true"){
             erroDuplicado();
+            window.location.href = 'camera.php';
         } 
     </script>
 </body>

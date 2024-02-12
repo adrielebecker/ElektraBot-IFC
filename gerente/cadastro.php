@@ -188,13 +188,15 @@
     <script> 
         var erro = <?=$erro?>;
         if(erro == true){
-            window.onload = alert("Não foi possível realizar o cadastro!");
+            alert("Não foi possível realizar o cadastro!");
+            window.location.href = 'cadastro.php';
         }
     </script>
     <script> 
         var erroUsuario = <?=$erroUsuario?>;
         if(erroUsuario == true){
-            window.onload = alert("Esse nome de usuário não está mais disponível");
+            alert("Esse nome de usuário não está mais disponível");
+            window.location.href = 'cadastro.php';
         }
     </script>
 </body>

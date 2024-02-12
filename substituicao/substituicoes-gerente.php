@@ -175,7 +175,7 @@
                                     $situacao = "<b style='color: #0F0'>Concluída</b>";
                                 }
                                 // var_dump($substituicao);
-                                echo "<tbody><tr><td>".ucWords($substituicao["1"])."</td><td>".date("d/m/Y", strtotime($substituicao['dataSub']))."</td><td>".ucWords($situacao)."</td><td><a href='visualizar-gerente.php?idSubstituicao={$substituicao['0']}&idGerente={$substituicao['gerente']}&substituicao={$substituicao['1']}' class='btn btn-outline-success'>Detalhes</a></td><td><a href='cadastro-substituicao.php?id={$substituicao['0']}&acao=editar' class='btn btn-outline-warning'>Editar</a></td><td><button onclick='excluirSubstituicao({$substituicao['0']}, {$substituicao['gerente']});' class='btn btn-outline-danger'>Excluir</button></td></tr></tbody>";
+                                echo "<tbody><tr><td>".ucWords($substituicao["1"])."</td><td>".date("d/m/Y", strtotime($substituicao['dataSub']))."</td><td>".ucWords($situacao)."</td><td><a href='visualizar-gerente.php?idSubstituicao={$substituicao['0']}&idGerente={$substituicao['gerente']}&substituicao={$substituicao['1']}' class='btn btn-outline-success'>Detalhes</a></td><td><a href='cadastro-substituicao.php?id={$substituicao['0']}&acao=editar' class='btn btn-outline-primary'>Editar</a></td><td><button onclick='excluirSubstituicao({$substituicao['0']}, {$substituicao['gerente']});' class='btn btn-outline-danger'>Excluir</button></td></tr></tbody>";
                             }
                             echo "</table>";
                         } else{

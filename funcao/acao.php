@@ -25,7 +25,8 @@
         $usuario = isset($_POST['usuario']) ? $_POST['usuario'] : "";
         $cargo = isset($_POST['cargo']) ? $_POST['cargo'] : "";
         $senha = isset($_POST['senha']) ? $_POST['senha'] : "";
-        $senha = sha1($senha);
+        echo $senha;
+        echo $usuario;
 
         include '../sql/config.php';
 
@@ -40,14 +41,14 @@
                 $gerentes = $stmt->fetchAll();
 
                 foreach($gerentes as $gerente){
-                    if(strtolower($gerente['usuario']) == strtolower($usuario) && $gerente['senha'] == $senha && $gerente['ativo'] != 'nao'){
+                    if($gerente['usuario'] == $usuario && $gerente['senha'] == $senha && $gerente['ativo'] != "nao"){
+                        var_dump($gerente);
                         session_start();
                         $_SESSION['nomeGerente'] = $gerente['nome'];
                         $_SESSION['idGerente'] = $gerente['id'];
                         $_SESSION['sexoGerente'] = $gerente['sexo'];
                         header('Location: ../gerente/index.php');
-                    } 
-                    else{
+                    } else{
                         header('Location: ../login.php?incorreto=true');
                     }
                 }
