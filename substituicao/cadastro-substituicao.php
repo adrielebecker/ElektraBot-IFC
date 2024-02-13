@@ -27,7 +27,7 @@
         }
     }
 
-    $maps = "https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3548.2225635105933!2d-49.642396925310535!3d-27.212161305780715!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-BR!2sbr!4v1697839360200!5m2!1spt-BR!2sbr";
+    // $maps = "https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3548.2225635105933!2d-49.642396925310535!3d-27.212161305780715!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-BR!2sbr!4v1697839360200!5m2!1spt-BR!2sbr";
 ?>
 <html lang="pt-BR">
 <head>
@@ -35,6 +35,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?=$pagina?></title>
     <?php include '../gerente/link.html';?>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+    
 </head>
 <body>
     <?php include '../navbar/nav-gerente.php'; ?>
@@ -128,15 +135,37 @@
                         <h6 class="texto verde text-center ms-5">LOCALIZAÇÃO</h6>
                     </div>
                 </div>
-                <div class="row">
+
+                <input type="hidden" name='latitude' id='latitude'>
+                <input type="hidden" name='longitude' id='longitude'>
+
+                <div id="map"></div>
+                <script>
+                    var map = L.map('map').setView([<?php if($id != 0) echo ucWords($substituicao["latitude"]); else echo -27.217712470118357;?>, <?php if($id != 0) echo ucWords($substituicao["longitude"]); else echo -49.64618682861328;?>], 15);
+
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '© OpenStreetMap contributors'
+                    }).addTo(map);
+
+                    var marker = L.marker([<?php if($id != 0) echo ucWords($substituicao["latitude"]); else echo "";?>, <?php if($id != 0) echo ucWords($substituicao["longitude"]); else echo "";?>], {draggable: true}).addTo(map);
+                    map.on('click', function(ev) {
+                        var latlng = ev.latlng;
+                        marker.setLatLng(latlng); ''
+                        document.getElementById('latitude').value = latlng.lat;
+                        document.getElementById('longitude').value = latlng.lng;
+                    });
+                    
+                </script>
+
+                <!-- <div class="row">
                     <div class="col-2"></div>
                     <div class="col-10 mt-3">
                         <?php
-                            echo "<iframe class='border border-success rounded-3' src='{$maps}' width='400' height='300' loading='lazy' referrerpolicy='no-referrer-when-downgrade'></iframe>";
-                            echo "<input type='hidden' name='localizacao' id='localizacao' value='{$maps}'>";
+                            // echo "<iframe class='border border-success rounded-3' src='{$maps}' width='400' height='300' loading='lazy' referrerpolicy='no-referrer-when-downgrade'></iframe>";
+                            // echo "<input type='hidden' name='localizacao' id='localizacao' value='{$maps}'>";
                         ?>
                     </div>
-                </div>
+                </div> -->
                 </form>
             </div>
         </div>

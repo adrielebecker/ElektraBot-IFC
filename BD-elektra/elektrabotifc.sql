@@ -79,6 +79,8 @@ create table substituicao(
     dataSub date not null,
     localizacao varchar(250) not null,
     situacao varchar(45) not null,
+    latitude varchar(45) not null,
+    longitude varchar(45) not null,
     eletricista int not null,
 	gravacao int unique,
     relatorio int unique,

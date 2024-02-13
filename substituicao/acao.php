@@ -10,9 +10,10 @@
     $id = isset($_POST['id']) ? $_POST['id'] : 0;
     $nome = isset($_POST['nome']) ? $_POST['nome'] : "";
     $eletricista = isset($_POST['eletricista']) ? $_POST['eletricista'] : "";
-    $localizacao = isset($_POST['localizacao']) ? $_POST['localizacao'] : "";
     $dataSub = isset($_POST['dataSub']) ? $_POST['dataSub'] : "";
     $situacao = isset($_POST['situacao']) ? $_POST['situacao'] : "";
+    $latitude = isset($_POST['latitude']) ? $_POST['latitude'] : "";
+    $longitude = isset($_POST['longitude']) ? $_POST['longitude'] : "";
 
     switch ($_SERVER['REQUEST_METHOD']) {
         case 'POST':
@@ -42,10 +43,11 @@
     }
 
     function bindar($stmt){
-        global $nome, $eletricista, $localizacao, $dataSub, $situacao;
+        global $nome, $eletricista, $latitude, $longitude, $dataSub, $situacao;
         $stmt->bindValue(":nome", $nome);
         $stmt->bindValue(":eletricista", $eletricista);
-        $stmt->bindValue(":localizacao", $localizacao);
+        $stmt->bindValue(":latitude", $latitude);
+        $stmt->bindValue(":longitude", $longitude);
         $stmt->bindValue(":dataSub", $dataSub);
         $stmt->bindValue(":situacao", $situacao);
     }
@@ -54,7 +56,7 @@
         try {
             $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
 
-            $query = "INSERT INTO substituicao(nome, eletricista, localizacao, dataSub, situacao) VALUES(:nome, :eletricista, :localizacao, :dataSub, :situacao)";
+            $query = "INSERT INTO substituicao(nome, eletricista, latitude, longitude, dataSub, situacao) VALUES(:nome, :eletricista, :latitude, :longitude, :dataSub, :situacao)";
 
             $stmt = $conexao->prepare($query);
 
@@ -62,7 +64,8 @@
 
             $stmt->execute();
 
-            header('Location: substituicoes-gerente.php?sucesso=true');
+            var_dump($_POST);
+            // header('Location: substituicoes-gerente.php?sucesso=true');
         } catch (Exception $e) {
             print("Erro ...<br>".$e->getMessage());
             die();
@@ -73,7 +76,7 @@
         try {
             global $id;
             $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);  
-            $query = "UPDATE substituicao SET nome = :nome, eletricista = :eletricista, localizacao = :localizacao, dataSub = :dataSub, situacao = :situacao WHERE id = :id";
+            $query = "UPDATE substituicao SET nome = :nome, eletricista = :eletricista, latitude = :latitude, longitude = :longitude, dataSub = :dataSub, situacao = :situacao WHERE id = :id";
             
             $stmt = $conexao->prepare($query);
 
