@@ -53,8 +53,6 @@
                                             <p class='texto mt-2'><b class='verde'>".ucWords($substituicao['1'])."</b> <br> <i class='tam10'> Data da Substituição: <br>".date("d/m/Y", strtotime($substituicao['dataSub']))."</i></p>
                                         </a>
                                     </div>";
-                            } else{
-                                echo "<p class='texto'>Nenhuma substituição concluída!</p>";
                             }
                         }
                     }catch(PDOExeptio $e){
@@ -82,8 +80,6 @@
                                             <p class='texto mt-2'><b class='text-danger'>".ucWords($substituicao['1'])."</b> <br> <i class='tam10'> Data da Substituição: <br>".date("d/m/Y", strtotime($substituicao['dataSub']))."</i></p>
                                         </a>
                                     </div>";
-                            } else{
-                                echo "<p class='texto'>Nenhuma substituição pendente!</p>";
                             }
                         }
                     }catch(PDOExeptio $e){
@@ -100,8 +96,8 @@
         </div>
 
         <div class="row">
-            <div class="col-6 mt-4">
-                <div class="row mt-1">
+            <div class="col-6 mt-3">
+                <div class="row">
                     <div class="col-5">
                         <div class="row bg-success rounded">
                             <p class="texto branco text-center mt-3">Nome da Substituição:</p>
@@ -303,71 +299,75 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- <div class="col-4 text-center ms-4 mt-3"> -->
+                    </div>
+                    <div class="row mt-4 mb-5">
+                        <div class="col-12 text-center">
                             <?php
-                                // try{
-                                //     $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
+                                try{
+                                    $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
                     
-                                //     $query = "SELECT * FROM substituicao";
+                                    $query = "SELECT * FROM substituicao";
                     
-                                //     $stmt = $conexao->prepare($query);
-                                //     $stmt->execute();
-                                //     $substituicoes = $stmt->fetchAll();
+                                    $stmt = $conexao->prepare($query);
+                                    $stmt->execute();
+                                    $substituicoes = $stmt->fetchAll();
                                     
-                                //     foreach($substituicoes as $substituicao){
-                                //         if($idSubstituicao == $substituicao['id']){
-                                //             if(strtolower($substituicao['situacao']) == "pendente"){
-                                //                 echo "<a href=acao.php?acao=concluir&id=".$substituicao["id"]."&situacao=concluída class='btn btn-success mt-1'>Concluir</a>";
-                                //             } else{
-                                //                 echo "<p class='texto'>Parabéns: <b>".ucWords($substituicao['nome'])."</b> está <b class='verde'>Concluída</b>!</p>";
-                                //             }
-                                //         }
-                                //     }
-                                // }catch(Exception $e){
-                                //     print("Erro ...<br>".$e->getMessage());
-                                //     die();
-                                // }
+                                    foreach($substituicoes as $substituicao){
+                                        if($idSubstituicao == $substituicao['id']){
+                                            if(strtolower($substituicao['situacao']) == "pendente"){
+                                                echo "<a href=acao.php?acao=concluir&id=".$substituicao["id"]."&situacao=concluída class='btn btn-success mt-1'>Concluir Substituição</a>";
+                                            }
+                                        }
+                                    }
+                                }catch(Exception $e){
+                                    print("Erro ...<br>".$e->getMessage());
+                                    die();
+                                }
                             ?>
-                        <!-- </div> -->
+                        </div>
                     </div>
             </div>
             <div class="col-6">
                 <div class="row">
                     <div class="col-1"></div>
-                    <div class="col-10">
-                        <h6 class="texto verde text-center ms-5">LOCALIZAÇÃO</h6>
+                    <div class="col-11">
+                        <h6 class="texto verde text-center">LOCALIZAÇÃO</h6>
                     </div>
                 </div>
-                <div id="map"></div>
-                <?php
-                    try{
-                        $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
-        
-                        $query = "SELECT * FROM substituicao";
-        
-                        $stmt = $conexao->prepare($query);
-                        $stmt->execute();
-                        $substituicoes = $stmt->fetchAll();
-                        
-                        foreach($substituicoes as $substituicao){
-                            if($idSubstituicao == $substituicao['id']){
-                                echo "<script>
-                                var map = L.map('map').setView([-27.217712470118357, -49.64618682861328], 12);
-            
-                                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                                    attribution: '© OpenStreetMap contributors'
-                                }).addTo(map);
-            
-                                L.marker([".ucWords($substituicao['latitude']).",".ucWords($substituicao['longitude'])."], {draggable: true}).addTo(map);
-                                </script>";
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-11">
+                        <div id="map" class="border border-success rounded-3"></div>
+                        <?php
+                            try{
+                                $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
+                
+                                $query = "SELECT * FROM substituicao";
+                
+                                $stmt = $conexao->prepare($query);
+                                $stmt->execute();
+                                $substituicoes = $stmt->fetchAll();
+                                
+                                foreach($substituicoes as $substituicao){
+                                    if($idSubstituicao == $substituicao['id']){
+                                        echo "<script>
+                                        var map = L.map('map').setView([-27.217712470118357, -49.64618682861328], 12);
+                    
+                                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                            attribution: '© OpenStreetMap contributors'
+                                        }).addTo(map);
+                    
+                                        L.marker([".ucWords($substituicao['latitude']).",".ucWords($substituicao['longitude'])."], {draggable: true}).addTo(map);
+                                        </script>";
+                                    }
+                                }
+                            }catch(Exception $e){
+                                print("Erro ...<br>".$e->getMessage());
+                                die();
                             }
-                        }
-                    }catch(Exception $e){
-                        print("Erro ...<br>".$e->getMessage());
-                        die();
-                    }
-                ?> 
+                        ?> 
+                    </div>
+                </div>
             </div>
         </div>
     </div>
