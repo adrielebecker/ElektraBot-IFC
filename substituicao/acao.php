@@ -96,8 +96,8 @@
         $stmt = $conexao->prepare($query);
         $stmt->execute();
 
-        $substituicoess = $stmt->fetchAll();
-        foreach($substituicao as $substituicao){
+        $substituicoes = $stmt->fetchAll();
+        foreach($substituicoes as $substituicao){
             if($substituicao['id'] == $id){
                 if($substituicao['gravacao'] != null || $substituicao['relatorio'] != null){
                     $excluir = false;
