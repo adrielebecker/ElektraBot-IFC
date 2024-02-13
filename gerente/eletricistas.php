@@ -5,6 +5,7 @@
     $pagina = "Eletricistas";
     session_start();
     // var_dump($_SESSION);
+    $transferencia = isset($_GET['transferencia']) ? $_GET['transferencia'] : "";
 ?>
 <html lang="pt-BR">
 <head>
@@ -83,5 +84,12 @@
             </div>
         </div>
     </div>
+    <script>
+        var transferencia = <?=$transferencia?>;
+        if(transferencia == true){
+            alert("Transferências realizadas com sucesso!");
+            window.location.href = "eletricistas.php";
+        }
+    </script>
 </body>
 </html>

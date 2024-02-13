@@ -202,12 +202,14 @@
         var erro = <?=$erro?>;
         if(erro == true){
             alert("O eletricista já está trabalhando na substituição, não é mais possível excluí-la!");
+            window.location.href = 'substituicoes-gerente.php';
         }
     </script>
      <script>
         var alterado = <?=$alterado?>;
         if(alterado == true){
             alert("Edições salvas com sucesso!");
+            window.location.href = 'substituicoes-gerente.php';
         }
     </script>
 </body>

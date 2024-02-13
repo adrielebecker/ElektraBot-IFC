@@ -175,19 +175,40 @@
         }
         
     }
+    function buscarGerente($conexao, $id){
+        $query = "SELECT * FROM eletricista";
+        $stmt = $conexao->prepare($query);
+        $stmt->execute();
+        $eletricistas = $stmt->fetchAll();
+
+        foreach($eletricistas as $eletricista){
+            if($eletricista['gerente'] == $id){
+                $eletricista = true;
+                break;
+            } else{
+                $eletricista = false;
+            }
+        }
+        return $eletricista;
+    }
     function excluir(){
         try{
             $id = isset($_GET['id']) ? $_GET['id'] : 0;
 
             $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
-            $query = "UPDATE gerente SET ativo = :ativo WHERE id = :id";
-            $stmt = $conexao->prepare($query);
-            $stmt->bindValue(":ativo", "nao");
-            $stmt->bindValue(":id", $id);
-
-            $stmt->execute();
-
-            header('Location: ../login.php?excluido=true');
+            $eletricista = buscarGerente($conexao, $id);
+            if($eletricista == true){
+                header('Location: transferencia.php?eletricista=true');
+            } else{
+                $query = "UPDATE gerente SET ativo = :ativo WHERE id = :id";
+                $stmt = $conexao->prepare($query);
+                $stmt->bindValue(":ativo", "nao");
+                $stmt->bindValue(":id", $id);
+    
+                $stmt->execute();
+    
+                header('Location: ../login.php?excluido=true');
+            }
         } catch(PDOExeptio $e){
             print("Erro ao conectar com o banco de dados . . . <br>".$e->getMenssage());
             die();
@@ -263,6 +284,7 @@
                 $stmt->bindValue(":id", $eletricista);
                 $stmt->execute();
             }
+            header('Location: eletricistas.php?transferencia=true');
         } catch(Exception $e){
             print("Erro ...<br>".$e->getMessage());
             die();

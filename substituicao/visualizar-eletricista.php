@@ -375,6 +375,7 @@
         var pendente = <?=$pendente?>;
         if(pendente == true){
             alert("Relatório ou gravação ainda não estão concluídos, verifique!");
+            window.location.href = 'visualizar-eletricista.php';
         }
     </script>
 </body>

@@ -5,7 +5,7 @@
     session_start();
     
     $pagina = "Transferência";
-    $erro = isset($_GET['erro_sql']) ? $_GET['erro_sql'] : "false";
+    $erroE = isset($_GET['eletricista']) ? $_GET['eletricista'] : "false";
     $idEletricista = isset($_GET['idEletricista']) ? $_GET['idEletricista'] : array();
     $idGerente = isset($_GET['idGerente']) ? $_GET['idGerente'] : 0;
 
@@ -40,8 +40,11 @@
 <body>
     <?php include "../navbar/nav-gerente.php";?>
     <?php
-        if($erro == 'true'){
-            echo "<script>alert('Antes de excluir sua conta transfira seus eletricistas para outro gerente!');</script>";
+        if($erroE == 'true'){
+            echo "<script>
+                    alert('Antes de excluir sua conta transfira seus eletricistas para outro gerente!');
+                    window.location.href = 'transferencia.php';
+                    </script>";
         }
     ?>
     <div class="container">

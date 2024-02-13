@@ -146,6 +146,7 @@
         var salvo = <?=$salvo?>;
         if(salvo == true){
             alert("Gravação salva com sucesso");
+            window.location.href = 'gravacao-eletricista.php';
         }
     </script>
 </body>

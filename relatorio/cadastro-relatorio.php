@@ -163,6 +163,7 @@
         var erro = "<?php echo $erro;?>";
         if(erro == "true"){
             erroDuplicado();
+            window.location.href = 'cadastro-relatorio.php';
         } 
     </script>
 </body>

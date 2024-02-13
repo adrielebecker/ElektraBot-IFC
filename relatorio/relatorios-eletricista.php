@@ -153,6 +153,7 @@
         var salvo = <?=$salvo?>;
         if(salvo == true){
             alert("Relatório salvo com sucesso");
+            window.location.href = 'relatorios-eletricista.php';
         }
     </script>
 </body>

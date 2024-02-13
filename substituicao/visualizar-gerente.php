@@ -304,42 +304,42 @@
             <div class="col-6 mt-4">
                 <div class="row">
                     <div class="col-1"></div>
-                    <div class="col-10">
-                        <h6 class="texto verde text-center ms-5">LOCALIZAÇÃO</h6>
+                    <div class="col-11">
+                        <h6 class="texto verde text-center">LOCALIZAÇÃO</h6>
                     </div>
                 </div>
-                <div id="map"></div>
-                <?php
-                    try{
-                        $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
-        
-                        $query = "SELECT * FROM substituicao";
-        
-                        $stmt = $conexao->prepare($query);
-                        $stmt->execute();
-                        $substituicoes = $stmt->fetchAll();
-                        
-                        foreach($substituicoes as $substituicao){
-                            if($idSubstituicao == $substituicao['id']){
-                                echo "<script>
-                                var map = L.map('map').setView([-27.217712470118357, -49.64618682861328], 12);
-            
-                                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                                    attribution: '© OpenStreetMap contributors'
-                                }).addTo(map);
-            
-                                L.marker([".ucWords($substituicao['latitude']).",".ucWords($substituicao['longitude'])."], {draggable: true}).addTo(map);
-                                </script>";
-                            }
-                        }
-                    }catch(Exception $e){
-                        print("Erro ...<br>".$e->getMessage());
-                        die();
-                    }
-                ?>                
                 <div class="row">
-                    <div class="col-2"></div> 
-                    <div class="col-10 mt-3">
+                    <div class="col-1"></div>
+                    <div class="col-11">
+                        <div id="map" class="border border-success rounded-3"></div>
+                        <?php
+                            try{
+                                $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
+                
+                                $query = "SELECT * FROM substituicao";
+                
+                                $stmt = $conexao->prepare($query);
+                                $stmt->execute();
+                                $substituicoes = $stmt->fetchAll();
+                                
+                                foreach($substituicoes as $substituicao){
+                                    if($idSubstituicao == $substituicao['id']){
+                                        echo "<script>
+                                        var map = L.map('map').setView([-27.217712470118357, -49.64618682861328], 12);
+                    
+                                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                            attribution: '© OpenStreetMap contributors'
+                                        }).addTo(map);
+                    
+                                        L.marker([".ucWords($substituicao['latitude']).",".ucWords($substituicao['longitude'])."], {draggable: true}).addTo(map);
+                                        </script>";
+                                    }
+                                }
+                            }catch(Exception $e){
+                                print("Erro ...<br>".$e->getMessage());
+                                die();
+                            }
+                        ?>  
                     </div>
                 </div>
             </div>

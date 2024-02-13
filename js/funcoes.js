@@ -11,14 +11,21 @@ function excluirRelatorio(id){
     }
 }
 
-function excluirConta(id){
+function excluirContaE(id){
     var acao = confirm("Tem certeza que deseja excluir?");
     if(acao == true){
         window.location.href = '../eletricista/acao.php?acao=excluir&id=' + id;
     } else{
         window.location.href = "../eletricista/conta.php";
     }
-
+}
+function excluirContaG(id){
+    var acao = confirm("Tem certeza que deseja excluir?");
+    if(acao == true){
+        window.location.href = '../gerente/acao.php?acao=excluir&id=' + id;
+    } else{
+        window.location.href = "../gerente/conta.php";
+    }
 }
 
 function excluirSubstituicao(substituicao, gerente){

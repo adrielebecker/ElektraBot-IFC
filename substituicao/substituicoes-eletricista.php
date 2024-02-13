@@ -182,6 +182,7 @@
         var concluida = <?=$concluida?>;
         if(concluida == true){
             alert('Substituição concluída!');
+            window.location.href = 'substituicoes-eletricista.php';
         } else{
             alert('Substituição pendente');
         }

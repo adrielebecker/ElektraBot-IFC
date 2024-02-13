@@ -87,8 +87,6 @@
             $stmt->bindValue(":foto",'user.png');
         } elseif($new_name != NULL && $id != 0){
             $stmt->bindValue(":foto", $new_name);
-        } else{
-            $stmt->bindValue(":foto", $new_name);
         } 
     }
 

@@ -46,7 +46,7 @@
                             foreach($gerentes as $gerente){
                                 if($_SESSION['idGerente'] === $gerente['id']){
                                     echo "<a class='btn btn-success texto' href='cadastro.php?acao=editar&id=".$gerente["id"]."'>Alterar Dados</a>";
-                                    echo "<a class='btn btn-danger mt-3 texto' href='acao.php?acao=excluir&id=".$gerente["id"]."'onclick='excluir(acao, id)'>Excluir Conta</a>";
+                                    echo "<a class='btn btn-danger mt-3 texto 'onclick='excluirContaG({$gerente['id']})'>Excluir Conta</a>";
                                 }
                             }
                         } catch(Exception $e){
@@ -240,10 +240,11 @@
 
         </div>
     </div>
-    <script language='javascript'>
+    <script>
         var salvo = <?=$salvo?>;
         if(salvo == true){
             alert("Alterações salvas com sucesso!");
+            window.location.href = 'conta.php';
         }
     </script>
 </body>

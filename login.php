@@ -75,18 +75,21 @@
         var cadastro = <?=$cadastro;?>;
         if(cadastro == true){
             alert("Cadastro efetuado com sucesso!");
+            window.location.href = 'login.php';
         }
     </script>
     <script>
         var excluido = <?=$excluido?>;
         if(excluido == true){
             alert("A conta foi excluída com sucesso!");
+            window.location.href = 'login.php';
         }
     </script>
     <script>
         var incorreto = <?=$incorreto?>;
         if(incorreto == true){
             alert("Usuário ou senha incorretos!");
+            window.location.href = 'login.php';
         }
     </script>
 </body>

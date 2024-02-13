@@ -63,7 +63,7 @@
                             foreach($eletricistas as $eletricista){
                                 if($_SESSION['idEletricista'] === $eletricista['id']){
                                     echo "<a class='btn btn-success texto' href='cadastro.php?acao=editar&id=".$eletricista["id"]."'>Alterar Dados</a>";
-                                    echo "<a class='btn btn-danger mt-3 texto' onclick='excluirConta({$eletricista['id']});'>Excluir Conta</a>";
+                                    echo "<a class='btn btn-danger mt-3 texto' onclick='excluirContaE({$eletricista['id']});'>Excluir Conta</a>";
                                 }
                             }
                         } catch(Exception $e){

@@ -52,7 +52,7 @@
             <div class="row mt-2">
                 <div class="col-4">
                     <label for="nome" class="form-label">Nome Completo:</label>
-                    <input type="text" name="nome" id="nome" minLength="3" class="form-control border-success text-center" value="<?php if($id != 0) echo ucWords($eletricista["nome"]);?>" >
+                    <input type="text" name="nome" id="nome" minLength="3" class="form-control border-success text-center" value="<?php if($id != 0) echo $eletricista["nome"];?>" >
                 </div>
                 <div class="col-2">
                     <label for="dataNasc" class="form-label">Data de Nascimento:</label>
@@ -74,14 +74,14 @@
                 </div> 
                 <div class="col-2">
                     <label for="cpf" class="form-label">CPF:</label>
-                    <input type="text" name="cpf" id="cpf" minLength="11" maxLength="11" class="form-control border-success text-center" placeholder="000.000.000-00" value="<?php if($id != 0) echo formataCpf($eletricista["cpf"])?>">
+                    <input type="text" name="cpf" id="cpf" minLength="11" maxLength="11" class="form-control border-success text-center" placeholder="000.000.000-00" value="<?php if($id != 0) echo $eletricista["cpf"]?>">
                 </div>              
             </div>
     
             <div class="row mt-3"> 
                 <div class="col-3">
                     <label for="celular" class="form-label">Celular:</label>
-                    <input type="text" name="celular" id="celular" minLength="11" maxLength="11" class="form-control border-success text-center" placeholder="(00) 00000-0000" value="<?php if($id != 0) echo formataTelefone($eletricista["celular"])?>">
+                    <input type="text" name="celular" id="celular" minLength="11" maxLength="11" class="form-control border-success text-center" placeholder="(00) 00000-0000" value="<?php if($id != 0) echo $eletricista["celular"]?>">
                 </div>
                 <div class="col-6">
                     <label for="email" class="form-label">E-mail:</label>
@@ -89,7 +89,7 @@
                 </div> 
                 <div class="col-3">
                     <label for="cep" class="form-label">CEP:</label>
-                    <input type="text" name="cep" id="cep" class="form-control border-success text-center" placeholder="00000-0000" value="<?php if($id != 0) echo formataCep($eletricista["cep"])?>">
+                    <input type="text" name="cep" id="cep" class="form-control border-success text-center" placeholder="00000-0000" value="<?php if($id != 0) echo $eletricista["cep"]?>">
                 </div>              
             </div>
                 
@@ -130,22 +130,22 @@
                 </div>
                 <div class="col-3">
                     <label for="cidade" class="form-label">Cidade:</label>
-                    <input type="text" name="cidade" id="cidade" class="form-control border-success text-center" value="<?php if($id != 0) echo ucWords($eletricista["cidade"])?>"> 
+                    <input type="text" name="cidade" id="cidade" class="form-control border-success text-center" value="<?php if($id != 0) echo $eletricista["cidade"]?>"> 
                 </div>
                 <div class="col-3">
                     <label for="bairro" class="form-label">Bairro:</label>
-                    <input type="text" name="bairro" id="bairro" class="form-control border-success text-center" value="<?php if($id != 0) echo ucWords($eletricista["bairro"])?>"> 
+                    <input type="text" name="bairro" id="bairro" class="form-control border-success text-center" value="<?php if($id != 0) echo $eletricista["bairro"]?>"> 
                 </div>  
                 <div class="col-3">
                     <label for="rua" class="form-label">Rua:</label>
-                    <input type="text" name="rua" id="rua" class="form-control border-success text-center" value="<?php if($id != 0) echo ucWords($eletricista["rua"])?>">
+                    <input type="text" name="rua" id="rua" class="form-control border-success text-center" value="<?php if($id != 0) echo $eletricista["rua"]?>">
                 </div>                    
             </div>
 
             <div class="row mt-3">
                 <div class="col-7">
                     <label for="complemento" class="form-label">Complemento:</label>
-                    <input type="text" name="complemento" id="complemento" class="form-control border-success text-center" placeholder="Ex: Casa" value="<?php if($id != 0) echo ucWords($eletricista["complemento"])?>">
+                    <input type="text" name="complemento" id="complemento" class="form-control border-success text-center" placeholder="Ex: Casa" value="<?php if($id != 0) echo $eletricista["complemento"]?>">
                 </div>
                 <div class="col-2">
                     <label for="numero" class="form-label">Número:</label>
@@ -188,7 +188,7 @@
                 
                 <div class="col-3">
                     <label for="senha" class="form-label">Criar Senha:</label>
-                    <input type="password" name="senha" id="senha" class="form-control border-success text-center" value="<?php if($id != 0) echo sha1($eletricista["senha"])?>">
+                    <input type="password" name="senha" id="senha" class="form-control border-success text-center" value="<?php if($id != 0) echo $eletricista["senha"]?>">
                 </div>
                 <div class="col-3">
                     <label for="confirmaSenha" class="form-label">Confirmar Senha:</label>
