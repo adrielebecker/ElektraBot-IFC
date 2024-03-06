@@ -25,8 +25,6 @@
         $usuario = isset($_POST['usuario']) ? $_POST['usuario'] : "";
         $cargo = isset($_POST['cargo']) ? $_POST['cargo'] : "";
         $senha = isset($_POST['senha']) ? $_POST['senha'] : "";
-        echo $senha;
-        echo $usuario;
 
         include '../sql/config.php';
 
@@ -39,7 +37,7 @@
                 $stmt = $conexao->prepare($query);
                 $stmt->execute();
                 $gerentes = $stmt->fetchAll();
-
+                var_dump($gerentes);
                 foreach($gerentes as $gerente){
                     if($gerente['usuario'] == $usuario && $gerente['senha'] == $senha && $gerente['ativo'] != "nao"){
                         var_dump($gerente);
@@ -48,9 +46,7 @@
                         $_SESSION['idGerente'] = $gerente['id'];
                         $_SESSION['sexoGerente'] = $gerente['sexo'];
                         header('Location: ../gerente/index.php');
-                    } else{
-                        header('Location: ../login.php?incorreto=true');
-                    }
+                    } 
                 }
             } catch(Exception $e){
                 print("Erro ...<br>".$e->getMessage());
@@ -67,16 +63,13 @@
                 $eletricistas = $stmt->fetchAll();
 
                 foreach($eletricistas as $eletricista){
-                    if(strtolower($eletricista['usuario']) == strtolower($usuario) && $eletricista['senha'] == $senha && $eletricista['ativo'] != 'nao'){
+                    if($eletricista['usuario'] == $usuario && $eletricista['senha'] == $senha && $eletricista['ativo'] != 'nao'){
                         session_start();
                         $_SESSION['nomeEletricista'] = $eletricista['nome'];
                         $_SESSION['idEletricista'] = $eletricista['id'];
                         $_SESSION['sexoEletricista'] = $eletricista['sexo'];
                         $_SESSION['idGerente'] = $eletricista['gerente'];
                         header('Location: ../eletricista/index.php');
-                    } 
-                    else{
-                        header('Location: ../login.php?incorreto=true');
                     }
                 }
             } catch(Exception $e){

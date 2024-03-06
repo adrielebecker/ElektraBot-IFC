@@ -77,7 +77,6 @@ create table substituicao(
 	id int not null auto_increment unique,
 	nome varchar(45) not null,
     dataSub date not null,
-    localizacao varchar(250) not null,
     situacao varchar(45) not null,
     latitude varchar(45) not null,
     longitude varchar(45) not null,
