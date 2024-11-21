@@ -5,7 +5,7 @@
     $diretorio = "video/substituicao-longa.mp4";
 
     $erro = isset($_GET['erro_sql']) ? $_GET['erro_sql'] : "";
-    var_dump($erro);
+    // var_dump($erro);
     session_start();
 ?>
 <html lang="pt-BR">
@@ -16,9 +16,38 @@
     <?php include 'link.html'; ?>
 </head>
 <body>
-    <?php include '../navbar/nav-eletricista.php'; ?>
+<?php include '../navbar/nav-eletricista.php'; ?>
 
-    <nav class="navbar">
+<script>
+        document.addEventListener('keydown', function(event){
+            let command = '';
+
+            if(event.key === 'ArrowUp'){ 
+                command = '/FRENTE';
+            }else if(event.key === 'ArrowDown'){
+                command = '/TRAS';
+            } else if(event.key === 'ArrowLeft'){
+                command = '/ESQUERDA';
+            } else if(event.key === 'ArrowRight'){
+                command = '/DIREITA';
+            } else if(event.code === 'NumpadAdd'){
+                command = '/PARAFUSAR';
+            } else if(event.code === 'NumpadSubtract'){
+                command = '/DESPARAFUSAR';
+            } else if(event.key === 'p'){
+                command = '/PARAR';
+            } 
+
+            if(command !== ''){
+                fetch('http://10.0.0.99' + command)
+                    .then(response => response.text())
+                    .then(data => console.log(data))
+                    .catch(error => console.error('Erro:', error));
+            }
+        })
+    </script>
+
+    <!-- <nav class="navbar">
         <div class="col-6 ms-3">
             <button class="navbar-toggler border border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
                 <h6 class="texto verde">Conectar Dispositivo</h6>
@@ -54,66 +83,65 @@
                 </ul>
             </div>
         </div>
-    </nav>
+    </nav> -->
 
     <div class="container">
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-12">
                 <h5 class="titulo verde text-center">Visualização em tempo real:</h5>
             </div>
-        </div>
+        </div> -->
 
         <form action="../gravacao/acao.php" method="post">
             <div class="row">
-                <div class="col-6 ms-1 mt-5">
-                    <video width='500' controls autoplay muted>
-                        <source src='../video/substituicao-longa.mp4' type='video/mp4'>
-                    </video>
+                <div class="col-1"></div>
+                <div class="col-11">
+                    <!-- <iframe src="http://10.0.0.98" allowfullscreen style="width: 850px; height: 500px;"></iframe> -->
                 </div>
 
-                <div class="col-4 ms-5 mt-5">
-                    <div class="row mt-5"></div>
-                    <h5 class="texto text-center mt-5">Nome da Substituição:</h5>
-                    <select name="substituicao" id="substituicao" class="form-select border-success text-center mt-4" required>
+                <!-- <div class="col-4 ms-5 mt-5"> -->
+                    <!-- <div class="row mt-5"></div> -->
+                    <!-- <h5 class="texto text-center mt-5">Nome da Substituição:</h5> -->
+                    <!-- <select name="substituicao" id="substituicao" class="form-select border-success text-center mt-4" required> -->
                     <?php
-                        try{
-                            $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
+                        // try{
+                        //     $conexao = new PDO(MYSQL_DSN,USER,PASSWORD);
                             
-                            $query = "SELECT * FROM substituicao";
+                        //     $query = "SELECT * FROM substituicao";
                             
-                            $stmt = $conexao->prepare($query);
-                            $stmt->execute();
-                            $substituicao = $stmt->fetchAll();
+                        //     $stmt = $conexao->prepare($query);
+                        //     $stmt->execute();
+                        //     $substituicao = $stmt->fetchAll();
                             
-                            foreach($substituicao as $value){
-                                if($_SESSION['idEletricista'] == $value['eletricista']){
-                                    echo "<option value='{$value['id']}'>".ucWords($value['nome'])."</option>";
-                                }
-                            }
-                        }catch(Exception $e){
-                            print("Erro ...<br>".$e->getMessage());
-                            die();
-                        }
-                        echo "</select><br>";
+                        //     foreach($substituicao as $value){
+                        //         if($_SESSION['idEletricista'] == $value['eletricista']){
+                        //             echo "<option value='{$value['id']}'>".ucWords($value['nome'])."</option>";
+                        //         }
+                        //     }
+                        // }catch(Exception $e){
+                        //     print("Erro ...<br>".$e->getMessage());
+                        //     die();
+                        // }
+                        // echo "</select><br>";
 
-                        echo "<input type='hidden' name='diretorio' value='{$diretorio}'>";
+                        // echo "<input type='hidden' name='diretorio' value='{$diretorio}'>";
                     ?>
-                    <div class="row mt-4">
+                    <!-- <div class="row mt-4">
                         <div class="col-2">
                             <button name="acao" id="acao" value="salvar" class="btn btn-success">Salvar</button>
                         </div>
-                    </div>
-            </form>
+                    </div> -->
+            </form> 
             </div>
         </div>
     </div>
 
-    <script language="javascript">
-        var erro = "<?php echo $erro;?>";
+    <!-- <script language="javascript">
+        var erro = "<?php //echo $erro;?>";
         if(erro == "true"){
             erroDuplicado();
             window.location.href = 'camera.php';
         } 
-    </script>
+    </script> -->
 </body>
 </html>

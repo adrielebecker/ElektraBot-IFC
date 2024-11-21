@@ -2,7 +2,7 @@
     define("HOST", "localhost");
     define("USER", "root");
     define("PASSWORD", "");
-    define("DB", "elektrabotifc");
+    define("DB", "elektrabot_bd");
     define("PORT", "3306");
     define("MYSQL_DSN", "mysql:host=".HOST.";port=".PORT.";dbname=".DB.";charset=UTF8");
 ?>
