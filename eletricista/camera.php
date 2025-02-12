@@ -5,7 +5,6 @@
     $diretorio = "video/substituicao-longa.mp4";
 
     $erro = isset($_GET['erro_sql']) ? $_GET['erro_sql'] : "";
-    // var_dump($erro);
     session_start();
 ?>
 <html lang="pt-BR">
@@ -19,33 +18,45 @@
 <?php include '../navbar/nav-eletricista.php'; ?>
 
 <script>
-        document.addEventListener('keydown', function(event){
-            let command = '';
+    document.addEventListener('keydown', function(event){
+        // if (debounce) return; 
+            
+        // debounce = true;
 
-            if(event.key === 'ArrowUp'){ 
-                command = '/FRENTE';
-            }else if(event.key === 'ArrowDown'){
-                command = '/TRAS';
-            } else if(event.key === 'ArrowLeft'){
-                command = '/ESQUERDA';
-            } else if(event.key === 'ArrowRight'){
-                command = '/DIREITA';
-            } else if(event.code === 'NumpadAdd'){
-                command = '/PARAFUSAR';
-            } else if(event.code === 'NumpadSubtract'){
-                command = '/DESPARAFUSAR';
-            } else if(event.key === 'p'){
-                command = '/PARAR';
-            } 
+        // setTimeout(() => debounce = false, 200);
 
-            if(command !== ''){
-                fetch('http://10.0.0.99' + command)
-                    .then(response => response.text())
-                    .then(data => console.log(data))
-                    .catch(error => console.error('Erro:', error));
-            }
-        })
-    </script>
+        const ip_esp = "http://10.0.0.99";
+        let command = '';
+        
+        if(event.key === 'ArrowUp'){ 
+            command = 'CIMA';
+        }else if(event.key === 'ArrowDown'){
+            command = 'BAIXO';
+        } else if(event.key === 'ArrowLeft'){
+            command = 'ESQUERDA';
+        } else if(event.key === 'ArrowRight'){
+            command = 'DIREITA';
+        } else if(event.code === 'NumpadAdd'){
+            command = 'PARAFUSAR';
+        } else if(event.code === 'NumpadSubtract'){
+            command = 'DESPARAFUSAR';
+        } else if(event.key === 'p'){
+            command = 'PARAR';
+        } else if(event.key == 'w'){
+            command = 'FRENTE';
+        } else if(event.key == 's'){
+            command = 'TRAS';
+        }
+
+        if(command !== ''){
+            event.preventDefault(); 
+            fetch(ip_esp + '/move_motor?command='+ command)
+                .then(response => response.text())
+                .then(data => console.log(data))
+                .catch(error => console.error('Erro:', error));
+        }
+    })
+</script>
 
     <!-- <nav class="navbar">
         <div class="col-6 ms-3">
@@ -96,7 +107,7 @@
             <div class="row">
                 <div class="col-1"></div>
                 <div class="col-11">
-                    <!-- <iframe src="http://10.0.0.98" allowfullscreen style="width: 850px; height: 500px;"></iframe> -->
+                    <iframe src="http://10.0.0.98" allowfullscreen style="width: 850px; height: 500px;"></iframe>
                 </div>
 
                 <!-- <div class="col-4 ms-5 mt-5"> -->
